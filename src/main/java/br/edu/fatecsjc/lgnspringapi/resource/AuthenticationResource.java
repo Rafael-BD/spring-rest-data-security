@@ -1,5 +1,14 @@
 package br.edu.fatecsjc.lgnspringapi.resource;
 
+import java.io.IOException;
+
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.edu.fatecsjc.lgnspringapi.dto.AuthenticationRequestDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.AuthenticationResponseDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.RegisterRequestDTO;
@@ -11,20 +20,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication and Token Operations")
 public class AuthenticationResource {
+	
 
     private final AuthenticationService service;
 
