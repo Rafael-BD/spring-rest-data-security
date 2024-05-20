@@ -17,10 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author rafae
- */
 @Getter
 @Setter
 @ToString

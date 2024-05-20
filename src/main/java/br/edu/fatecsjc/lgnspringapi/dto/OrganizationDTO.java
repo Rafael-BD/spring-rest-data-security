@@ -4,20 +4,26 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import br.edu.fatecsjc.lgnspringapi.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GroupDTO {
+public class OrganizationDTO {
     @Schema(hidden = true)
     private Long id;
+    
     private String name;
-    private List<MemberDTO> members;
+
+    private Address address;
+
+    private String instituitionName;
+
+    private String country;
+
+    private List<GroupDTO> groups;
 }
