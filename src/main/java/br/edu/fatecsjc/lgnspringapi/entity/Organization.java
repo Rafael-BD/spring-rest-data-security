@@ -31,13 +31,14 @@ public class Organization {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organizationsidgen")
     private Long id;
     
-    private String name;
-
-    private Address address;
+    private String cep;
+    private String number;
+    private String street;
+    private String city;
+    private String state;
+    private String country;
 
     private String instituitionName;
-
-    private String country;
 
     @OneToMany(mappedBy="organization", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Group> groups;

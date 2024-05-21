@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import br.edu.fatecsjc.lgnspringapi.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -19,11 +21,14 @@ public class OrganizationDTO {
     
     private String name;
 
-    private Address address;
+    private String cep;
+    private String number;
+    private String street;
+    private String city;
+    private String state;
+    private String country;
 
     private String instituitionName;
-
-    private String country;
 
     private List<GroupDTO> groups;
 }

@@ -1,7 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
-import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
-import br.edu.fatecsjc.lgnspringapi.entity.Group;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.Provider;
 import org.modelmapper.TypeMap;
@@ -9,7 +9,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
+import br.edu.fatecsjc.lgnspringapi.entity.Group;
 
 @Component
 public class GroupConverter implements Converter<Group, GroupDTO> {
