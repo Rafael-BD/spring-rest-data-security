@@ -24,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class UserResource {
 
 private final UserService service;
-    
-    @PatchMapping
+
+    @PatchMapping 
     @Operation(
             description = "Change user password",
             responses = {

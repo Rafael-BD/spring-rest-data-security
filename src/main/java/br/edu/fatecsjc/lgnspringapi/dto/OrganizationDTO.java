@@ -28,7 +28,7 @@ public class OrganizationDTO {
     private String state;
     private String country;
 
-    private String instituitionName;
+    private String instituition_name;
 
     private List<GroupDTO> groups;
 }

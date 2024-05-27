@@ -38,7 +38,7 @@ public class Organization {
     private String state;
     private String country;
 
-    private String instituitionName;
+    private String instituition_name;
 
     @OneToMany(mappedBy="organization", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Group> groups;

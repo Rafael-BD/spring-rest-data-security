@@ -5,7 +5,7 @@ CREATE OR REPLACE SEQUENCE `organizations_seq` start with 1 minvalue 1 maxvalue 
 CREATE TABLE IF NOT EXISTS `organizations` (
     `id` bigint(20) NOT NULL,
     `name` varchar(255) DEFAULT NULL,
-    `instituitionName` varchar(255) DEFAULT NULL,
+    `instituition_name` varchar(255) DEFAULT NULL,
     `country` varchar(255) DEFAULT NULL,
     `cep` varchar(255) DEFAULT NULL,
     `state` varchar(255) DEFAULT NULL,
