@@ -25,6 +25,7 @@ public class UserResource {
 
 private final UserService service;
 
+
     @PatchMapping 
     @Operation(
             description = "Change user password",
