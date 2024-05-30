@@ -21,6 +21,10 @@
 		<flyway.url>jdbc:mariadb://localhost:3306/sample</flyway.url>
 		<flyway.user>root</flyway.user>
 		<flyway.password>root</flyway.password>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.basedir}/report-aggregate/target/site/
+			jacoco-aggregate/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -129,7 +133,7 @@
 					</goals>
 					<configuration>
 						<formats>
-						<format>XML</format>
+							<format>XML</format>
 						</formats>
 					</configuration>
 					</execution>
