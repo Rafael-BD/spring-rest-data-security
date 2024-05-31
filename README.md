@@ -1,5 +1,5 @@
 # spring-rest-data-security
-This sample project contains a simple set of group/members API using:
+This sample project contains a simple set of group/members API using :
 - [Flyway](https://flywaydb.org/) to versioning database's SQL changesets 
 - [Swagger.io](https://swagger.io/) to generate an executable API documentation
 - [Spring](https://spring.io/) to be metioned:
