@@ -61,7 +61,7 @@ jobs:
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Rafael-BD_spring-rest-data-security
 
   system-test:
-    needs: build-and-analyze
+    needs: static-analysis
     runs-on: ubuntu-latest
 
     steps:
