@@ -22,9 +22,10 @@
 		<flyway.user>root</flyway.user>
 		<flyway.password>root</flyway.password>
 		<sonar.coverage.jacoco.xmlReportPaths>
-			${project.basedir}/target/site/
-			jacoco/jacoco.xml
+			${project.basedir}/target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.organization>rafael-bd</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
