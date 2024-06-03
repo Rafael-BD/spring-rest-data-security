@@ -1,4 +1,5 @@
 package br.edu.fatecsjc.lgnspringapi.entity;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -30,6 +31,8 @@ public class Organization {
     @SequenceGenerator(initialValue = 1, allocationSize = 1, name = "organizationsidgen", sequenceName = "organizations_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organizationsidgen")
     private Long id;
+
+    private String name;
     
     private String cep;
     private String number;
@@ -41,7 +44,8 @@ public class Organization {
     private String instituition_name;
 
     @OneToMany(mappedBy="organization", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Group> groups;
+    @Builder.Default
+    private List<Group> groups = new ArrayList<>();
 }
 
 

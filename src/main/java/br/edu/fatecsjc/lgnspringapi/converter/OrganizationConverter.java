@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,11 @@ public class OrganizationConverter implements Converter<Organization, Organizati
         Organization entity = modelMapper.map(dto, Organization.class);
         Provider<Organization> organizationProvider = p -> new Organization();
         propertyMapperDto.setProvider(organizationProvider);
-
+        
+        if (entity.getGroups() == null) {
+            entity.setGroups(new ArrayList<>());
+        }
+    
         entity.getGroups().forEach(g -> {
             g.setOrganization(entity);
         });
@@ -47,6 +52,10 @@ public class OrganizationConverter implements Converter<Organization, Organizati
         propertyMapperDto.setProvider(organizationProvider);
 
         Organization newEntity = modelMapper.map(dto, Organization.class);
+        if (newEntity.getGroups() == null) {
+            newEntity.setGroups(new ArrayList<>());
+        }
+    
         newEntity.getGroups().forEach(group -> {
             group.setOrganization(newEntity);
         });
@@ -61,7 +70,11 @@ public class OrganizationConverter implements Converter<Organization, Organizati
     @Override
     public List<Organization> convertToEntity(List<OrganizationDTO> dtos) {
         List<Organization> organizations = modelMapper.map(dtos, new TypeToken<List<Organization>>() {}.getType());
+
         organizations.forEach(organization -> {
+            if (organization.getGroups() == null) {
+                organization.setGroups(new ArrayList<>());
+            }
             organization.getGroups().forEach(group -> {
                 group.setOrganization(organization);
             });

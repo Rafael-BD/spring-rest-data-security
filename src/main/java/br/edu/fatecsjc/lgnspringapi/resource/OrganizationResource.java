@@ -58,6 +58,7 @@ public class OrganizationResource {
         return ResponseEntity.ok(organizationService.findById(id));
     }
 
+    
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('admin:update')")
     @Operation(
