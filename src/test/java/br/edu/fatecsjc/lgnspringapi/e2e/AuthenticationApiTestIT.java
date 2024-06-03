@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 
-public class AuthenticationApiTest {
+public class AuthenticationApiTestIT {
 
     private static String token;
 

@@ -12,7 +12,7 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 
-public class OrganizationApiTest {
+public class OrganizationApiTestIT {
 
     private static Integer organizationId, organizationIdDeleteTest;
 
@@ -34,7 +34,7 @@ public class OrganizationApiTest {
 
         organizationId = given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .body(requestBody)
             .when()
             .post("/organization")
@@ -53,7 +53,7 @@ public class OrganizationApiTest {
         
             organizationIdDeleteTest = given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .body(requestBody)
             .when()
             .post("/organization")
@@ -88,7 +88,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .body(requestBody)
             .when()
             .post("/organization")
@@ -110,7 +110,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .when()
             .get("/organization")
             .then()
@@ -123,7 +123,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .when()
             .get("/organization/" + organizationId)
             .then()
@@ -147,7 +147,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .body(requestBody)
             .when()
             .put("/organization/" + organizationId)
@@ -162,7 +162,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .when()
             .delete("/organization/" + organizationIdDeleteTest)
             .then()
@@ -176,7 +176,7 @@ public class OrganizationApiTest {
 
         List<Integer> ids = given()
         .contentType(ContentType.JSON)
-        .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+        .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
         .when()
         .get("/organization")
         .then()
@@ -188,7 +188,7 @@ public class OrganizationApiTest {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .when()
             .delete("/organization/" + organizationId)
             .then()
@@ -196,7 +196,7 @@ public class OrganizationApiTest {
         
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTest.getToken())
+            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
             .when()
             .delete("/organization/" + lastId)
             .then()
