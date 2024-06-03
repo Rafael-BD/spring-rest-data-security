@@ -8,19 +8,43 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  unit-test:
+  build:
     runs-on: ubuntu-latest
-    services:
-      my-service:
-        image: docker/compose:1.29.2
-        options: --build
-        env:
-          COMPOSE_FILE: docker-compose.yml
-
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    
+    - name: Start Docker Compose
+      run: |
+        docker-compose up -d
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: 'zulu'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Start Docker Compose
+      run: |
+        docker-compose up -d
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
@@ -81,19 +105,15 @@ jobs:
 
 
   system-test:
-    needs: static-analysis
     runs-on: ubuntu-latest
-    services:
-      my-service:
-        image: docker/compose:1.29.2
-        options: --build
-        env:
-          COMPOSE_FILE: docker-compose.yml
-
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+
+    - name: Start Docker Compose
+      run: |
+        docker-compose up -d
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
