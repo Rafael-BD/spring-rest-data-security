@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "Authentication and Token Operations")
 public class AuthenticationResource {
 	
-
+    
     private final AuthenticationService service;
 
     @PostMapping("/register")

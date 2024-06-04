@@ -11,15 +11,18 @@ import org.junit.jupiter.api.Test;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class OrganizationApiTestIT {
 
     private static Integer organizationId, organizationIdDeleteTest;
+    private static String token;
 
     // Create two organizations for testing
     @BeforeAll
     public static void createOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
+        token = AuthenticationApiTestIT.getToken();
 
         String requestBody = "{" 
             + "\"cep\":\"12345\"," 
@@ -34,39 +37,23 @@ public class OrganizationApiTestIT {
 
         organizationId = given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .body(requestBody)
             .when()
             .post("/organization")
             .then()
             .statusCode(201)
-            .body("cep", equalTo("12345"))
-            .body("number", equalTo("123"))
-            .body("street", equalTo("Test Street"))
-            .body("city", equalTo("Test City"))
-            .body("state", equalTo("Test State"))
-            .body("country", equalTo("Test Country"))
-            .body("instituition_name", equalTo("Test Institution"))
-            .body("name", equalTo("Test Organization"))
             .extract()
             .path("id");
         
             organizationIdDeleteTest = given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .body(requestBody)
             .when()
             .post("/organization")
             .then()
             .statusCode(201)
-            .body("cep", equalTo("12345"))
-            .body("number", equalTo("123"))
-            .body("street", equalTo("Test Street"))
-            .body("city", equalTo("Test City"))
-            .body("state", equalTo("Test State"))
-            .body("country", equalTo("Test Country"))
-            .body("instituition_name", equalTo("Test Institution"))
-            .body("name", equalTo("Test Organization"))
             .extract()
             .path("id");
     }
@@ -88,7 +75,7 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .body(requestBody)
             .when()
             .post("/organization")
@@ -101,7 +88,8 @@ public class OrganizationApiTestIT {
             .body("state", equalTo("Test State"))
             .body("country", equalTo("Test Country"))
             .body("instituition_name", equalTo("Test Institution"))
-            .body("name", equalTo("Test Organization"));
+            .body("name", equalTo("Test Organization"))
+            .body(matchesJsonSchemaInClasspath("organization-schema.json"));
     }
 
     @Test
@@ -110,11 +98,12 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .when()
             .get("/organization")
             .then()
-            .statusCode(200);
+            .statusCode(200)
+            .body(matchesJsonSchemaInClasspath("organizations-list-schema.json"));
     }
 
     @Test
@@ -123,11 +112,12 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .when()
             .get("/organization/" + organizationId)
             .then()
-            .statusCode(200);
+            .statusCode(200)
+            .body(matchesJsonSchemaInClasspath("organization-schema.json"));
     }
 
     @Test
@@ -147,13 +137,14 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .body(requestBody)
             .when()
             .put("/organization/" + organizationId)
             .then()
             .statusCode(201)
-            .body("instituition_name", equalTo("Test Institution Updated"));
+            .body("instituition_name", equalTo("Test Institution Updated"))
+            .body(matchesJsonSchemaInClasspath("organization-schema.json"));
     }
 
     @Test
@@ -162,7 +153,7 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .when()
             .delete("/organization/" + organizationIdDeleteTest)
             .then()
@@ -176,7 +167,7 @@ public class OrganizationApiTestIT {
 
         List<Integer> ids = given()
         .contentType(ContentType.JSON)
-        .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+        .header("Authorization", "Bearer " + token)
         .when()
         .get("/organization")
         .then()
@@ -188,7 +179,7 @@ public class OrganizationApiTestIT {
 
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .when()
             .delete("/organization/" + organizationId)
             .then()
@@ -196,7 +187,7 @@ public class OrganizationApiTestIT {
         
         given()
             .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + AuthenticationApiTestIT.getToken())
+            .header("Authorization", "Bearer " + token)
             .when()
             .delete("/organization/" + lastId)
             .then()

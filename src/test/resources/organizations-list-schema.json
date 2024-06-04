@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "cep": {
+                "type": "string"
+            },
+            "number": {
+                "type": "string"
+            },
+            "street": {
+                "type": "string"
+            },
+            "city": {
+                "type": "string"
+            },
+            "state": {
+                "type": "string"
+            },
+            "country": {
+                "type": "string"
+            },
+            "instituition_name": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            },
+            "groups": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["id", "name"]
+                }
+            }
+        },
+        "required": ["id", "cep", "number", "street", "city", "state", "country", "instituition_name", "name"]
+    }
+}
