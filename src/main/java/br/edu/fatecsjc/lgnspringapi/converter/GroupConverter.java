@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -30,6 +31,9 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
         Provider<Group> groupProvider = p -> new Group();
         propertyMapperDto.setProvider(groupProvider);
 
+        if(entity.getMembers() == null) {
+            entity.setMembers(new ArrayList<>());
+        }
         entity.getMembers().forEach(m -> {
             m.setGroup(entity);
         });
@@ -47,6 +51,9 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
         propertyMapperDto.setProvider(groupProvider);
 
         Group newEntity = modelMapper.map(dto, Group.class);
+        if(newEntity.getMembers() == null) {
+            newEntity.setMembers(new ArrayList<>());
+        }
         newEntity.getMembers().forEach(member -> {
             member.setGroup(newEntity);
         });
@@ -62,6 +69,9 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
     public List<Group> convertToEntity(List<GroupDTO> dtos) {
         List<Group> groups = modelMapper.map(dtos, new TypeToken<List<Group>>(){}.getType());
         groups.forEach(group -> {
+            if(group.getMembers() == null) {
+                group.setMembers(new ArrayList<>());
+            }
             group.getMembers().forEach(member -> {
                 member.setGroup(group);
             });

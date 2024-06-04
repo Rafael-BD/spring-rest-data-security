@@ -1,6 +1,5 @@
 package br.edu.fatecsjc.lgnspringapi.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +30,5 @@ public class OrganizationDTO {
 
     private String instituition_name;
 
-    @Builder.Default
-    private List<GroupDTO> groups = new ArrayList<>();
+    private List<GroupDTO> groups;
 }

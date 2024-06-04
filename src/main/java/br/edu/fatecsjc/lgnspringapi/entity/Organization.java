@@ -44,8 +44,7 @@ public class Organization {
     private String instituition_name;
 
     @OneToMany(mappedBy="organization", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<Group> groups = new ArrayList<>();
+    private List<Group> groups;
 }
 
 
