@@ -1,7 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.e2e;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -12,31 +11,8 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class AuthenticationApiTestIT {
 
-    private static String token;
     private static String testToken;
     private static String testId;
-
-    public static String getToken() {
-        if (token == null) {
-            RestAssured.baseURI = "http://localhost:8000";
-
-            String authRequestBody = "{"
-                + "\"email\":\"admin@mail.com\","
-                + "\"password\":\"admin123\""
-                + "}";
-
-            token = given()
-                .contentType(ContentType.JSON)
-                .body(authRequestBody)
-                .when()
-                .post("/auth/authenticate")
-                .then()
-                .extract()
-                .path("access_token");
-        }
-
-        return token;
-    }
 
     @BeforeAll
     public static void createTestUser() {

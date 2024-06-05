@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import br.edu.fatecsjc.lgnspringapi.TestHelper;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
@@ -22,7 +23,7 @@ public class OrganizationApiTestIT {
     @BeforeAll
     public static void createOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
-        token = AuthenticationApiTestIT.getToken();
+        token = TestHelper.getToken();
 
         String requestBody = "{" 
             + "\"cep\":\"12345\"," 

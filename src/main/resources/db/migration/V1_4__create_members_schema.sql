@@ -10,4 +10,5 @@ CREATE TABLE IF NOT EXISTS `members` (
     PRIMARY KEY (`id`),
     KEY `fk_members_group` (`group_id`),
     CONSTRAINT `fk_members_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

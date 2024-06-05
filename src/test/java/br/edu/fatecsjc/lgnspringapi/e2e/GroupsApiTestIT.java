@@ -3,10 +3,16 @@ package br.edu.fatecsjc.lgnspringapi.e2e;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import br.edu.fatecsjc.lgnspringapi.TestHelper;
+import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
+import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
@@ -16,16 +22,20 @@ public class GroupsApiTestIT {
     private static String testToken;
     private static Integer groupIdDeleteTest;
     private static Integer groupId;
+    private static MemberDTO memberTest;
+    private static OrganizationDTO organizationTest;
 
     @BeforeAll
     public static void CreateTestGroups() {
         RestAssured.baseURI = "http://localhost:8000";
-        testToken = AuthenticationApiTestIT.getToken();
+        testToken = TestHelper.getToken();
+        memberTest = TestHelper.getMember();
+        organizationTest = TestHelper.getOrganization();
 
         String requestBody = "{" 
             + "\"name\":\"Test Group\"," 
-            + "\"members\":[]," 
-            + "\"organization\":{}" 
+            + "\"members\":[" + memberTest.toString() + "],"
+            + "\"organization\":" + organizationTest.toString()
             + "}";
         
         groupId = given()
@@ -51,6 +61,7 @@ public class GroupsApiTestIT {
             .path("id");
     }
 
+
     @Test
     public void testGetAllGroups() {
         RestAssured.baseURI = "http://localhost:8000";
@@ -74,6 +85,10 @@ public class GroupsApiTestIT {
             .get("/group/" + groupId)
             .then()
             .statusCode(200)
+            .body("id", equalTo(groupId))
+            .body("name", equalTo("Test Group"))
+            .body("members", hasSize(0))
+            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 
@@ -83,8 +98,8 @@ public class GroupsApiTestIT {
 
         String requestBody = "{" 
             + "\"name\":\"Test Group Updated\"," 
-            + "\"members\":[]," 
-            + "\"organization\":{}" 
+            + "\"members\":[" + memberTest.toString() + "],"
+            + "\"organization\":" + organizationTest.toString()
             + "}";
 
         given()
@@ -95,6 +110,10 @@ public class GroupsApiTestIT {
             .put("/group/" + groupId)
             .then()
             .statusCode(201)
+            .body("id", equalTo(groupId))
+            .body("name", equalTo("Test Group Updated"))
+            .body("members", hasSize(0))
+            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 
@@ -116,6 +135,10 @@ public class GroupsApiTestIT {
             .post("/group")
             .then()
             .statusCode(201)
+            .body("id", notNullValue())
+            .body("name", equalTo("Test Group new"))
+            .body("members", hasSize(0))
+            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 
