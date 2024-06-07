@@ -122,8 +122,7 @@ jobs:
         distribution: 'zulu'
 
     - name: Start application
-      run: |
-        nohup mvn spring-boot:run &
-        sleep 30
+      run: mvn clean spring-boot:run
+
     - name: Run system tests
       run: mvn test -Dtest=*IT
