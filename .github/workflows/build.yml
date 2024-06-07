@@ -105,7 +105,6 @@ jobs:
 
 
   system-test:
-    needs: static-analysis
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

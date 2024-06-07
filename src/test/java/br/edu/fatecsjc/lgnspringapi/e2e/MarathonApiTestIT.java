@@ -7,7 +7,10 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import br.edu.fatecsjc.lgnspringapi.TestHelper;
 import io.restassured.RestAssured;
@@ -16,10 +19,9 @@ import io.restassured.http.ContentType;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
-
+@TestMethodOrder(OrderAnnotation.class)
 public class MarathonApiTestIT {
     private static String testToken;
-    private static Integer marathonIdDeleteTest;
     private static Integer marathonId;
     private static Long idTest;
 
@@ -45,17 +47,6 @@ public class MarathonApiTestIT {
             .statusCode(201)
             .extract()
             .path("id");
-
-        marathonIdDeleteTest = given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + testToken)
-            .body(requestBody)
-            .when()
-            .post("/marathon")
-            .then()
-            .statusCode(201)
-            .extract()
-            .path("id");
     }
 
     @Test
@@ -72,6 +63,7 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    @Order(1)
     public void testGetMarathonById() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -86,6 +78,7 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    @Order(2)
     public void testUpdateMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -134,13 +127,14 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    @Order(3)
     public void testDeleteMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
             .header("Authorization", "Bearer " + testToken)
             .when()
-            .delete("/marathon/" + marathonIdDeleteTest)
+            .delete("/marathon/" + marathonId)
             .then()
             .statusCode(204);
     }

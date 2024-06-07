@@ -62,7 +62,7 @@ public class OrganizationApiTestIT {
             .extract()
             .path("id");
         
-            organizationIdDeleteTest = given()
+        organizationIdDeleteTest = given()
             .contentType(ContentType.JSON)
             .header("Authorization", "Bearer " + token)
             .body(requestBody)
