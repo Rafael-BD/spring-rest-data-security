@@ -136,9 +136,7 @@ public class TestHelper {
     }
 
     public static GroupDTO getGroup(){
-        if (group != null) {
-            return group;
-        }
+
 
         RestAssured.baseURI = BASE_URL;
 
