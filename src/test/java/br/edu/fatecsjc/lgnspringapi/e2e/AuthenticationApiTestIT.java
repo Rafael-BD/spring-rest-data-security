@@ -21,7 +21,7 @@ public class AuthenticationApiTestIT {
     @BeforeAll
     public static void createTestUser() {
         RestAssured.baseURI = "http://localhost:8000";
-        testId = RandomStringUtils.randomAlphabetic(3);
+        testId = RandomStringUtils.randomAlphabetic(10);
 
         String requestBody = "{" +
             "\"firstname\":\"Test\"," +
@@ -43,6 +43,7 @@ public class AuthenticationApiTestIT {
     }
 
     @Test
+    @Order(0)
     public void testRegister() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -67,6 +68,11 @@ public class AuthenticationApiTestIT {
     @Test
     @Order(1)
     public void testAuthenticate() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+        }
+
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{"
@@ -91,7 +97,7 @@ public class AuthenticationApiTestIT {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
         }
-        
+
         RestAssured.baseURI = "http://localhost:8000";
 
         given()

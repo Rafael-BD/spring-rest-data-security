@@ -136,8 +136,6 @@ public class TestHelper {
     }
 
     public static GroupDTO getGroup(){
-
-
         RestAssured.baseURI = BASE_URL;
 
         String tokenTest;
