@@ -2,13 +2,17 @@ package br.edu.fatecsjc.lgnspringapi.e2e;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class AuthenticationApiTestIT {
 
     private static String testToken;
@@ -61,6 +65,7 @@ public class AuthenticationApiTestIT {
     }
 
     @Test
+    @Order(1)
     public void testAuthenticate() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -80,7 +85,13 @@ public class AuthenticationApiTestIT {
     }
 
     @Test
+    @Order(2)
     public void testRefreshToken() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+        }
+        
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
