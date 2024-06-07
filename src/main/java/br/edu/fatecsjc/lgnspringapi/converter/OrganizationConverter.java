@@ -10,8 +10,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
+import br.edu.fatecsjc.lgnspringapi.entity.Group;
 import br.edu.fatecsjc.lgnspringapi.entity.Organization;
+import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 
 @Component
 public class OrganizationConverter implements Converter<Organization, OrganizationDTO> {
@@ -20,8 +23,14 @@ public class OrganizationConverter implements Converter<Organization, Organizati
 
     private TypeMap<OrganizationDTO, Organization> propertyMapperDto;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
     @Override
     public Organization convertToEntity(OrganizationDTO dto) {
+        List<Long> groupIds = dto.getGroups().stream().map(GroupDTO::getId).toList();
+        List<Group> groups = groupRepository.findAllById(groupIds);
+
         if(propertyMapperDto == null) {
             propertyMapperDto = modelMapper.createTypeMap(OrganizationDTO.class, Organization.class);
             propertyMapperDto.addMappings(mapper -> mapper.skip(Organization::setId));
@@ -31,10 +40,8 @@ public class OrganizationConverter implements Converter<Organization, Organizati
         Provider<Organization> organizationProvider = p -> new Organization();
         propertyMapperDto.setProvider(organizationProvider);
         
-        if (entity.getGroups() == null) {
-            entity.setGroups(new ArrayList<>());
-        }
-    
+        entity.setGroups(groups);
+
         entity.getGroups().forEach(g -> {
             g.setOrganization(entity);
         });
@@ -86,6 +93,4 @@ public class OrganizationConverter implements Converter<Organization, Organizati
     public List<OrganizationDTO> convertToDto(List<Organization> entities) {
         return modelMapper.map(entities, new TypeToken<List<OrganizationDTO>>() {}.getType());
     }
-
-    
 }

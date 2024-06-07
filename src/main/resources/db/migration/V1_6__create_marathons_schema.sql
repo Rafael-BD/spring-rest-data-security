@@ -10,12 +10,11 @@ CREATE TABLE IF NOT EXISTS `marathons` (
 
 
 CREATE TABLE IF NOT EXISTS `member_marathon` (
-    `id` bigint(20) NOT NULL,
-    `marathon_id` bigint(20) NOT NULL,
     `member_id` bigint(20) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `fk_marathon_id` (`marathon_id`),
-    KEY `fk_member_id` (`member_id`),
-    CONSTRAINT `fk_marathon_id` FOREIGN KEY (`marathon_id`) REFERENCES `marathons` (`id`),
-    CONSTRAINT `fk_member_id` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`)
+    `marathon_id` bigint(20) NOT NULL,
+    PRIMARY KEY (`member_id`, `marathon_id`),
+    KEY `fk_member` (`member_id`),
+    KEY `fk_marathon` (`marathon_id`),
+    CONSTRAINT `fk_member` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
+    CONSTRAINT `fk_marathon` FOREIGN KEY (`marathon_id`) REFERENCES `marathons` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -8,5 +8,4 @@ import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
 
 @Repository 
 public interface MarathonRepository extends JpaRepository<Marathon, Long> {
-
 }

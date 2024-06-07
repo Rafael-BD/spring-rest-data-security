@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -29,17 +27,13 @@ import lombok.ToString;
 @Table(name = "marathons")
 public class Marathon {
     @Id
-    @SequenceGenerator(initialValue = 1, allocationSize = 1, name = "membersidgen", sequenceName = "members_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "membersidgen")
+    @SequenceGenerator(initialValue = 1, allocationSize = 1, name = "marathonsidgen", sequenceName = "marathons_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "marathonsidgen")
     private Long id;
 
     private int weight;
     private int score;
 
-    @ManyToMany
-    @JoinTable(
-        name = "member_marathon",
-        joinColumns = @JoinColumn(name = "marathon_id"),
-        inverseJoinColumns = @JoinColumn(name = "member_id"))
+    @ManyToMany(mappedBy = "marathons")
     private List<Member> members;
 }

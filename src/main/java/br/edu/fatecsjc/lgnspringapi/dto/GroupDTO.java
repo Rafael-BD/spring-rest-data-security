@@ -20,5 +20,4 @@ public class GroupDTO {
     private Long id;
     private String name;
     private List<MemberDTO> members;
-    private OrganizationDTO organization;
 }

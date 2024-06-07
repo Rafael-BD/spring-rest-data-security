@@ -40,8 +40,4 @@ public class Group {
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
 }

@@ -1,8 +1,13 @@
 package br.edu.fatecsjc.lgnspringapi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MarathonDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
+import br.edu.fatecsjc.lgnspringapi.entity.Group;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
@@ -15,11 +20,14 @@ public class TestHelper {
     private static final String ORGANIZATION_ENDPOINT = "/organization";
     private static final String MARATHON_ENDPOINT = "/marathon";
     private static final String MEMBER_ENDPOINT = "/member";
+    private static final String GROUP_ENDPOINT = "/group";
     private static final String ADMIN_EMAIL = "admin@mail.com";
     private static final String ADMIN_PASSWORD = "admin123";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static MarathonDTO marathon;
     private static OrganizationDTO organization;
     private static MemberDTO member;
+    private static GroupDTO group;
 
     public static String getToken() {
         if (token == null) {
@@ -124,6 +132,40 @@ public class TestHelper {
         return marathon;
     }
 
+    public static GroupDTO getGroup(){
+        if (group != null) {
+            return group;
+        }
+
+        RestAssured.baseURI = BASE_URL;
+
+        String tokenTest;
+        if (token == null) {
+            tokenTest = getToken();
+        } else {
+            tokenTest = token;
+        }
+
+        String requestBody = "{\"name\":\"Test Group\"}";
+
+        try {
+            group = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + tokenTest)
+                .body(requestBody)
+                .when()
+                .post(GROUP_ENDPOINT)
+                .then()
+                .statusCode(201)
+                .extract()
+                .as(GroupDTO.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get group", e);
+        }
+
+        return group;
+    }
+
     public static MemberDTO getMember() {
         if (member != null) {
             return member;
@@ -131,12 +173,19 @@ public class TestHelper {
         RestAssured.baseURI = BASE_URL;
 
         MarathonDTO marathonTest;
+        GroupDTO groupTest;
         String tokenTest;
 
         if (marathon == null) {
             marathonTest = getMarathon();
         } else {
             marathonTest = marathon;
+        }
+
+        if (group == null) {
+            groupTest = getGroup();
+        } else {
+            groupTest = group;
         }
 
         if (token == null) {
@@ -148,7 +197,8 @@ public class TestHelper {
         String requestBody = "{" 
             + "\"name\":\"Test Member\"," 
             + "\"age\":30,"
-            + "\"marathons\":[{\"id\":" + marathonTest.getId() + "}]"
+            + "\"marathonIds\":[" + marathonTest.getId() + "],"
+            + "\"groupId\":" + groupTest.getId()
             + "}";
 
         try {

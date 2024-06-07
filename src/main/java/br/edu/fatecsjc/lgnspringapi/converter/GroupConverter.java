@@ -1,7 +1,9 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
+import br.edu.fatecsjc.lgnspringapi.entity.Group;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.Provider;
@@ -10,14 +12,12 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
-import br.edu.fatecsjc.lgnspringapi.entity.Group;
+import java.util.List;
 
 @Component
 public class GroupConverter implements Converter<Group, GroupDTO> {
     @Autowired
     private ModelMapper modelMapper;
-
     private TypeMap<GroupDTO, Group> propertyMapperDto;
 
     @Override
@@ -31,12 +31,6 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
         Provider<Group> groupProvider = p -> new Group();
         propertyMapperDto.setProvider(groupProvider);
 
-        if(entity.getMembers() == null) {
-            entity.setMembers(new ArrayList<>());
-        }
-        entity.getMembers().forEach(m -> {
-            m.setGroup(entity);
-        });
         return entity;
     }
 
@@ -51,7 +45,7 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
         propertyMapperDto.setProvider(groupProvider);
 
         Group newEntity = modelMapper.map(dto, Group.class);
-        if(newEntity.getMembers() == null) {
+        if (newEntity.getMembers() == null) {
             newEntity.setMembers(new ArrayList<>());
         }
         newEntity.getMembers().forEach(member -> {
@@ -69,9 +63,6 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
     public List<Group> convertToEntity(List<GroupDTO> dtos) {
         List<Group> groups = modelMapper.map(dtos, new TypeToken<List<Group>>(){}.getType());
         groups.forEach(group -> {
-            if(group.getMembers() == null) {
-                group.setMembers(new ArrayList<>());
-            }
             group.getMembers().forEach(member -> {
                 member.setGroup(group);
             });

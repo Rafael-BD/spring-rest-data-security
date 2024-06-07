@@ -1,13 +1,14 @@
 package br.edu.fatecsjc.lgnspringapi.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,6 @@ public class MemberDTO {
     private Long id;
     private String name;
     private Integer age;
-    private List<MarathonDTO> marathons;
+    private List<Long> marathonIds;
+    private Long groupId;
 }

@@ -39,24 +39,6 @@
                     },
                     "name": {
                         "type": "string"
-                    },
-                    "members": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "name": {
-                                    "type": "string"
-                                },
-                                "age": {
-                                    "type": "integer"
-                                }
-                            },
-                            "required": ["id", "name", "age"]
-                        }
                     }
                 },
                 "required": ["id", "name"]

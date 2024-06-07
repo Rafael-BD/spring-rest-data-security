@@ -1,5 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,4 +20,5 @@ public class MarathonDTO {
     private Long id;
     private int weight;
     private int score;
+    private List<Long> memberIds;
 }

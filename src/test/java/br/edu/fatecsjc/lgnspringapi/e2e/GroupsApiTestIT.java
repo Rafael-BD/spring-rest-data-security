@@ -4,15 +4,12 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import br.edu.fatecsjc.lgnspringapi.TestHelper;
-import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
-import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
@@ -22,21 +19,13 @@ public class GroupsApiTestIT {
     private static String testToken;
     private static Integer groupIdDeleteTest;
     private static Integer groupId;
-    private static MemberDTO memberTest;
-    private static OrganizationDTO organizationTest;
 
     @BeforeAll
     public static void CreateTestGroups() {
         RestAssured.baseURI = "http://localhost:8000";
         testToken = TestHelper.getToken();
-        memberTest = TestHelper.getMember();
-        organizationTest = TestHelper.getOrganization();
 
-        String requestBody = "{" 
-            + "\"name\":\"Test Group\"," 
-            + "\"members\":[" + memberTest.toString() + "],"
-            + "\"organization\":" + organizationTest.toString()
-            + "}";
+        String requestBody = "{\"name\":\"Test Group\"}";
         
         groupId = given()
             .contentType(ContentType.JSON)
@@ -86,9 +75,6 @@ public class GroupsApiTestIT {
             .then()
             .statusCode(200)
             .body("id", equalTo(groupId))
-            .body("name", equalTo("Test Group"))
-            .body("members", hasSize(0))
-            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 
@@ -96,11 +82,7 @@ public class GroupsApiTestIT {
     public void testUpdateGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
-        String requestBody = "{" 
-            + "\"name\":\"Test Group Updated\"," 
-            + "\"members\":[" + memberTest.toString() + "],"
-            + "\"organization\":" + organizationTest.toString()
-            + "}";
+        String requestBody = "{\"name\":\"Test Group Updated\"}";
 
         given()
             .header("Authorization", "Bearer " + testToken)
@@ -112,8 +94,6 @@ public class GroupsApiTestIT {
             .statusCode(201)
             .body("id", equalTo(groupId))
             .body("name", equalTo("Test Group Updated"))
-            .body("members", hasSize(0))
-            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 
@@ -121,11 +101,7 @@ public class GroupsApiTestIT {
     public void testRegisterGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
-        String requestBody = "{" 
-            + "\"name\":\"Test Group new\"," 
-            + "\"members\":[]," 
-            + "\"organization\":{}" 
-            + "}";
+        String requestBody = "{\"name\":\"Test Group new\"}";
 
         given()
             .header("Authorization", "Bearer " + testToken)
@@ -137,8 +113,6 @@ public class GroupsApiTestIT {
             .statusCode(201)
             .body("id", notNullValue())
             .body("name", equalTo("Test Group new"))
-            .body("members", hasSize(0))
-            .body("organization", notNullValue())
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
     }
 

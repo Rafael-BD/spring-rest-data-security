@@ -8,7 +8,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.edu.fatecsjc.lgnspringapi.TestHelper;
+import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
@@ -18,12 +22,21 @@ public class OrganizationApiTestIT {
 
     private static Integer organizationId, organizationIdDeleteTest;
     private static String token;
+    private static GroupDTO groupTest;
+    private static String groupJson = "";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Create two organizations for testing
     @BeforeAll
-    public static void createOrganization() {
+    public static void CreateOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
         token = TestHelper.getToken();
+        groupTest = TestHelper.getGroup();
+        
+        try {
+            groupJson = objectMapper.writeValueAsString(groupTest);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to create group test", e);
+        }
 
         String requestBody = "{" 
             + "\"cep\":\"12345\"," 
@@ -33,7 +46,8 @@ public class OrganizationApiTestIT {
             + "\"state\":\"Test State\"," 
             + "\"country\":\"Test Country\"," 
             + "\"instituition_name\":\"Test Institution\","
-            + "\"name\":\"Test Organization\""
+            + "\"name\":\"Test Organization\","
+            + "\"groups\":[" + groupJson + "]"
             + "}";
 
         organizationId = given()
@@ -71,7 +85,8 @@ public class OrganizationApiTestIT {
             + "\"state\":\"Test State\"," 
             + "\"country\":\"Test Country\"," 
             + "\"instituition_name\":\"Test Institution\","
-            + "\"name\":\"Test Organization\""
+            + "\"name\":\"Test Organization\","
+            + "\"groups\":[" + groupJson + "]"
             + "}";
 
         given()
@@ -133,7 +148,8 @@ public class OrganizationApiTestIT {
             + "\"state\":\"Test State\"," 
             + "\"country\":\"Test Country\"," 
             + "\"instituition_name\":\"Test Institution Updated\","
-            + "\"name\":\"Test Organization\""
+            + "\"name\":\"Test Organization\","
+            + "\"groups\":[" + groupJson + "]"
             + "}";
 
         given()
@@ -161,7 +177,6 @@ public class OrganizationApiTestIT {
             .statusCode(204);
     }
 
-    // Delete the organizations created for testing
     @AfterAll
     public static void DeleteTestOrganizations() {
         RestAssured.baseURI = "http://localhost:8000";
