@@ -29,6 +29,7 @@ public class TestHelper {
     private static MarathonDTO marathon;
     private static OrganizationDTO organization;
     private static GroupDTO group;
+    private static MemberDTO member;
 
     public static String getToken() {
         if (token == null) {
@@ -169,8 +170,11 @@ public class TestHelper {
     }
 
     public static MemberDTO getMember() {
+        if (member != null) {
+            return member;
+        }
+
         RestAssured.baseURI = BASE_URL;
-        MemberDTO member;
         MarathonDTO marathonTest;
         GroupDTO groupTest;
         String tokenTest;
