@@ -30,25 +30,24 @@ public class TestHelper {
     private static OrganizationDTO organization;
     private static GroupDTO group;
 
-    public static String getToken() {
-        if (token == null) {
-            RestAssured.baseURI = BASE_URL;
+    public static String getToken() {  
+        RestAssured.baseURI = BASE_URL;
 
-            String authRequestBody = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", ADMIN_EMAIL, ADMIN_PASSWORD);
+        String authRequestBody = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", ADMIN_EMAIL, ADMIN_PASSWORD);
 
-            try {
-                token = given()
-                    .contentType(ContentType.JSON)
-                    .body(authRequestBody)
-                    .when()
-                    .post(AUTH_ENDPOINT)
-                    .then()
-                    .extract()
-                    .path("access_token");
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to get token", e);
-            }
+        try {
+            token = given()
+                .contentType(ContentType.JSON)
+                .body(authRequestBody)
+                .when()
+                .post(AUTH_ENDPOINT)
+                .then()
+                .extract()
+                .path("access_token");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get token", e);
         }
+    
 
         return token;
     }
