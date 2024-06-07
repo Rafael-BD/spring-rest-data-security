@@ -23,18 +23,15 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class MarathonApiTestIT {
     private static String testToken;
     private static Integer marathonId;
-    private static Long idTest;
 
     @BeforeAll
     public static void CreateTestMarathons() {
         RestAssured.baseURI = "http://localhost:8000";
         testToken = TestHelper.getToken();
-        idTest = TestHelper.getMember().getId();
 
         String requestBody = "{" 
             + "\"weight\":10," 
-            + "\"score\":100," 
-            + "\"memberIds\":[" + idTest + "]" 
+            + "\"score\":100" 
             + "}";
 
         marathonId = given()
@@ -84,8 +81,7 @@ public class MarathonApiTestIT {
 
         String requestBody = "{" 
             + "\"weight\":20," 
-            + "\"score\":200," 
-            + "\"memberIds\":[" + idTest + "]" 
+            + "\"score\":200" 
             + "}";
 
         given()
@@ -108,8 +104,7 @@ public class MarathonApiTestIT {
 
         String requestBody = "{" 
             + "\"weight\":30," 
-            + "\"score\":300," 
-            + "\"memberIds\":[" + idTest + "]" 
+            + "\"score\":300" 
             + "}";
 
         given()
