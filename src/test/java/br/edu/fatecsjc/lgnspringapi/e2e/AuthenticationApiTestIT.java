@@ -33,6 +33,7 @@ public class AuthenticationApiTestIT {
             .when()
             .post("/auth/register")
             .then()
+            .log().all()
             .extract()
             .path("access_token"); 
     }
@@ -73,8 +74,7 @@ public class AuthenticationApiTestIT {
             .body(requestBody)
             .when()
             .post("/auth/authenticate")
-            .then()
-            .log().all()
+            .then()         
             .statusCode(200)
             .body(matchesJsonSchemaInClasspath("authenticate-schema.json"));
     }
@@ -88,7 +88,6 @@ public class AuthenticationApiTestIT {
             .when()
             .post("/auth/refresh-token")
             .then()
-            .log().all()
             .statusCode(200)
             .body(matchesJsonSchemaInClasspath("refresh-token-schema.json"));
     }
