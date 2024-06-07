@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -97,6 +98,7 @@ public class OrganizationApiTestIT {
             .post("/organization")
             .then()
             .statusCode(201)
+            .body ("id", notNullValue())
             .body("cep", equalTo("12345"))
             .body("number", equalTo("123"))
             .body("street", equalTo("Test Street"))
@@ -133,6 +135,7 @@ public class OrganizationApiTestIT {
             .get("/organization/" + organizationId)
             .then()
             .statusCode(200)
+            .body("id", equalTo(organizationId))
             .body(matchesJsonSchemaInClasspath("organization-schema.json"));
     }
 
@@ -160,7 +163,15 @@ public class OrganizationApiTestIT {
             .put("/organization/" + organizationId)
             .then()
             .statusCode(201)
+            .body("id", equalTo(organizationId))
             .body("instituition_name", equalTo("Test Institution Updated"))
+            .body("cep", equalTo("12345"))
+            .body("number", equalTo("123"))
+            .body("street", equalTo("Test Street"))
+            .body("city", equalTo("Test City"))
+            .body("state", equalTo("Test State"))
+            .body("country", equalTo("Test Country"))
+            .body("name", equalTo("Test Organization"))
             .body(matchesJsonSchemaInClasspath("organization-schema.json"));
     }
 

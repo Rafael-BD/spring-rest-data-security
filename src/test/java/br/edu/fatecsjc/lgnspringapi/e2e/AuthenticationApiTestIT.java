@@ -33,7 +33,7 @@ public class AuthenticationApiTestIT {
             .when()
             .post("/auth/register")
             .then()
-            .log().all()
+            .statusCode(201)
             .extract()
             .path("access_token"); 
     }

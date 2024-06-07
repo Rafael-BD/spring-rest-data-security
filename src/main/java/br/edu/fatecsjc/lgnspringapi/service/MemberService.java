@@ -54,10 +54,11 @@ public class MemberService {
             existingMember.setGroup(group);
         }
 
-        List<Marathon> marathons = marathonRepository.findAllById(dto.getMarathonIds());
-
-        existingMember.getMarathons().clear();
-        existingMember.getMarathons().addAll(marathons);
+        if(dto.getMarathonIds() != null) {
+            List<Marathon> marathons = marathonRepository.findAllById(dto.getMarathonIds());
+            existingMember.getMarathons().clear();
+            existingMember.getMarathons().addAll(marathons);
+        }
         
         Member memberReturned = memberRepository.save(existingMember);
 
@@ -80,7 +81,23 @@ public class MemberService {
         return memberConverter.convertToDto(memberReturned);
     }
 
-    public void delete(Long id) {
-        memberRepository.deleteById(id);
+    public void delete(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new RuntimeException("Member not found"));
+    
+        for (Marathon marathon : member.getMarathons()) {
+            marathon.getMembers().remove(member);
+            marathonRepository.save(marathon); 
+        }
+    
+        member.getMarathons().clear();
+
+        Group group = member.getGroup();
+        group.getMembers().remove(member);
+        groupRepository.save(group);
+
+        member.setGroup(null);
+    
+        memberRepository.delete(member);
     }
 }

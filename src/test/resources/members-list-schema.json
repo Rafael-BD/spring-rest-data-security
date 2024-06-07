@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "name": {
+                "type": "string"
+            },
+            "age": {
+                "type": "integer"
+            },
+            "marathonIds": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                }
+            },
+            "groupId": {
+                "type": "integer"
+            }
+        },
+        "required": ["id", "name", "age", "marathonIds", "groupId"]
+    }
+}

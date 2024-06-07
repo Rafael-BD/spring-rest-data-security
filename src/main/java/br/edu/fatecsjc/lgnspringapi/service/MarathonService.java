@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import br.edu.fatecsjc.lgnspringapi.converter.MarathonConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.MarathonDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
+import br.edu.fatecsjc.lgnspringapi.entity.Member;
 import br.edu.fatecsjc.lgnspringapi.repository.MarathonRepository;
+import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -17,6 +19,8 @@ public class MarathonService {
     private MarathonRepository marathonRepository;
     @Autowired
     private MarathonConverter marathonConverter;
+    @Autowired
+    private MemberRepository memberRepository;
 
     public List<MarathonDTO> getAll() {
         return marathonConverter.convertToDto(marathonRepository.findAll());
@@ -29,9 +33,18 @@ public class MarathonService {
     @Transactional
     public MarathonDTO save(Long id, MarathonDTO dto) {
         Marathon entity = marathonRepository.findById(id).get();
+        
+        entity.setWeight(dto.getWeight());
+        entity.setScore(dto.getScore());
 
-        Marathon marathonToSaved = marathonConverter.convertToEntity(dto, entity);
-        Marathon marathonReturned = marathonRepository.save(marathonToSaved);
+        if (dto.getMemberIds() != null) {
+            List<Member> members = memberRepository.findAllById(dto.getMemberIds());
+            entity.getMembers().clear();
+            entity.getMembers().addAll(members);
+        }
+        
+        Marathon marathonReturned = marathonRepository.save(entity);
+
         return marathonConverter.convertToDto(marathonReturned);
     }
 

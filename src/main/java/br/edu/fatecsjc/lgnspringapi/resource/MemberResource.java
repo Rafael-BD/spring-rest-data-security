@@ -89,7 +89,6 @@ public class MemberResource {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('admin:delete')")
     @Operation(
             description = "Delete a member by ID",
             responses = {
@@ -98,7 +97,7 @@ public class MemberResource {
                     @ApiResponse(description = "Unknown error", responseCode = "400"),
             }
     )
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
