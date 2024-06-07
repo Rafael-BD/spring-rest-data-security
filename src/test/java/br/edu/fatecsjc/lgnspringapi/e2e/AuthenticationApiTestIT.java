@@ -12,12 +12,14 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class AuthenticationApiTestIT {
 
     private static String testToken;
+    private static String testRefreshToken;
     private static String testId;
 
     @BeforeAll
     public static void createTestUser() {
         RestAssured.baseURI = "http://localhost:8000";
         testId = RandomStringUtils.randomAlphabetic(3);
+        String tempId = RandomStringUtils.randomAlphabetic(3);
 
         String requestBody = "{" +
             "\"firstname\":\"Test\"," +
@@ -36,6 +38,24 @@ public class AuthenticationApiTestIT {
             .statusCode(201)
             .extract()
             .path("access_token"); 
+
+        requestBody = "{" +
+            "\"firstname\":\"TestRefresh\"," +
+            "\"lastname\":\"User" + tempId + "\"," +
+            "\"email\":\"test" + tempId + "@mail.com\"," +
+            "\"password\":\"test" + tempId + "\"," +
+            "\"role\":\"USER\"" +
+            "}";
+        
+        testRefreshToken = given()
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .post("/auth/register")
+            .then()
+            .statusCode(201)
+            .extract()
+            .path("access_token");
     }
 
     @Test
@@ -43,7 +63,7 @@ public class AuthenticationApiTestIT {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{"
-            + "\"firstname\":\"Test\","
+            + "\"firstname\":\"Test Register\","
             + "\"lastname\":\"User\","
             + "\"email\":\"test@mail.com\","
             + "\"password\":\"test123\","
@@ -84,7 +104,7 @@ public class AuthenticationApiTestIT {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
-            .header("Authorization", "Bearer " + testToken)
+            .header("Authorization", "Bearer " + testRefreshToken)
             .when()
             .post("/auth/refresh-token")
             .then()

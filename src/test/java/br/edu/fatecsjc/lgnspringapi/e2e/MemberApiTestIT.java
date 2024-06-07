@@ -46,7 +46,14 @@ public class MemberApiTestIT {
             .statusCode(201)
             .extract()
             .path("id");
-
+        
+        requestBody = "{" 
+            + "\"name\":\"Test Member Delete\"," 
+            + "\"age\":30," 
+            + "\"marathonIds\":[" + marathonIdTest + "]," 
+            + "\"groupId\":" + groupIdTest
+            + "}";
+            
         memberIdDeleteTest = given()
             .contentType(ContentType.JSON)
             .header("Authorization", "Bearer " + testToken)

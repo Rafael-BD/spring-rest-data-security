@@ -1,5 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,7 +28,6 @@ public class TestHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static MarathonDTO marathon;
     private static OrganizationDTO organization;
-    private static MemberDTO member;
     private static GroupDTO group;
 
     public static String getToken() {
@@ -167,14 +168,12 @@ public class TestHelper {
     }
 
     public static MemberDTO getMember() {
-        if (member != null) {
-            return member;
-        }
         RestAssured.baseURI = BASE_URL;
-
+        MemberDTO member;
         MarathonDTO marathonTest;
         GroupDTO groupTest;
         String tokenTest;
+        String randomName = "Test Member " + RandomStringUtils.randomAlphabetic(3);
 
         if (marathon == null) {
             marathonTest = getMarathon();
@@ -195,7 +194,7 @@ public class TestHelper {
         }
         
         String requestBody = "{" 
-            + "\"name\":\"Test Member\"," 
+            + "\"name\":\"" + randomName + "\","
             + "\"age\":30,"
             + "\"marathonIds\":[" + marathonTest.getId() + "],"
             + "\"groupId\":" + groupTest.getId()
