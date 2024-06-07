@@ -17,7 +17,7 @@ public class AuthenticationApiTestIT {
     @BeforeAll
     public static void createTestUser() {
         RestAssured.baseURI = "http://localhost:8000";
-        testId = RandomStringUtils.randomAlphabetic(10);
+        testId = RandomStringUtils.randomAlphabetic(3);
 
         String requestBody = "{" +
             "\"firstname\":\"Test\"," +
@@ -55,6 +55,7 @@ public class AuthenticationApiTestIT {
             .when()
             .post("/auth/register")
             .then()
+            .log().all()
             .statusCode(201)
             .body(matchesJsonSchemaInClasspath("authenticate-schema.json"));
     }
@@ -74,6 +75,7 @@ public class AuthenticationApiTestIT {
             .when()
             .post("/auth/authenticate")
             .then()
+            .log().all()
             .statusCode(200)
             .body(matchesJsonSchemaInClasspath("authenticate-schema.json"));
     }
