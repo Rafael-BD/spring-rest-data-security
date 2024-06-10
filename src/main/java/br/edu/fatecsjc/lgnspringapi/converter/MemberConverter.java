@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,10 +83,10 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
     public List<Member> convertToEntity(List<MemberDTO> dtos) {
         List<Member> members = modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType());
         members.forEach(member -> {
-            if(member.getMarathons() == null) {
-                return;
-            }
             member.getMarathons().forEach(marathon -> {
+                if (marathon.getMembers() == null) {
+                    marathon.setMembers(new ArrayList<>());
+                }
                 marathon.setMembers(members);
             });
         });
@@ -94,6 +95,14 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
 
     @Override
     public List<MemberDTO> convertToDto(List<Member> entities) {
-        return modelMapper.map(entities, new TypeToken<List<MemberDTO>>(){}.getType());
+        List<MemberDTO> dtos = modelMapper.map(entities, new TypeToken<List<MemberDTO>>(){}.getType());
+        dtos.forEach(dto -> {
+            if(dto.getMarathonIds() == null) {
+                dto.setMarathonIds(new ArrayList<>());
+                return;
+            }
+            dto.setMarathonIds(dto.getMarathonIds());
+        });
+        return dtos;
     }
 }
