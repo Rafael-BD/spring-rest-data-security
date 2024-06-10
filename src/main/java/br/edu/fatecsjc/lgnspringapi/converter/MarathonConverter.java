@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,15 +66,20 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
 
     @Override
     public List<Marathon> convertToEntity(List<MarathonDTO> dtos) {
-        return dtos.stream()
-            .map(this::convertToEntity)
-            .collect(Collectors.toList());
+        List<Marathon> marathons = modelMapper.map(dtos, new TypeToken<List<Marathon>>(){}.getType());
+        marathons.forEach(marathon -> {
+            if(marathon.getMembers() == null) {
+                return;
+            }
+            marathon.getMembers().forEach(member -> {
+                member.setMarathons(marathons);
+            });
+        });
+        return marathons;
     }
 
     @Override
     public List<MarathonDTO> convertToDto(List<Marathon> entities) {
-        return entities.stream()
-            .map(this::convertToDto)
-            .collect(Collectors.toList());
+        return modelMapper.map(entities, new TypeToken<List<MarathonDTO>>(){}.getType());
     }
 }

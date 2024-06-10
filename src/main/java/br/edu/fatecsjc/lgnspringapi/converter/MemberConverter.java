@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -79,15 +80,20 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
 
     @Override
     public List<Member> convertToEntity(List<MemberDTO> dtos) {
-        return dtos.stream()
-            .map(this::convertToEntity)
-            .collect(Collectors.toList());
+        List<Member> members = modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType());
+        members.forEach(member -> {
+            if(member.getMarathons() == null) {
+                return;
+            }
+            member.getMarathons().forEach(marathon -> {
+                marathon.setMembers(members);
+            });
+        });
+        return members;
     }
 
     @Override
     public List<MemberDTO> convertToDto(List<Member> entities) {
-        return entities.stream()
-            .map(this::convertToDto)
-            .collect(Collectors.toList());
+        return modelMapper.map(entities, new TypeToken<List<MemberDTO>>(){}.getType());
     }
 }
