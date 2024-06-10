@@ -66,6 +66,7 @@ public class MemberConverterTest {
 
         group = new Group();
         group.setId(1L);
+        
 
         member.setMarathons(Arrays.asList(marathon));
         member.setGroup(group);
