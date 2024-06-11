@@ -1,4 +1,4 @@
-package br.edu.fatecsjc.lgnspringapi;
+package br.edu.fatecsjc.lgnspringapi.converter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 
-import br.edu.fatecsjc.lgnspringapi.converter.MarathonConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.MarathonDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
 import br.edu.fatecsjc.lgnspringapi.entity.Member;

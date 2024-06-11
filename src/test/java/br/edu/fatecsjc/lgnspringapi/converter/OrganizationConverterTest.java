@@ -1,4 +1,4 @@
-package br.edu.fatecsjc.lgnspringapi;
+package br.edu.fatecsjc.lgnspringapi.converter;
 import java.util.Arrays;
 import static java.util.Arrays.asList;
 import java.util.List;
@@ -18,7 +18,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 
-import br.edu.fatecsjc.lgnspringapi.converter.OrganizationConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;

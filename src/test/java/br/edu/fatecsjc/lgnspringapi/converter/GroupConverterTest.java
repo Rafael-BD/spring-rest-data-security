@@ -1,4 +1,4 @@
-package br.edu.fatecsjc.lgnspringapi;
+package br.edu.fatecsjc.lgnspringapi.converter;
 import java.util.Arrays;
 import java.util.List;
 
