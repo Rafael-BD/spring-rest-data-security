@@ -34,6 +34,7 @@ public class Marathon {
     private int weight;
     private int score;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "marathons")
     private List<Member> members;
 }

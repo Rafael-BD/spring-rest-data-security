@@ -1,15 +1,16 @@
 package br.edu.fatecsjc.lgnspringapi.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static br.edu.fatecsjc.lgnspringapi.enums.Permission.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import static br.edu.fatecsjc.lgnspringapi.enums.Permission.ADMIN_CREATE;
+import static br.edu.fatecsjc.lgnspringapi.enums.Permission.ADMIN_UPDATE;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor

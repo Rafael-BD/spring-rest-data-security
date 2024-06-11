@@ -34,6 +34,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupsidgen")
     private Long id;
     private String name;
+    @ToString.Exclude
     @OneToMany(mappedBy="group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Member> members;
 

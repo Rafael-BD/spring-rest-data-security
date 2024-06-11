@@ -35,10 +35,13 @@ public class Member {
     private Long id;
     private String name;
     private Integer age;
+
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="group_id", nullable=false)
     private Group group;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
         name = "member_marathon", 
