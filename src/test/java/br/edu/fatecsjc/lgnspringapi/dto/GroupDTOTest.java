@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,34 @@ public class GroupDTOTest {
     @BeforeEach
     public void setUp() {
         groupDTO = new GroupDTO();
+    }
+
+    @Test
+    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        MemberDTO memberDTO = new MemberDTO();
+        List<MemberDTO> membersValue = Arrays.asList(memberDTO);
+
+        GroupDTO groupDTOFields = new GroupDTO(
+                idValue,
+                nameValue,
+                membersValue
+        );
+        GroupDTO groupDTOFromBuilder = GroupDTO.builder()
+                .id(idValue)
+                .name(nameValue)
+                .members(membersValue)
+                .build();
+
+        assertEquals(groupDTOFields, groupDTOFromBuilder);
+
+        GroupDTO groupDTONoArgs = new GroupDTO();
+        assertNotNull(groupDTONoArgs);
+
+        assertEquals(groupDTOFields.equals(groupDTOFromBuilder), true);
+        assertEquals(groupDTOFields.hashCode(), groupDTOFromBuilder.hashCode());
+        assertNotNull(groupDTOFields.toString());
     }
 
     @Test

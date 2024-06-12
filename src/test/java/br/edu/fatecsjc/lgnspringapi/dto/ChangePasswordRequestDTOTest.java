@@ -1,6 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,33 @@ public class ChangePasswordRequestDTOTest {
     @BeforeEach
     public void setUp() {
         changePasswordRequestDTO = new ChangePasswordRequestDTO();
+    }
+
+    @Test
+    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+        String currentPasswordValue = "CurrentPassword";
+        String newPasswordValue = "NewPassword";
+        String confirmationPasswordValue = "ConfirmationPassword";
+
+        ChangePasswordRequestDTO changePasswordRequestDTOFields = new ChangePasswordRequestDTO(
+                currentPasswordValue,
+                newPasswordValue,
+                confirmationPasswordValue
+        );
+        ChangePasswordRequestDTO changePasswordRequestDTOFromBuilder = ChangePasswordRequestDTO.builder()
+                .currentPassword(currentPasswordValue)
+                .newPassword(newPasswordValue)
+                .confirmationPassword(confirmationPasswordValue)
+                .build();
+
+        assertEquals(changePasswordRequestDTOFields, changePasswordRequestDTOFromBuilder);
+
+        ChangePasswordRequestDTO changePasswordRequestDTONoArgs = new ChangePasswordRequestDTO();
+        assertNotNull(changePasswordRequestDTONoArgs);
+
+        assertEquals(changePasswordRequestDTOFields.equals(changePasswordRequestDTOFromBuilder), true);
+        assertEquals(changePasswordRequestDTOFields.hashCode(), changePasswordRequestDTOFromBuilder.hashCode());
+        assertNotNull(changePasswordRequestDTOFields.toString());
     }
 
     @Test

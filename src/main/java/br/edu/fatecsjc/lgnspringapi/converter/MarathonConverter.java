@@ -26,13 +26,12 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
     public Marathon convertToEntity(MarathonDTO dto) {
         Marathon entity = modelMapper.map(dto, Marathon.class);
 
-        if(dto.getMemberIds() == null) {
-            return entity;
-        }
-        entity.setMembers(dto.getMemberIds().stream()
+        if(dto.getMemberIds() != null) {
+            entity.setMembers(dto.getMemberIds().stream()
             .map(id -> memberRepository.findById(id).orElse(null))
             .collect(Collectors.toList()));
-
+        }
+        
         return entity;
     }
 
@@ -40,12 +39,11 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
     public Marathon convertToEntity(MarathonDTO dto, Marathon existingEntity) {
         modelMapper.map(dto, existingEntity);
 
-        if(dto.getMemberIds() == null) {
-            return existingEntity;
-        }
-        existingEntity.setMembers(dto.getMemberIds().stream()
+        if(dto.getMemberIds() != null) {
+            existingEntity.setMembers(dto.getMemberIds().stream()
             .map(id -> memberRepository.findById(id).orElse(null))
             .collect(Collectors.toList()));
+        }
 
         return existingEntity;
     }
@@ -54,12 +52,11 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
     public MarathonDTO convertToDto(Marathon entity) {
         MarathonDTO dto = modelMapper.map(entity, MarathonDTO.class);
 
-        if(entity.getMembers() == null) {
-            return dto;
-        }
-        dto.setMemberIds(entity.getMembers().stream()
+        if(entity.getMembers() != null) {
+            dto.setMemberIds(entity.getMembers().stream()
             .map(Member::getId)
             .collect(Collectors.toList()));
+        }
 
         return dto;
     }
@@ -68,12 +65,11 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
     public List<Marathon> convertToEntity(List<MarathonDTO> dtos) {
         List<Marathon> marathons = modelMapper.map(dtos, new TypeToken<List<Marathon>>(){}.getType());
         marathons.forEach(marathon -> {
-            if(marathon.getMembers() == null) {
-                return;
-            }
-            marathon.getMembers().forEach(member -> {
-                member.setMarathons(marathons);
-            });
+            if(marathon.getMembers() != null) {
+                marathon.getMembers().forEach(member -> {
+                    member.setMarathons(marathons);
+                });
+            }    
         });
         return marathons;
     }

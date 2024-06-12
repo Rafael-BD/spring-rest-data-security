@@ -1,7 +1,9 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import static java.util.Arrays.asList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -92,6 +94,37 @@ public class OrganizationConverterTest {
     }
 
     @Test
+    public void testConvertToEntityWithExistingOrganization() {
+        when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(organization);
+        when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
+
+        Organization result = organizationConverter.convertToEntity(organizationDTO, organization);
+
+        assertEquals(organization, result);
+        assertNotNull(result.getGroups());
+        assertTrue(result.getGroups().contains(group));
+    }
+
+    @Test
+    public void testConvertToEntityWithNullGroups() {
+        Organization existingEntity = new Organization();
+        existingEntity.setId(1L);
+        existingEntity.setName("Existing Organization");
+
+        OrganizationDTO dto = new OrganizationDTO();
+        dto.setId(1L);
+        dto.setName("Organization Name");
+        dto.setGroups(null);
+
+        when(modelMapper.map(dto, Organization.class)).thenReturn(existingEntity);
+
+        Organization result = organizationConverter.convertToEntity(dto, existingEntity);
+
+        assertEquals(existingEntity, result);
+        assertTrue(result.getGroups().isEmpty());
+    }
+
+    @Test
     public void testConvertToDto() {
         when(modelMapper.map(organization, OrganizationDTO.class)).thenReturn(organizationDTO);
 
@@ -111,6 +144,30 @@ public class OrganizationConverterTest {
 
         assertEquals(organizations, result);
         assertTrue(result.stream().allMatch(o -> o.getGroups().contains(group)));
+    }
+
+    @Test
+    public void testConvertToEntityListWithNullGroups() {
+        OrganizationDTO dtoWithNullGroups = new OrganizationDTO();
+        dtoWithNullGroups.setId(1L);
+        dtoWithNullGroups.setName("Organization Name");
+        dtoWithNullGroups.setGroups(null);
+
+        List<OrganizationDTO> dtos = Arrays.asList(dtoWithNullGroups);
+
+        Organization expectedEntity = new Organization();
+        expectedEntity.setId(1L);
+        expectedEntity.setName("Organization Name");
+        expectedEntity.setGroups(new ArrayList<>());
+
+        List<Organization> expectedEntities = Arrays.asList(expectedEntity);
+
+        when(modelMapper.map(dtos, new TypeToken<List<Organization>>(){}.getType())).thenReturn(expectedEntities);
+
+        List<Organization> result = organizationConverter.convertToEntity(dtos);
+
+        assertEquals(expectedEntities, result);
+        assertTrue(result.stream().allMatch(org -> org.getGroups().isEmpty()));
     }
 
     @Test

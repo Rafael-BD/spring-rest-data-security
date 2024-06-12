@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,39 @@ public class RegisterRequestDTOTest {
     @BeforeEach
     public void setUp() {
         registerRequestDTO = new RegisterRequestDTO();
+    }
+
+    @Test
+    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+        String firstnameValue = "Test Firstname";
+        String lastnameValue = "Test Lastname";
+        String emailValue = "test@mail.com";
+        String passwordValue = "Test Password";
+        Role roleValue = Role.USER;
+
+        RegisterRequestDTO registerRequestDTOfields = new RegisterRequestDTO(
+                firstnameValue,
+                lastnameValue,
+                emailValue,
+                passwordValue,
+                roleValue
+        );
+        RegisterRequestDTO registerRequestDTOFromBuilder = RegisterRequestDTO.builder()
+                .firstname(firstnameValue)
+                .lastname(lastnameValue)
+                .email(emailValue)
+                .password(passwordValue)
+                .role(roleValue)
+                .build();
+
+        assertEquals(registerRequestDTOfields, registerRequestDTOFromBuilder);
+
+        RegisterRequestDTO registerRequestDTONoArgs = new RegisterRequestDTO();
+        assertNotNull(registerRequestDTONoArgs);
+
+        assertEquals(registerRequestDTOfields.equals(registerRequestDTOFromBuilder), true);
+        assertEquals(registerRequestDTOfields.hashCode(), registerRequestDTOFromBuilder.hashCode());
+        assertNotNull(registerRequestDTOfields.toString());
     }
 
     @Test

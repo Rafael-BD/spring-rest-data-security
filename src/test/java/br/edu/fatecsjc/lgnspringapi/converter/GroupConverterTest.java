@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
 
-import br.edu.fatecsjc.lgnspringapi.converter.GroupConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Group;
@@ -87,6 +86,25 @@ public class GroupConverterTest {
         assertEquals(group, result);
         assertNotNull(result.getMembers());
         assertTrue(result.getMembers().stream().allMatch(m -> m.getGroup() == result));
+    }
+
+    @Test
+    public void testConvertToEntityWithNullMembers() {
+        Group existingEntity = new Group();
+        existingEntity.setId(1L);
+        existingEntity.setName("Existing Group");
+
+        GroupDTO dto = new GroupDTO();
+        dto.setId(1L);
+        dto.setName("Group Name");
+        dto.setMembers(null);
+
+        when(modelMapper.map(dto, Group.class)).thenReturn(existingEntity);
+
+        Group result = groupConverter.convertToEntity(dto, existingEntity);
+
+        assertEquals(existingEntity, result);
+        assertTrue(result.getMembers().isEmpty());
     }
 
     @Test

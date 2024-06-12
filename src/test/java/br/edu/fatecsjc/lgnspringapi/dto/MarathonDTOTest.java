@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,36 @@ public class MarathonDTOTest {
     @BeforeEach
     public void setUp() {
         marathonDTO = new MarathonDTO();
+    }
+
+    @Test
+    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+        Long idValue = 1L;
+        int weightValue = 70;
+        int scoreValue = 90;
+        List<Long> memberIdsValue = Arrays.asList(1L, 2L, 3L);
+
+        MarathonDTO marathonDTOFields = new MarathonDTO(
+                idValue,
+                weightValue,
+                scoreValue,
+                memberIdsValue
+        );
+        MarathonDTO marathonDTOFromBuilder = MarathonDTO.builder()
+                .id(idValue)
+                .weight(weightValue)
+                .score(scoreValue)
+                .memberIds(memberIdsValue)
+                .build();
+
+        assertEquals(marathonDTOFields, marathonDTOFromBuilder);
+
+        MarathonDTO marathonDTONoArgs = new MarathonDTO();
+        assertNotNull(marathonDTONoArgs);
+
+        assertEquals(marathonDTOFields.equals(marathonDTOFromBuilder), true);
+        assertEquals(marathonDTOFields.hashCode(), marathonDTOFromBuilder.hashCode());
+        assertNotNull(marathonDTOFields.toString());
     }
 
     @Test

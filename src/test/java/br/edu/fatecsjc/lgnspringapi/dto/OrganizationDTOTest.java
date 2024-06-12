@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,55 @@ public class OrganizationDTOTest {
     @BeforeEach
     public void setUp() {
         organizationDTO = new OrganizationDTO();
+    }
+
+    @Test
+    public void testAllArgsConstructorAndBuilder() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        String cepValue = "12345-678";
+        String numberValue = "123";
+        String streetValue = "Test Street";
+        String cityValue = "Test City";
+        String stateValue = "Test State";
+        String countryValue = "Test Country";
+        String institutionNameValue = "Test Institution";
+        GroupDTO groupDTO = new GroupDTO();
+        List<GroupDTO> groupsValue = Arrays.asList(groupDTO);
+
+        // Testa o construtor com todos os argumentos e o construtor de builder
+        OrganizationDTO organizationDTOFields = new OrganizationDTO(
+                idValue,
+                nameValue,
+                cepValue,
+                numberValue,
+                streetValue,
+                cityValue,
+                stateValue,
+                countryValue,
+                institutionNameValue,
+                groupsValue
+        );
+        OrganizationDTO organizationDTOFromBuilder = OrganizationDTO.builder()
+                .id(idValue)
+                .name(nameValue)
+                .cep(cepValue)
+                .number(numberValue)
+                .street(streetValue)
+                .city(cityValue)
+                .state(stateValue)
+                .country(countryValue)
+                .instituition_name(institutionNameValue)
+                .groups(groupsValue)
+                .build();
+
+        // Verifica se os dois objetos são iguais
+        assertEquals(organizationDTOFields, organizationDTOFromBuilder);
+
+        // Testa os métodos equals, hashCode e toString
+        assertEquals(organizationDTOFields.equals(organizationDTOFromBuilder), true);
+        assertEquals(organizationDTOFields.hashCode(), organizationDTOFromBuilder.hashCode());
+        assertNotNull(organizationDTOFields.toString());
     }
 
     @Test

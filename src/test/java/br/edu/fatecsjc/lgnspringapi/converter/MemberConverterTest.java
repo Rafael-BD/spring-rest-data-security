@@ -1,4 +1,5 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,20 @@ public class MemberConverterTest {
     }
 
     @Test
+    public void testConvertToEntityWithExistingEntity() {
+        when(modelMapper.map(memberDTO, Member.class)).thenReturn(member);
+        when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
+        when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
+
+        Member result = memberConverter.convertToEntity(memberDTO, member);
+
+        assertEquals(member, result);
+        assertNotNull(result.getMarathons());
+        assertTrue(result.getMarathons().contains(marathon));
+        assertEquals(group, result.getGroup());
+    }
+
+    @Test
     public void testConvertToDto() {
         when(modelMapper.map(member, MemberDTO.class)).thenReturn(memberDTO);
 
@@ -121,5 +136,31 @@ public class MemberConverterTest {
         List<MemberDTO> result = memberConverter.convertToDto(members);
 
         assertEquals(dtos, result);
+    }
+
+    @Test
+    public void testConvertToDtoListWithNullMarathons() {
+        Member memberWithNullMarathons = new Member();
+        memberWithNullMarathons.setId(1L);
+        memberWithNullMarathons.setName("Member Name");
+        memberWithNullMarathons.setAge(22);
+        memberWithNullMarathons.setMarathons(null);
+
+        List<Member> members = Arrays.asList(memberWithNullMarathons);
+
+        MemberDTO expectedDto = new MemberDTO();
+        expectedDto.setId(1L);
+        expectedDto.setName("Member Name");
+        expectedDto.setAge(22);
+        expectedDto.setMarathonIds(new ArrayList<>());
+
+        List<MemberDTO> expectedDtos = Arrays.asList(expectedDto);
+
+        when(modelMapper.map(members, new TypeToken<List<MemberDTO>>(){}.getType())).thenReturn(expectedDtos);
+
+        List<MemberDTO> result = memberConverter.convertToDto(members);
+
+        assertEquals(expectedDtos, result);
+        assertTrue(result.stream().allMatch(dto -> dto.getMarathonIds().isEmpty()));
     }
 }

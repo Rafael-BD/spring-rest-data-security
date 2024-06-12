@@ -2,6 +2,7 @@ package br.edu.fatecsjc.lgnspringapi.repository;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,15 @@ public class UserRepositoryTest {
 
     @Test
     public void testFindByEmail() {
-        User user = User.builder().email("test@mail.com").password("password").role(Role.USER).build();
+        String rendomName = RandomStringUtils.randomAlphabetic(5);
+        User user = User.builder().email(rendomName + "@mail.com").password("password").role(Role.USER).build();
         entityManager.persist(user);
         entityManager.flush();
 
-        Optional<User> found = userRepository.findByEmail("test@mail.com");
+        Optional<User> found = userRepository.findByEmail(rendomName + "@mail.com");
 
         assertThat(found).isPresent();
-        assertThat(found.get().getEmail()).isEqualTo("test@mail.com");
+        assertThat(found.get().getEmail()).isEqualTo(rendomName + "@mail.com");
     }
 
     @Test
