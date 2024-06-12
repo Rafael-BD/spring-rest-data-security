@@ -3,10 +3,14 @@ package br.edu.fatecsjc.lgnspringapi.dto;
 import br.edu.fatecsjc.lgnspringapi.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

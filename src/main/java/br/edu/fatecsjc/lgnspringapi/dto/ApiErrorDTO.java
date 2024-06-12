@@ -2,12 +2,17 @@ package br.edu.fatecsjc.lgnspringapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Data
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.Getter;
+
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
