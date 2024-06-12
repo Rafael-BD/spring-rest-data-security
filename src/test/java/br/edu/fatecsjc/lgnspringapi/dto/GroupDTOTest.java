@@ -45,6 +45,22 @@ public class GroupDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        MemberDTO memberDTO = new MemberDTO();
+        List<MemberDTO> membersValue = Arrays.asList(memberDTO);
+
+        groupDTO.setId(idValue);
+        groupDTO.setName(nameValue);
+        groupDTO.setMembers(membersValue);
+
+        assertEquals(idValue, groupDTO.getId());
+        assertEquals(nameValue, groupDTO.getName());
+        assertEquals(membersValue, groupDTO.getMembers());
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         groupDTO.setId(idValue);

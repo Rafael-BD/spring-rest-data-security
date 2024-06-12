@@ -30,7 +30,6 @@ public class OrganizationDTOTest {
         GroupDTO groupDTO = new GroupDTO();
         List<GroupDTO> groupsValue = Arrays.asList(groupDTO);
 
-        // Testa o construtor com todos os argumentos e o construtor de builder
         OrganizationDTO organizationDTOFields = new OrganizationDTO(
                 idValue,
                 nameValue,
@@ -56,13 +55,48 @@ public class OrganizationDTOTest {
                 .groups(groupsValue)
                 .build();
 
-        // Verifica se os dois objetos são iguais
         assertEquals(organizationDTOFields, organizationDTOFromBuilder);
 
-        // Testa os métodos equals, hashCode e toString
         assertEquals(organizationDTOFields.equals(organizationDTOFromBuilder), true);
         assertEquals(organizationDTOFields.hashCode(), organizationDTOFromBuilder.hashCode());
         assertNotNull(organizationDTOFields.toString());
+    }
+
+    @Test
+    public void testGettersAndSetters() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        String cepValue = "12345-678";
+        String numberValue = "123";
+        String streetValue = "Test Street";
+        String cityValue = "Test City";
+        String stateValue = "Test State";
+        String countryValue = "Test Country";
+        String institutionNameValue = "Test Institution";
+        GroupDTO groupDTO = new GroupDTO();
+        List<GroupDTO> groupsValue = Arrays.asList(groupDTO);
+
+        organizationDTO.setId(idValue);
+        organizationDTO.setName(nameValue);
+        organizationDTO.setCep(cepValue);
+        organizationDTO.setNumber(numberValue);
+        organizationDTO.setStreet(streetValue);
+        organizationDTO.setCity(cityValue);
+        organizationDTO.setState(stateValue);
+        organizationDTO.setCountry(countryValue);
+        organizationDTO.setInstituition_name(institutionNameValue);
+        organizationDTO.setGroups(groupsValue);
+
+        assertEquals(idValue, organizationDTO.getId());
+        assertEquals(nameValue, organizationDTO.getName());
+        assertEquals(cepValue, organizationDTO.getCep());
+        assertEquals(numberValue, organizationDTO.getNumber());
+        assertEquals(streetValue, organizationDTO.getStreet());
+        assertEquals(cityValue, organizationDTO.getCity());
+        assertEquals(stateValue, organizationDTO.getState());
+        assertEquals(countryValue, organizationDTO.getCountry());
+        assertEquals(institutionNameValue, organizationDTO.getInstituition_name());
+        assertEquals(groupsValue, organizationDTO.getGroups());
     }
 
     @Test

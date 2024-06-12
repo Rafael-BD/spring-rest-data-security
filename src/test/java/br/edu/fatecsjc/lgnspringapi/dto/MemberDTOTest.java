@@ -50,6 +50,27 @@ public class MemberDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        Integer ageValue = 30;
+        List<Long> marathonIdsValue = Arrays.asList(1L, 2L, 3L);
+        Long groupIdValue = 1L;
+
+        memberDTO.setId(idValue);
+        memberDTO.setName(nameValue);
+        memberDTO.setAge(ageValue);
+        memberDTO.setMarathonIds(marathonIdsValue);
+        memberDTO.setGroupId(groupIdValue);
+
+        assertEquals(idValue, memberDTO.getId());
+        assertEquals(nameValue, memberDTO.getName());
+        assertEquals(ageValue, memberDTO.getAge());
+        assertEquals(marathonIdsValue, memberDTO.getMarathonIds());
+        assertEquals(groupIdValue, memberDTO.getGroupId());
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         memberDTO.setId(idValue);

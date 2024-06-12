@@ -47,6 +47,24 @@ public class MarathonDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        Long idValue = 1L;
+        int weightValue = 70;
+        int scoreValue = 90;
+        List<Long> memberIdsValue = Arrays.asList(1L, 2L, 3L);
+
+        marathonDTO.setId(idValue);
+        marathonDTO.setWeight(weightValue);
+        marathonDTO.setScore(scoreValue);
+        marathonDTO.setMemberIds(memberIdsValue);
+
+        assertEquals(idValue, marathonDTO.getId());
+        assertEquals(weightValue, marathonDTO.getWeight());
+        assertEquals(scoreValue, marathonDTO.getScore());
+        assertEquals(memberIdsValue, marathonDTO.getMemberIds());
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         marathonDTO.setId(idValue);

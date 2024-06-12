@@ -38,6 +38,18 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        String emailValue = "testeGetterSetter@mail.com";
+        String passwordValue = "TestPasswordGetterSetter";
+
+        authenticationRequestDTO.setEmail(emailValue);
+        authenticationRequestDTO.setPassword(passwordValue);
+
+        assertEquals(emailValue, authenticationRequestDTO.getEmail());
+        assertEquals(passwordValue, authenticationRequestDTO.getPassword());
+    }
+
+    @Test
     public void testEmail() {
         String emailValue = "test@mail.com";
         authenticationRequestDTO.setEmail(emailValue);

@@ -49,6 +49,27 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        String firstnameValue = "Test Firstname Getter Setter";
+        String lastnameValue = "Test Lastname Getter Setter";
+        String emailValue = "testeGetterSetter@mail.com";
+        String passwordValue = "Test Password Getter Setter";
+        Role roleValue = Role.USER;
+
+        registerRequestDTO.setFirstname(firstnameValue);
+        registerRequestDTO.setLastname(lastnameValue);
+        registerRequestDTO.setEmail(emailValue);
+        registerRequestDTO.setPassword(passwordValue);
+        registerRequestDTO.setRole(roleValue);
+
+        assertEquals(firstnameValue, registerRequestDTO.getFirstname());
+        assertEquals(lastnameValue, registerRequestDTO.getLastname());
+        assertEquals(emailValue, registerRequestDTO.getEmail());
+        assertEquals(passwordValue, registerRequestDTO.getPassword());
+        assertEquals(roleValue, registerRequestDTO.getRole());
+    }
+
+    @Test
     public void testFirstname() {
         String firstnameValue = "Test Firstname";
         registerRequestDTO.setFirstname(firstnameValue);

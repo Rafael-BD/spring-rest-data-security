@@ -42,6 +42,21 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        String currentPasswordValue = "CurrentPasswordGetterSetter";
+        String newPasswordValue = "NewPasswordGetterSetter";
+        String confirmationPasswordValue = "ConfirmationPasswordGetterSetter";
+
+        changePasswordRequestDTO.setCurrentPassword(currentPasswordValue);
+        changePasswordRequestDTO.setNewPassword(newPasswordValue);
+        changePasswordRequestDTO.setConfirmationPassword(confirmationPasswordValue);
+
+        assertEquals(currentPasswordValue, changePasswordRequestDTO.getCurrentPassword());
+        assertEquals(newPasswordValue, changePasswordRequestDTO.getNewPassword());
+        assertEquals(confirmationPasswordValue, changePasswordRequestDTO.getConfirmationPassword());
+    }
+
+    @Test
     public void testCurrentPassword() {
         String currentPasswordValue = "current_password";
         changePasswordRequestDTO.setCurrentPassword(currentPasswordValue);

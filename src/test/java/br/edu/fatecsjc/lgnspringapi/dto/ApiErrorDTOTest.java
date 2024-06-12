@@ -40,6 +40,18 @@ public class ApiErrorDTOTest {
     }
 
     @Test
+    public void testGettersAndSetters() {
+        String messageValue = "Test Message getter setter";
+        Instant timestampValue = Instant.now();
+
+        apiErrorDTO.setMessage(messageValue);
+        apiErrorDTO.setTimestamp(timestampValue);
+
+        assertEquals(messageValue, apiErrorDTO.getMessage());
+        assertEquals(timestampValue, apiErrorDTO.getTimestamp());
+    }
+
+    @Test
     public void testMessage() {
         String messageValue = "Test Message";
         apiErrorDTO.setMessage(messageValue);
