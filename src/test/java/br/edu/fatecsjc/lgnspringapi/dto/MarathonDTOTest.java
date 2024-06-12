@@ -65,6 +65,29 @@ public class MarathonDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        Long idValue = 1L;
+        int weightValue = 70;
+        int scoreValue = 90;
+        List<Long> memberIdsValue = Arrays.asList(1L, 2L, 3L);
+
+        MarathonDTO marathonDTOFields = new MarathonDTO(
+                idValue,
+                weightValue,
+                scoreValue,
+                memberIdsValue
+        );
+        MarathonDTO marathonDTOFromBuilder = MarathonDTO.builder()
+                .id(idValue)
+                .weight(weightValue)
+                .score(scoreValue)
+                .memberIds(memberIdsValue)
+                .build();
+
+        assertEquals(marathonDTOFields, marathonDTOFromBuilder);
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         marathonDTO.setId(idValue);

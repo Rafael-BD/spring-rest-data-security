@@ -57,6 +57,27 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        String currentPasswordValue = "CurrentPassword";
+        String newPasswordValue = "NewPassword";
+        String confirmationPasswordValue = "ConfirmationPassword";
+
+        ChangePasswordRequestDTO changePasswordRequestDTOFields = new ChangePasswordRequestDTO(
+                currentPasswordValue,
+                newPasswordValue,
+                confirmationPasswordValue
+        );
+        ChangePasswordRequestDTO changePasswordRequestDTOFromBuilder = ChangePasswordRequestDTO.builder()
+                .currentPassword(currentPasswordValue)
+                .newPassword(newPasswordValue)
+                .confirmationPassword(confirmationPasswordValue)
+                .build();
+
+        assertEquals(changePasswordRequestDTOFields, changePasswordRequestDTOFromBuilder);
+        assertEquals(changePasswordRequestDTOFields.hashCode(), changePasswordRequestDTOFromBuilder.hashCode());
+    }
+
+    @Test
     public void testCurrentPassword() {
         String currentPasswordValue = "current_password";
         changePasswordRequestDTO.setCurrentPassword(currentPasswordValue);

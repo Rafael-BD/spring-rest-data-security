@@ -71,6 +71,52 @@ public class MemberDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        Integer ageValue = 30;
+        List<Long> marathonIdsValue = Arrays.asList(1L, 2L, 3L);
+        Long groupIdValue = 1L;
+
+        MemberDTO memberDTOFields = new MemberDTO(
+                idValue,
+                nameValue,
+                ageValue,
+                marathonIdsValue,
+                groupIdValue
+        );
+        MemberDTO memberDTOFromBuilder = MemberDTO.builder()
+                .id(idValue)
+                .name(nameValue)
+                .age(ageValue)
+                .marathonIds(marathonIdsValue)
+                .groupId(groupIdValue)
+                .build();
+
+        assertEquals(memberDTOFields, memberDTOFromBuilder);
+
+        MemberDTO memberDTO1 = new MemberDTO(
+                idValue,
+                nameValue,
+                ageValue,
+                marathonIdsValue,
+                groupIdValue
+        );
+        MemberDTO memberDTO2 = new MemberDTO(
+                idValue,
+                nameValue,
+                ageValue,
+                marathonIdsValue,
+                groupIdValue
+        );
+
+        assertEquals(memberDTO1.equals(memberDTO2), true);
+        assertEquals(memberDTO2.equals(memberDTO1), true);
+        assertEquals(memberDTO1.hashCode(), memberDTO2.hashCode());
+        assertEquals(memberDTO1.equals(memberDTO1), true);
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         memberDTO.setId(idValue);

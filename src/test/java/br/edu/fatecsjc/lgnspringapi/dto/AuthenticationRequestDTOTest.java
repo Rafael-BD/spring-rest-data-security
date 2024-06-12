@@ -50,6 +50,38 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        String emailValue = "test@mail.com";
+        String passwordValue = "TestPassword";
+        
+        AuthenticationRequestDTO authenticationRequestDTOFields = new AuthenticationRequestDTO(
+                emailValue,
+                passwordValue
+        );
+        AuthenticationRequestDTO authenticationRequestDTOFromBuilder = AuthenticationRequestDTO.builder()
+                .email(emailValue)
+                .password(passwordValue)
+                .build();
+
+        assertEquals(authenticationRequestDTOFields, authenticationRequestDTOFromBuilder);
+
+        AuthenticationRequestDTO authenticationRequestDTO1 = new AuthenticationRequestDTO(
+                emailValue,
+                passwordValue
+        );
+
+        AuthenticationRequestDTO authenticationRequestDTO2 = new AuthenticationRequestDTO(
+                emailValue,
+                passwordValue
+        );
+
+        assertEquals(authenticationRequestDTO1, authenticationRequestDTO2);
+        assertEquals(authenticationRequestDTO2, authenticationRequestDTO1);
+        assertEquals(authenticationRequestDTO1.hashCode(), authenticationRequestDTO2.hashCode());
+        assertEquals(authenticationRequestDTO1.equals(authenticationRequestDTO1), true);
+    }
+
+    @Test
     public void testEmail() {
         String emailValue = "test@mail.com";
         authenticationRequestDTO.setEmail(emailValue);

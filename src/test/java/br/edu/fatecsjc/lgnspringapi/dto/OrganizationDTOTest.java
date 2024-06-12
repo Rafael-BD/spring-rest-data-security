@@ -100,6 +100,64 @@ public class OrganizationDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        String cepValue = "12345-678";
+        String numberValue = "123";
+        String streetValue = "Test Street";
+        String cityValue = "Test City";
+        String stateValue = "Test State";
+        String countryValue = "Test Country";
+        String institutionNameValue = "Test Institution";
+        GroupDTO groupDTO = new GroupDTO();
+        List<GroupDTO> groupsValue = Arrays.asList(groupDTO);
+
+        OrganizationDTO organizationDTOFields = new OrganizationDTO(
+                idValue,
+                nameValue,
+                cepValue,
+                numberValue,
+                streetValue,
+                cityValue,
+                stateValue,
+                countryValue,
+                institutionNameValue,
+                groupsValue
+        );
+        OrganizationDTO organizationDTOFromBuilder = OrganizationDTO.builder()
+                .id(idValue)
+                .name(nameValue)
+                .cep(cepValue)
+                .number(numberValue)
+                .street(streetValue)
+                .city(cityValue)
+                .state(stateValue)
+                .country(countryValue)
+                .instituition_name(institutionNameValue)
+                .groups(groupsValue)
+                .build();
+
+        assertEquals(organizationDTOFields, organizationDTOFromBuilder);
+
+        OrganizationDTO organizationDTO1 = new OrganizationDTO(
+                idValue,
+                nameValue,
+                cepValue,
+                numberValue,
+                streetValue,
+                cityValue,
+                stateValue,
+                countryValue,
+                institutionNameValue,
+                groupsValue
+        );
+
+        assertEquals(organizationDTOFields.equals(organizationDTO1), true);
+        assertEquals(organizationDTOFields.hashCode(), organizationDTO1.hashCode());
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         organizationDTO.setId(idValue);

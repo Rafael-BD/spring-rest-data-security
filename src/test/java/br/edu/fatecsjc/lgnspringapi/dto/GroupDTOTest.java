@@ -61,6 +61,28 @@ public class GroupDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        Long idValue = 1L;
+        String nameValue = "Test Name";
+        MemberDTO memberDTO = new MemberDTO();
+        List<MemberDTO> membersValue = Arrays.asList(memberDTO);
+
+        GroupDTO groupDTOFields = new GroupDTO(
+                idValue,
+                nameValue,
+                membersValue
+        );
+        GroupDTO groupDTOFromBuilder = GroupDTO.builder()
+                .id(idValue)
+                .name(nameValue)
+                .members(membersValue)
+                .build();
+
+        assertEquals(groupDTOFields, groupDTOFromBuilder);
+        assertEquals(groupDTOFields.hashCode(), groupDTOFromBuilder.hashCode());
+    }
+
+    @Test
     public void testId() {
         Long idValue = 1L;
         groupDTO.setId(idValue);

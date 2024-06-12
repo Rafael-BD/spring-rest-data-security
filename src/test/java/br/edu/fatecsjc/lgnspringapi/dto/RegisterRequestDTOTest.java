@@ -70,6 +70,43 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        String firstnameValue = "Test Firstname";
+        String lastnameValue = "Test Lastname";
+        String emailValue = "test@mail.com";
+        String passwordValue = "Test Password";
+        Role roleValue = Role.USER;
+
+        RegisterRequestDTO registerRequestDTOfields = new RegisterRequestDTO(
+                firstnameValue,
+                lastnameValue,
+                emailValue,
+                passwordValue,
+                roleValue
+        );
+        RegisterRequestDTO registerRequestDTOFromBuilder = RegisterRequestDTO.builder()
+                .firstname(firstnameValue)
+                .lastname(lastnameValue)
+                .email(emailValue)
+                .password(passwordValue)
+                .role(roleValue)
+                .build();
+
+        assertEquals(registerRequestDTOfields, registerRequestDTOFromBuilder);
+        
+        RegisterRequestDTO registerRequestDTO1 = new RegisterRequestDTO(
+                firstnameValue,
+                lastnameValue,
+                emailValue,
+                passwordValue,
+                roleValue
+        );
+
+        assertEquals(registerRequestDTO1.equals(registerRequestDTOFromBuilder), true);
+        assertEquals(registerRequestDTO1.hashCode(), registerRequestDTOFromBuilder.hashCode());
+    }
+
+    @Test
     public void testFirstname() {
         String firstnameValue = "Test Firstname";
         registerRequestDTO.setFirstname(firstnameValue);

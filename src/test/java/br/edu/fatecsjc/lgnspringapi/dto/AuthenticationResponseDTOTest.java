@@ -14,6 +14,20 @@ public class AuthenticationResponseDTOTest {
     }
 
     @Test
+    public void testEqualsAndHashCode() {
+        String accessToken = "access_token 1";
+        String refreshToken = "refresh token 1";
+        AuthenticationResponseDTO authenticationResponseDTOFields = new AuthenticationResponseDTO(accessToken, refreshToken);
+        AuthenticationResponseDTO authenticationResponseDTOFromBuilder = AuthenticationResponseDTO.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        assertEquals(authenticationResponseDTOFields, authenticationResponseDTOFromBuilder);
+        assertEquals(authenticationResponseDTOFields.hashCode(), authenticationResponseDTOFromBuilder.hashCode());
+    }
+
+    @Test
     public void testAccessToken() {
         String accessTokenValue = "access_token";
         authenticationResponseDTO.setAccessToken(accessTokenValue);
