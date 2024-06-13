@@ -82,6 +82,7 @@ public class MemberConverterTest {
         memberWithoutGroup.setId(1L);
         memberWithoutGroup.setName("Member Name");
         memberWithoutGroup.setAge(22);
+        memberWithoutGroup.setMarathons(Arrays.asList(marathon));
         
 
         member.setMarathons(Arrays.asList(marathon));
@@ -178,6 +179,20 @@ public class MemberConverterTest {
     }
 
     @Test
+    public void testConvertToEntityListWithNullGroupId() {
+        List<MemberDTO> dtos = Arrays.asList(memberDtoWithoutGroupId);
+        List<Member> members = Arrays.asList(memberWithoutGroup);
+        when(modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType())).thenReturn(members);
+        when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
+
+        List<Member> result = memberConverter.convertToEntity(dtos);
+
+        assertEquals(members, result);
+        assertTrue(result.stream().allMatch(m -> m.getMarathons().contains(marathon)));
+        assertTrue(result.stream().allMatch(m -> m.getGroup() == null));
+    }
+
+    @Test
     public void testConvertToDtoList() {
         List<Member> members = Arrays.asList(member);
         List<MemberDTO> dtos = Arrays.asList(memberDTO);
@@ -186,32 +201,6 @@ public class MemberConverterTest {
         List<MemberDTO> result = memberConverter.convertToDto(members);
 
         assertEquals(dtos, result);
-    }
-
-    @Test
-    public void testConvertToEntityListWithNullMembers() {
-        Marathon marathonWithNullMembers = new Marathon();
-        marathonWithNullMembers.setId(1L);
-        marathonWithNullMembers.setMembers(null);
-
-        MemberDTO memberDtoWithMarathon = new MemberDTO();
-        memberDtoWithMarathon.setId(1L);
-        memberDtoWithMarathon.setName("Member Name");
-        memberDtoWithMarathon.setAge(22);
-        memberDtoWithMarathon.setMarathonIds(Arrays.asList(1L));
-        memberDtoWithMarathon.setGroupId(1L);
-
-        List<MemberDTO> dtos = Arrays.asList(memberDtoWithMarathon);
-
-        when(modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType())).thenReturn(Arrays.asList(member));
-        when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathonWithNullMembers));
-        when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
-
-        List<Member> result = memberConverter.convertToEntity(dtos);
-
-        assertEquals(Arrays.asList(member), result);
-        assertTrue(result.stream().allMatch(m -> m.getMarathons().stream().anyMatch(mt-> mt.getId().equals(marathonWithNullMembers.getId()))));
-        assertTrue(result.stream().allMatch(m -> m.getGroup().equals(group)));
     }
 
     @Test
