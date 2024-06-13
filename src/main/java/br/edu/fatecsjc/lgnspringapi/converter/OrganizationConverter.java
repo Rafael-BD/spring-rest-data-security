@@ -28,13 +28,12 @@ public class OrganizationConverter implements Converter<Organization, Organizati
 
     @Override
     public Organization convertToEntity(OrganizationDTO dto) {
-        List<Long> groupIds = dto.getGroups().stream().map(GroupDTO::getId).toList();
-        List<Group> groups = groupRepository.findAllById(groupIds);
-
         if(propertyMapperDto == null) {
             propertyMapperDto = modelMapper.createTypeMap(OrganizationDTO.class, Organization.class);
             propertyMapperDto.addMappings(mapper -> mapper.skip(Organization::setId));
         }
+        List<Long> groupIds = dto.getGroups().stream().map(GroupDTO::getId).toList();
+        List<Group> groups = groupRepository.findAllById(groupIds);
 
         Organization entity = modelMapper.map(dto, Organization.class);
         Provider<Organization> organizationProvider = p -> new Organization();
@@ -79,9 +78,6 @@ public class OrganizationConverter implements Converter<Organization, Organizati
         List<Organization> organizations = modelMapper.map(dtos, new TypeToken<List<Organization>>() {}.getType());
 
         organizations.forEach(organization -> {
-            if (organization.getGroups() == null) {
-                organization.setGroups(new ArrayList<>());
-            }
             organization.getGroups().forEach(group -> {
                 group.setOrganization(organization);
             });

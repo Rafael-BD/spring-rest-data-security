@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
@@ -137,5 +140,29 @@ public class GroupConverterTest {
         List<GroupDTO> result = groupConverter.convertToDto(groups);
 
         assertEquals(dtos, result);
+    }
+
+    @Test
+    public void testConvertToEntityWithExistingPropertyMapperDto() {
+        TypeMap<GroupDTO, Group> typeMapMock = mock(TypeMap.class);
+        when(modelMapper.createTypeMap(GroupDTO.class, Group.class)).thenReturn(typeMapMock);
+        groupConverter.convertToEntity(groupDTO);
+
+        reset(modelMapper);
+        groupConverter.convertToEntity(groupDTO);
+        verify(modelMapper, times(0)).createTypeMap(GroupDTO.class, Group.class);
+    }
+
+    @Test
+    public void testConvertToEntityWithExistingEntityAndExistingPropertyMapperDto() {
+        TypeMap<GroupDTO, Group> typeMapMock = mock(TypeMap.class);
+        when(modelMapper.createTypeMap(GroupDTO.class, Group.class)).thenReturn(typeMapMock);
+        when(modelMapper.map(groupDTO, Group.class)).thenReturn(new Group());
+        groupConverter.convertToEntity(groupDTO, group);
+
+        reset(modelMapper);
+        when(modelMapper.map(groupDTO, Group.class)).thenReturn(new Group());
+        groupConverter.convertToEntity(groupDTO, group);
+        verify(modelMapper, times(0)).createTypeMap(GroupDTO.class, Group.class);
     }
 }

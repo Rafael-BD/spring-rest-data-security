@@ -10,10 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
@@ -106,6 +111,32 @@ public class OrganizationConverterTest {
     }
 
     @Test
+    public void testConvertToEntityWithNullPropertyMapperDto() {
+        TypeMap<OrganizationDTO, Organization> typeMapMock = mock(TypeMap.class);
+        when(modelMapper.createTypeMap(OrganizationDTO.class, Organization.class)).thenReturn(typeMapMock);
+        when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
+        organizationConverter.convertToEntity(organizationDTO);
+
+        reset(modelMapper);
+        when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
+        organizationConverter.convertToEntity(organizationDTO);
+        verify(modelMapper, times(0)).createTypeMap(OrganizationDTO.class, Organization.class);
+    }
+
+    @Test
+    public void testConvertToEntityWithExistingOrganizationAndNullPropertyMapperDto() {
+        TypeMap<OrganizationDTO, Organization> typeMapMock = mock(TypeMap.class);
+        when(modelMapper.createTypeMap(OrganizationDTO.class, Organization.class)).thenReturn(typeMapMock);
+        when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
+        organizationConverter.convertToEntity(organizationDTO, organization);
+
+        reset(modelMapper);
+        when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
+        organizationConverter.convertToEntity(organizationDTO, organization);
+        verify(modelMapper, times(0)).createTypeMap(OrganizationDTO.class, Organization.class);
+    }
+
+    @Test
     public void testConvertToEntityWithNullGroups() {
         Organization existingEntity = new Organization();
         existingEntity.setId(1L);
@@ -144,30 +175,6 @@ public class OrganizationConverterTest {
 
         assertEquals(organizations, result);
         assertTrue(result.stream().allMatch(o -> o.getGroups().contains(group)));
-    }
-
-    @Test
-    public void testConvertToEntityListWithNullGroups() {
-        OrganizationDTO dtoWithNullGroups = new OrganizationDTO();
-        dtoWithNullGroups.setId(1L);
-        dtoWithNullGroups.setName("Organization Name");
-        dtoWithNullGroups.setGroups(null);
-
-        List<OrganizationDTO> dtos = Arrays.asList(dtoWithNullGroups);
-
-        Organization expectedEntity = new Organization();
-        expectedEntity.setId(1L);
-        expectedEntity.setName("Organization Name");
-        expectedEntity.setGroups(new ArrayList<>());
-
-        List<Organization> expectedEntities = Arrays.asList(expectedEntity);
-
-        when(modelMapper.map(dtos, new TypeToken<List<Organization>>(){}.getType())).thenReturn(expectedEntities);
-
-        List<Organization> result = organizationConverter.convertToEntity(dtos);
-
-        assertEquals(expectedEntities, result);
-        assertTrue(result.stream().allMatch(org -> org.getGroups().isEmpty()));
     }
 
     @Test

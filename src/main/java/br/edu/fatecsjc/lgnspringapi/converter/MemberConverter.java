@@ -83,12 +83,14 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
     public List<Member> convertToEntity(List<MemberDTO> dtos) {
         List<Member> members = modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType());
         members.forEach(member -> {
-            member.getMarathons().forEach(marathon -> {
-                if (marathon.getMembers() == null) {
-                    marathon.setMembers(new ArrayList<>());
-                }
-                marathon.setMembers(members);
-            });
+            if (member.getMarathons() != null) {
+                member.getMarathons().forEach(marathon -> {
+                    if (marathon.getMembers() == null) {
+                        marathon.setMembers(new ArrayList<>());
+                    }
+                    marathon.getMembers().add(member);
+                });
+            }
         });
         return members;
     }
@@ -97,11 +99,9 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
     public List<MemberDTO> convertToDto(List<Member> entities) {
         List<MemberDTO> dtos = modelMapper.map(entities, new TypeToken<List<MemberDTO>>(){}.getType());
         dtos.forEach(dto -> {
-            if(dto.getMarathonIds() == null) {
-                dto.setMarathonIds(new ArrayList<>());
-                return;
+            if(dto.getMarathonIds() != null) {
+                dto.setMarathonIds(dto.getMarathonIds());
             }
-            dto.setMarathonIds(dto.getMarathonIds());
         });
         return dtos;
     }
