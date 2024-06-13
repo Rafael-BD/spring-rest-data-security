@@ -83,12 +83,9 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
     public List<Member> convertToEntity(List<MemberDTO> dtos) {
         List<Member> members = modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType());
         members.forEach(member -> {
-            if (member.getMarathons() != null) {
+            if(member.getMarathons() != null) {
                 member.getMarathons().forEach(marathon -> {
-                    if (marathon.getMembers() == null) {
-                        marathon.setMembers(new ArrayList<>());
-                    }
-                    marathon.getMembers().add(member);
+                    marathon.setMembers(members);
                 });
             }
         });

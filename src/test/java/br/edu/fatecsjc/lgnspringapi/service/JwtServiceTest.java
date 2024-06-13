@@ -97,4 +97,22 @@ public class JwtServiceTest {
         boolean isValid = jwtService.isTokenValid(token, userDetails);
         assertTrue(isValid);
     }
+
+    @Test
+    public void testIsTokenValidWithWrongUsernameAndExpiredToken() {
+        when(userDetails.getUsername()).thenReturn("correctUsername");
+
+        String wrongUsernameAndExpiredToken = Jwts.builder()
+            .setSubject("wrongUsername")
+            .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
+            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .compact();
+
+        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
+            jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
+        });
+
+        assertNotNull(thrown);
+    }
+
 }

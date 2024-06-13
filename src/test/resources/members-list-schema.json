@@ -23,6 +23,6 @@
                 "type": "integer"
             }
         },
-        "required": ["id", "name", "age", "marathonIds", "groupId"]
+        "required": ["id", "name", "age", "groupId"]
     }
 }

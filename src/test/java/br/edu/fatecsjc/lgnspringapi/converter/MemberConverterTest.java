@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 import java.util.Arrays;
+import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,6 @@ public class MemberConverterTest {
         memberDTO.setId(1L);
         memberDTO.setName("Member Name");
         memberDTO.setAge(22);
-        memberDTO.setMarathonIds(Arrays.asList(1L));
         memberDTO.setGroupId(1L);
 
         member = new Member();
@@ -65,6 +65,9 @@ public class MemberConverterTest {
 
         marathon = new Marathon();
         marathon.setId(1L);
+        marathon.setMembers(Arrays.asList(member));
+
+        memberDTO.setMarathonIds(asList(marathon.getId()));
 
         group = new Group();
         group.setId(1L);
