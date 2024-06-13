@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -76,6 +77,43 @@ public class OrganizationServiceTest {
         when(organizationRepository.save(any(Organization.class))).thenReturn(organization);
         organizationService.save(dto);
         verify(organizationConverter).convertToDto(organization);
+    }
+
+    @Test
+    @Transactional
+    public void testSaveWithIdAndGroups() {
+        OrganizationDTO dto = new OrganizationDTO();
+        dto.setGroups(new ArrayList<>());
+
+        Organization organization = new Organization();
+        organization.setGroups(new ArrayList<>());
+
+        when(organizationRepository.findById(anyLong())).thenReturn(Optional.of(organization));
+        when(organizationConverter.convertToEntity(dto, organization)).thenReturn(organization);
+        when(organizationRepository.save(any(Organization.class))).thenReturn(organization);
+
+        organizationService.save(1L, dto);
+
+        verify(organizationConverter).convertToDto(organization);
+        organization.getGroups().forEach(group -> assertEquals(organization.getId(), group.getOrganization().getId()));
+    }
+
+    @Test
+    @Transactional
+    public void testSaveWithGroups() {
+        OrganizationDTO dto = new OrganizationDTO();
+        dto.setGroups(new ArrayList<>());
+
+        Organization organization = new Organization();
+        organization.setGroups(new ArrayList<>());
+
+        when(organizationConverter.convertToEntity(dto)).thenReturn(organization);
+        when(organizationRepository.save(any(Organization.class))).thenReturn(organization);
+
+        organizationService.save(dto);
+
+        verify(organizationConverter).convertToDto(organization);
+        organization.getGroups().forEach(group -> assertEquals(organization.getId(), group.getOrganization().getId()));
     }
 
     @Test

@@ -172,4 +172,31 @@ public class AuthenticationServiceTest {
 
         assertEquals("", outputStream.toString());
     }
+
+    @Test
+    public void testRefreshTokenWithNullEmail() throws IOException, java.io.IOException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("Bearer refreshToken");
+        when(jwtService.extractUsername("refreshToken")).thenReturn(null);
+
+        authenticationService.refreshToken(request, response);
+
+        verify(response, never()).getOutputStream();
+    }
+
+    @Test
+    public void testRefreshTokenWithInvalidToken() throws IOException, java.io.IOException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("Bearer refreshToken");
+        when(jwtService.extractUsername("refreshToken")).thenReturn("userEmail");
+        User user = new User();
+        when(userRepository.findByEmail("userEmail")).thenReturn(Optional.of(user));
+        when(jwtService.isTokenValid("refreshToken", user)).thenReturn(false);
+
+        authenticationService.refreshToken(request, response);
+
+        verify(response, never()).getOutputStream();
+    }
 }

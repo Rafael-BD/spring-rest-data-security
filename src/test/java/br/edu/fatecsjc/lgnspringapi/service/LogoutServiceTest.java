@@ -5,7 +5,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +65,24 @@ public class LogoutServiceTest {
         when(tokenRepository.findByToken("invalidToken")).thenReturn(Optional.empty());
 
         logoutService.logout(request, response, authentication);
+    }
+
+    @Test
+    public void testLogoutWithNullAuthHeader() {
+        when(request.getHeader("Authorization")).thenReturn(null);
+
+        logoutService.logout(request, response, authentication);
+
+        verify(tokenRepository, never()).findByToken(anyString());
+    }
+
+    @Test
+    public void testLogoutWithInvalidAuthHeader() {
+        String token = "Invalid auth header";
+        when(request.getHeader("Authorization")).thenReturn(token);
+
+        logoutService.logout(request, response, authentication);
+
+        verify(tokenRepository, never()).findByToken(anyString());
     }
 }

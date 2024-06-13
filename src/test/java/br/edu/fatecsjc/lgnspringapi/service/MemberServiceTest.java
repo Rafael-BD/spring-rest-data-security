@@ -115,6 +115,38 @@ public class MemberServiceTest {
     }
 
     @Test
+    @Transactional
+    public void testSaveWithMarathonIdsAndGroupId() {
+        MemberDTO dto = new MemberDTO();
+        dto.setMarathonIds(Arrays.asList(1L, 2L));
+        dto.setGroupId(1L);
+
+        Member member = new Member();
+        member.setMarathons(new ArrayList<>());
+
+        Marathon marathon1 = new Marathon();
+        marathon1.setMembers(new ArrayList<>());
+        Marathon marathon2 = new Marathon();
+        marathon2.setMembers(new ArrayList<>());
+
+        Group group = new Group();
+
+        member.getMarathons().add(marathon1);
+        member.getMarathons().add(marathon2);
+
+        when(memberConverter.convertToEntity(dto)).thenReturn(member);
+        when(groupRepository.findById(dto.getGroupId())).thenReturn(Optional.of(group));
+        when(memberRepository.save(any(Member.class))).thenReturn(member);
+
+        memberService.save(dto);
+
+        verify(memberConverter).convertToDto(member);
+        assertTrue(marathon1.getMembers().contains(member));
+        assertTrue(marathon2.getMembers().contains(member));
+        assertEquals(group, member.getGroup());
+    }
+
+    @Test
     public void testDelete() {
         Member member = new Member();
         Group group = new Group();
