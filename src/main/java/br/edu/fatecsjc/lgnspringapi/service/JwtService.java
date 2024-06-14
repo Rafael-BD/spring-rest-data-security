@@ -27,11 +27,7 @@ public class JwtService {
     private long refreshExpiration;
 
     public String extractUsername(String token) {
-        try {
-            return extractClaim(token, Claims::getSubject);
-        } catch (Exception e) {
-            return null;
-        }
+        return extractClaim(token, Claims::getSubject);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -73,10 +69,16 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        if (username == null) {
+        boolean isTokenExpired = isTokenExpired(token);
+        boolean isUsernameValid = username.equals(userDetails.getUsername());
+        if (isTokenExpired) {
             return false;
         }
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        else if(!isUsernameValid) {
+            return false;
+        }
+        
+        return true;
     }
 
     public boolean isTokenExpired(String token) {
