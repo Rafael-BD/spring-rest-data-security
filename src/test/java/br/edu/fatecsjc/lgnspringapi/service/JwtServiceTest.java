@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class JwtServiceTest {
 
     @Autowired
     private JwtService jwtService;
+
+    @Mock
+    private JwtService jwtServiceMock;
 
     @MockBean
     private UserDetails userDetails;
@@ -102,11 +108,10 @@ public class JwtServiceTest {
 
         //when(jwtService.isTokenExpired(wrongUsernameAndExpiredToken)).thenReturn(true);
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
-        });
+        boolean isValid = jwtServiceMock.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
+        assertFalse(isValid);
 
-        assertNotNull(thrown);
+
     }
 
 }

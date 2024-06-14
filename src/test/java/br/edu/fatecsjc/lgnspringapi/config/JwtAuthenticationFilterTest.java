@@ -63,6 +63,7 @@ public class JwtAuthenticationFilterTest {
 
         token = Token.builder()
             .id(1L)
+            .user(user)
             .token("token")
             .tokenType(TokenType.BEARER) 
             .revoked(false)
@@ -103,6 +104,7 @@ public class JwtAuthenticationFilterTest {
 
     @Test
     public void testDoFilterInternalWithValidToken() throws Exception { // L52 true - true
+        SecurityContextHolder.getContext().setAuthentication(null);
         when(jwtService.extractUsername(anyString())).thenReturn("username");
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
         when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
@@ -126,6 +128,7 @@ public class JwtAuthenticationFilterTest {
 
     @Test
     public void testDoFilterInternalWithInvalidToken() throws Exception { // L52 false - false
+        SecurityContextHolder.getContext().setAuthentication(null);
         token.setRevoked(true);
         token.setExpired(true);
             
@@ -152,6 +155,7 @@ public class JwtAuthenticationFilterTest {
 
     @Test
     public void testDoFilterInternalWithExpiredToken() throws Exception { // L52 false - true
+        SecurityContextHolder.getContext().setAuthentication(null);
         token.setExpired(true);
 
         FilterChain filterChain = mock(FilterChain.class);
@@ -168,12 +172,10 @@ public class JwtAuthenticationFilterTest {
 
     @Test
     public void testDoFilterInternalWithRevokedToken() throws Exception { // L52 true - false
+        SecurityContextHolder.getContext().setAuthentication(null);
         token.setRevoked(true);
 
         when(jwtService.extractUsername(anyString())).thenReturn("username");
-        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
-        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
 
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -206,6 +208,7 @@ public class JwtAuthenticationFilterTest {
     @Test
     public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception { //L49 false - false
         //SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+        token.setUser(null);
 
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
