@@ -95,7 +95,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValidWithWrongUsernameAndExpiredToken() { // false - false
+    public void testIsTokenValidWithWrongUsernameAndExpiredToken() {
         when(userDetails.getUsername()).thenReturn("correctUsername");
 
         String wrongUsernameAndExpiredToken = Jwts.builder()
