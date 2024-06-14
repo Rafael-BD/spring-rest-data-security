@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -28,15 +27,7 @@ public class JwtService {
     private long refreshExpiration;
 
     public String extractUsername(String token) {
-        try {
-            return extractClaim(token, Claims::getSubject);
-        } catch (ExpiredJwtException e) {
-            // If the token is expired, the jjwt library throws an ExpiredJwtException when we try to extract claims.
-            // To handle this, we catch the ExpiredJwtException and return an empty string.
-            // This allows the isTokenValid method to continue execution and correctly return false for expired tokens.
-            return "";
-        }
-        
+        return extractClaim(token, Claims::getSubject);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

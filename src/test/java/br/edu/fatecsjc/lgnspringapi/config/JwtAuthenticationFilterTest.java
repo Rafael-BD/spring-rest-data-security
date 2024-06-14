@@ -144,4 +144,57 @@ public class JwtAuthenticationFilterTest {
         verify(tokenRepository, times(1)).findByToken(anyString());
         verify(jwtService, times(1)).isTokenValid(anyString(), any(UserDetails.class));
     }
+
+    @Test
+    public void testDoFilterInternalWithExpiredToken() throws Exception {
+        token.setExpired(true);
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testDoFilterInternalWithRevokedToken() throws Exception {
+        token.setRevoked(true);
+
+        when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testDoFilterInternalWithInvalidBearer() throws Exception {
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Invalid Bearer");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verifyNoInteractions(jwtService);
+        verifyNoInteractions(userDetailsService);
+        verifyNoInteractions(tokenRepository);
+    }
 }
