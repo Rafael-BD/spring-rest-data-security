@@ -43,7 +43,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValid() { // true - true
+    public void testIsTokenValid() {
         when(userDetails.getUsername()).thenReturn("username");
         String token = jwtService.generateToken(userDetails);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
@@ -59,7 +59,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValidWithExpiredToken() { // true - false
+    public void testIsTokenValidWithExpiredToken() {
         when(userDetails.getUsername()).thenReturn("username");
 
         String token = Jwts.builder()
@@ -76,7 +76,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValidWithWrongUsername() { // false - true ---
+    public void testIsTokenValidWithWrongUsername() {
         when(userDetails.getUsername()).thenReturn("correctUsername");
 
         String wrongUsernameToken = Jwts.builder()
@@ -90,21 +90,23 @@ public class JwtServiceTest {
         assertFalse(isValid);
     }
 
-    // @Test
-    // public void testIsTokenValidWithWrongUsernameAndExpiredToken() { // false - false
-    //     when(userDetails.getUsername()).thenReturn("correctUsername");
+    @Test
+    public void testIsTokenValidWithWrongUsernameAndExpiredToken() { // false - false
+        when(userDetails.getUsername()).thenReturn("correctUsername");
 
-    //     String wrongUsernameAndExpiredToken = Jwts.builder()
-    //         .setSubject("wrongUsername")
-    //         .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
-    //         .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
-    //         .compact();
+        String wrongUsernameAndExpiredToken = Jwts.builder()
+            .setSubject("wrongUsername")
+            .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
+            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .compact();
 
-    //     ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-    //         jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
-    //     });
+        //when(jwtService.isTokenExpired(wrongUsernameAndExpiredToken)).thenReturn(true);
 
-    //     assertNotNull(thrown);
-    // }
+        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
+            jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
+        });
+
+        assertNotNull(thrown);
+    }
 
 }

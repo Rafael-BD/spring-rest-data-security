@@ -72,12 +72,12 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithNoAuthHeader() throws Exception {
+    public void testDoFilterInternalWithNoAuthHeader() throws Exception { // L43 authHeader == null
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getServletPath()).thenReturn("/auth/authenticate");
+        when(request.getServletPath()).thenReturn("/na");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -87,7 +87,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithInvalidAuthHeader() throws Exception {
+    public void testDoFilterInternalWithAuthPath() throws Exception {
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -185,23 +185,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithInvalidBearer() throws Exception {
-        FilterChain filterChain = mock(FilterChain.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        when(request.getHeader("Authorization")).thenReturn("Invalid Bearer");
-        when(request.getServletPath()).thenReturn("/na");
-
-        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
-
-        verifyNoInteractions(jwtService);
-        verifyNoInteractions(userDetailsService);
-        verifyNoInteractions(tokenRepository);
-    }
-
-    @Test
-    public void testDoFilterInternalWithAuthHeaderNotStartingWithBearer() throws Exception {
+    public void testDoFilterInternalWithAuthHeaderNotStartingWithBearer() throws Exception { // L43 !authHeader.startsWith("Bearer ") == true
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
