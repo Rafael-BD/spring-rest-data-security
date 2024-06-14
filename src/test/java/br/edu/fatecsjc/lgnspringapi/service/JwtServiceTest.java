@@ -4,8 +4,6 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 
@@ -43,7 +40,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValid() {
+    public void testIsTokenValid() { // true - true
         when(userDetails.getUsername()).thenReturn("username");
         String token = jwtService.generateToken(userDetails);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
@@ -59,7 +56,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValidWithExpiredToken() {
+    public void testIsTokenValidWithExpiredToken() { // true - false
         when(userDetails.getUsername()).thenReturn("username");
 
         String token = Jwts.builder()
@@ -68,15 +65,12 @@ public class JwtServiceTest {
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(token, userDetails);
-        });
-
-        assertNotNull(thrown);
+        boolean isValid = jwtService.isTokenValid(token, userDetails);
+        assertFalse(isValid);
     }
 
     @Test
-    public void testIsTokenValidWithWrongUsername() {
+    public void testIsTokenValidWithWrongUsername() { // false - true
         when(userDetails.getUsername()).thenReturn("correctUsername");
 
         String wrongUsernameToken = Jwts.builder()
@@ -91,15 +85,7 @@ public class JwtServiceTest {
     }
 
     @Test
-    public void testIsTokenValidWithNonExpiredToken() {
-        when(userDetails.getUsername()).thenReturn("username");
-        String token = jwtService.generateToken(userDetails);
-        boolean isValid = jwtService.isTokenValid(token, userDetails);
-        assertTrue(isValid);
-    }
-
-    @Test
-    public void testIsTokenValidWithWrongUsernameAndExpiredToken() {
+    public void testIsTokenValidWithWrongUsernameAndExpiredToken() { // false - false
         when(userDetails.getUsername()).thenReturn("correctUsername");
 
         String wrongUsernameAndExpiredToken = Jwts.builder()
@@ -108,11 +94,8 @@ public class JwtServiceTest {
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
-        });
-
-        assertNotNull(thrown);
+        boolean isValid = jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
+        assertFalse(isValid);
     }
 
 }

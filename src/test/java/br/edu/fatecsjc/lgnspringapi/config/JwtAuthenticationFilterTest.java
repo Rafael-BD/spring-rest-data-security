@@ -16,25 +16,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import br.edu.fatecsjc.lgnspringapi.entity.Token;
 import br.edu.fatecsjc.lgnspringapi.entity.User;
-import br.edu.fatecsjc.lgnspringapi.repository.TokenRepository;
-import br.edu.fatecsjc.lgnspringapi.service.JwtService;
-
-
 import br.edu.fatecsjc.lgnspringapi.enums.Role;
 import br.edu.fatecsjc.lgnspringapi.enums.TokenType;
-
+import br.edu.fatecsjc.lgnspringapi.repository.TokenRepository;
+import br.edu.fatecsjc.lgnspringapi.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
 public class JwtAuthenticationFilterTest {
 
     @Mock
@@ -95,7 +90,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getServletPath()).thenReturn("/auth/authenticate");
+        when(request.getServletPath()).thenReturn("/auth");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -104,47 +99,49 @@ public class JwtAuthenticationFilterTest {
         verifyNoInteractions(tokenRepository);
     }
 
-    // @Test
-    // public void testDoFilterInternalWithValidToken() throws Exception {
-    //     when(jwtService.extractUsername(anyString())).thenReturn("username");
-    //     when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
-    //     when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-    //     when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
+    @Test
+    public void testDoFilterInternalWithValidToken() throws Exception {
+        when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
 
-    //     FilterChain filterChain = mock(FilterChain.class);
-    //     HttpServletRequest request = mock(HttpServletRequest.class);
-    //     HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
 
-    //     when(request.getHeader("Authorization")).thenReturn("Bearer token");
-    //     when(request.getServletPath()).thenReturn("/notAuth");
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
 
-    //     jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
-    //     verify(jwtService, times(1)).extractUsername(anyString());
-    //     verify(userDetailsService, times(1)).loadUserByUsername(anyString());
-    //     verify(tokenRepository, times(1)).findByToken(anyString());
-    //     verify(jwtService, times(1)).isTokenValid(anyString(), any(UserDetails.class));
-    // }
+        verify(filterChain, times(1)).doFilter(request, response);
+        verify(jwtService, times(1)).extractUsername(anyString());
+        verify(userDetailsService, times(1)).loadUserByUsername(anyString());
+        verify(tokenRepository, times(1)).findByToken(anyString());
+        verify(jwtService, times(1)).isTokenValid(anyString(), any(UserDetails.class));
+    }
 
-    // @Test
-    // public void testDoFilterInternalWithInvalidToken() throws Exception {
-    //     when(jwtService.extractUsername(anyString())).thenReturn("username");
-    //     when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
-    //     when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-    //     when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(false);
+    @Test
+    public void testDoFilterInternalWithInvalidToken() throws Exception {
+        when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(false);
 
-    //     FilterChain filterChain = mock(FilterChain.class);
-    //     HttpServletRequest request = mock(HttpServletRequest.class);
-    //     HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
 
-    //     when(request.getHeader("Authorization")).thenReturn("Bearer token");
-    //     when(request.getServletPath()).thenReturn("/notAuth");
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
 
-    //     jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
-    //     verify(jwtService, times(1)).extractUsername(anyString());
-    //     verify(userDetailsService, times(1)).loadUserByUsername(anyString());
-    //     verify(tokenRepository, times(1)).findByToken(anyString());
-    //     verify(jwtService, times(1)).isTokenValid(anyString(), any(UserDetails.class));
-    // }
+        verify(filterChain, times(1)).doFilter(request, response);
+        verify(jwtService, times(1)).extractUsername(anyString());
+        verify(userDetailsService, times(1)).loadUserByUsername(anyString());
+        verify(tokenRepository, times(1)).findByToken(anyString());
+        verify(jwtService, times(1)).isTokenValid(anyString(), any(UserDetails.class));
+    }
 }
