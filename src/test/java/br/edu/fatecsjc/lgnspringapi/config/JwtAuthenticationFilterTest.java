@@ -102,7 +102,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithValidToken() throws Exception {
+    public void testDoFilterInternalWithValidToken() throws Exception { // L52 true - true
         when(jwtService.extractUsername(anyString())).thenReturn("username");
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
         when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
@@ -125,7 +125,10 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithInvalidToken() throws Exception {
+    public void testDoFilterInternalWithInvalidToken() throws Exception { // L52 false - false
+        token.setRevoked(true);
+        token.setExpired(true);
+            
         when(jwtService.extractUsername(anyString())).thenReturn("username");
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
         when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
@@ -148,7 +151,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithExpiredToken() throws Exception {
+    public void testDoFilterInternalWithExpiredToken() throws Exception { // L52 false - true
         token.setExpired(true);
 
         FilterChain filterChain = mock(FilterChain.class);
@@ -164,7 +167,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithRevokedToken() throws Exception {
+    public void testDoFilterInternalWithRevokedToken() throws Exception { // L52 true - false
         token.setRevoked(true);
 
         when(jwtService.extractUsername(anyString())).thenReturn("username");
@@ -201,7 +204,23 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception {
+    public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception { //L49 false - false
+        //SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testDoFilterInternalWithNonNullUserEmail() throws Exception { // L49 false - true
         SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
 
         FilterChain filterChain = mock(FilterChain.class);
@@ -217,34 +236,14 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithRevokedButNotExpiredToken() throws Exception {
-        token.setRevoked(true);
-        token.setExpired(false);
+    public void testDoFilterInternalWithNonNullAuthentication() throws Exception { // L49 true - false
+        //SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(jwtService.extractUsername(anyString())).thenReturn("username");
-        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
-        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
-
-        FilterChain filterChain = mock(FilterChain.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
-
-        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
-
-        verify(filterChain, times(1)).doFilter(request, response);
-    }
-
-    @Test
-    public void testDoFilterInternalWithNonNullAuthentication() throws Exception {
-        SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
-
-        FilterChain filterChain = mock(FilterChain.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
         when(request.getServletPath()).thenReturn("/na");
 
