@@ -79,7 +79,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -116,7 +116,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -143,7 +143,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -164,7 +164,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -183,7 +183,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -197,7 +197,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Invalid token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -216,7 +216,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -233,7 +233,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -250,7 +250,7 @@ public class JwtAuthenticationFilterTest {
 
         when(jwtService.extractUsername(anyString())).thenReturn("username");
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
@@ -267,7 +267,7 @@ public class JwtAuthenticationFilterTest {
 
         when(jwtService.extractUsername(anyString())).thenReturn(null);
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/na");
+        when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
