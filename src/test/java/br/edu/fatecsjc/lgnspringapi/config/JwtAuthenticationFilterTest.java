@@ -159,12 +159,16 @@ public class JwtAuthenticationFilterTest {
         SecurityContextHolder.getContext().setAuthentication(null);
         token.setExpired(true);
 
+        when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
+
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
         when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
@@ -178,13 +182,15 @@ public class JwtAuthenticationFilterTest {
         token.setRevoked(true);
 
         when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
 
         FilterChain filterChain = mock(FilterChain.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
         when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
