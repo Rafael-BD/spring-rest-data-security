@@ -74,11 +74,8 @@ public class JwtServiceTest {
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(token, userDetails);
-        });
-
-        assertNotNull(thrown);
+        boolean isValid = jwtService.isTokenValid(token, userDetails);
+        assertFalse(isValid);
     }
 
     @Test
@@ -105,8 +102,6 @@ public class JwtServiceTest {
             .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
-
-        //when(jwtService.isTokenExpired(wrongUsernameAndExpiredToken)).thenReturn(true);
 
         boolean isValid = jwtServiceMock.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
         assertFalse(isValid);
