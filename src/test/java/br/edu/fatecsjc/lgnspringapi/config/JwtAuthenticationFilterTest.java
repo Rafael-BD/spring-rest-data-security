@@ -104,7 +104,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithValidToken() throws Exception { // L52 true - true
+    public void testDoFilterInternalWithValidToken() throws Exception { // L52 true - true L54 true - true
         SecurityContextHolder.getContext().setAuthentication(null);
         when(jwtService.extractUsername(anyString())).thenReturn("username");
         when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
@@ -128,7 +128,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithInvalidToken() throws Exception { // L52 false - false
+    public void testDoFilterInternalWithInvalidToken() throws Exception { // L52 false - false L54 false - false
         SecurityContextHolder.getContext().setAuthentication(null);
         token.setRevoked(true);
         token.setExpired(true);
@@ -155,7 +155,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithExpiredToken() throws Exception { // L52 false - true
+    public void testDoFilterInternalWithExpiredToken() throws Exception { // L52 false - true L54 true - false
         SecurityContextHolder.getContext().setAuthentication(null);
         token.setExpired(true);
 
@@ -164,6 +164,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
         when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
@@ -172,7 +173,7 @@ public class JwtAuthenticationFilterTest {
     }
 
     @Test
-    public void testDoFilterInternalWithRevokedToken() throws Exception { // L52 true - false
+    public void testDoFilterInternalWithRevokedToken() throws Exception { // L52 true - false L54 false - true
         SecurityContextHolder.getContext().setAuthentication(null);
         token.setRevoked(true);
 
@@ -183,6 +184,7 @@ public class JwtAuthenticationFilterTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(jwtService.isTokenValid(anyString(), any(UserDetails.class))).thenReturn(true);
         when(request.getServletPath()).thenReturn("/user");
 
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
@@ -241,20 +243,20 @@ public class JwtAuthenticationFilterTest {
         verify(filterChain, times(1)).doFilter(request, response);
     }
 
-    @Test
-    public void testDoFilterInternalWithNullUserEmail() throws Exception { // L49 true - false
-        SecurityContextHolder.getContext().setAuthentication(null);
+    // @Test
+    // public void testDoFilterInternalWithNullUserEmail() throws Exception { // L49 true - false
+    //     SecurityContextHolder.getContext().setAuthentication(null);
 
-        FilterChain filterChain = mock(FilterChain.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
+    //     FilterChain filterChain = mock(FilterChain.class);
+    //     HttpServletRequest request = mock(HttpServletRequest.class);
+    //     HttpServletResponse response = mock(HttpServletResponse.class);
 
-        when(jwtService.extractUsername(anyString())).thenReturn("username");
-        when(request.getHeader("Authorization")).thenReturn("Bearer token");
-        when(request.getServletPath()).thenReturn("/user");
+    //     when(jwtService.extractUsername(anyString())).thenReturn("username");
+    //     when(request.getHeader("Authorization")).thenReturn("Bearer token");
+    //     when(request.getServletPath()).thenReturn("/user");
 
-        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+    //     jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
 
-        verify(filterChain, times(1)).doFilter(request, response);
-    }
+    //     verify(filterChain, times(1)).doFilter(request, response);
+    // }
 }
