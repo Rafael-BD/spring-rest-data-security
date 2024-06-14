@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,6 +37,9 @@ public class JwtServiceTest {
 
     @MockBean
     private UserDetails userDetails;
+
+    @InjectMocks
+    private JwtService jwtServiceMock;
 
     @Test
     public void testGenerateToken() {
@@ -70,11 +75,8 @@ public class JwtServiceTest {
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(token, userDetails);
-        });
-
-        assertNotNull(thrown);
+        boolean isValid = jwtService.isTokenValid(token, userDetails);
+        assertFalse(isValid);
     }
 
     @Test
@@ -102,11 +104,8 @@ public class JwtServiceTest {
             .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
-        ExpiredJwtException thrown = assertThrows(ExpiredJwtException.class, () -> {
-            jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
-        });
-
-        assertNotNull(thrown);
+        boolean isValid = jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
+        assertFalse(isValid);
     }
 
 }
