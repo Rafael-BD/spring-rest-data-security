@@ -16,6 +16,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -196,5 +198,74 @@ public class JwtAuthenticationFilterTest {
         verifyNoInteractions(jwtService);
         verifyNoInteractions(userDetailsService);
         verifyNoInteractions(tokenRepository);
+    }
+
+    @Test
+    public void testDoFilterInternalWithAuthHeaderNotStartingWithBearer() throws Exception {
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Invalid token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verifyNoInteractions(jwtService);
+        verifyNoInteractions(userDetailsService);
+        verifyNoInteractions(tokenRepository);
+    }
+
+    @Test
+    public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception {
+        SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testDoFilterInternalWithRevokedButNotExpiredToken() throws Exception {
+        token.setRevoked(true);
+        token.setExpired(false);
+
+        when(jwtService.extractUsername(anyString())).thenReturn("username");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(user);
+        when(tokenRepository.findByToken(anyString())).thenReturn(Optional.of(token));
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testDoFilterInternalWithNonNullAuthentication() throws Exception {
+        SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/na");
+
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
     }
 }

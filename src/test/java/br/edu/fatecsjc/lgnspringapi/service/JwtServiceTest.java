@@ -3,6 +3,7 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -74,20 +75,20 @@ public class JwtServiceTest {
         assertNotNull(thrown);
     }
 
-    // @Test
-    // public void testIsTokenValidWithWrongUsername() { // false - true
-    //     when(userDetails.getUsername()).thenReturn("correctUsername");
+    @Test
+    public void testIsTokenValidWithWrongUsername() { // false - true ---
+        when(userDetails.getUsername()).thenReturn("correctUsername");
 
-    //     String wrongUsernameToken = Jwts.builder()
-    //         .setSubject("wrongUsername")
-    //         .setIssuedAt(new Date(System.currentTimeMillis()))
-    //         .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-    //         .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
-    //         .compact();
+        String wrongUsernameToken = Jwts.builder()
+            .setSubject("wrongUsername")
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .compact();
 
-    //     boolean isValid = jwtService.isTokenValid(wrongUsernameToken, userDetails);
-    //     assertFalse(isValid);
-    // }
+        boolean isValid = jwtService.isTokenValid(wrongUsernameToken, userDetails);
+        assertFalse(isValid);
+    }
 
     // @Test
     // public void testIsTokenValidWithWrongUsernameAndExpiredToken() { // false - false
