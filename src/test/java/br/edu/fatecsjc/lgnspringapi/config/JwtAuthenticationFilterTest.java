@@ -214,23 +214,24 @@ public class JwtAuthenticationFilterTest {
         verifyNoInteractions(tokenRepository);
     }
 
-    // @Test
-    // public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception { //L49 false - false
-    //     SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
-    //     token.setUser(null);
+    @Test
+    public void testDoFilterInternalWithNonNullUserEmailAndAuthentication() throws Exception { //L49 false - false
+        SecurityContextHolder.getContext().setAuthentication(mock(Authentication.class));
+        token.setUser(null);
 
-    //     FilterChain filterChain = mock(FilterChain.class);
-    //     HttpServletRequest request = mock(HttpServletRequest.class);
-    //     HttpServletResponse response = mock(HttpServletResponse.class);
+        when(jwtService.extractUsername(token.getToken())).thenReturn(null);
 
-    //     when(request.getHeader("Authorization")).thenReturn("Bearer token");
-    //     when(jwtService.extractUsername(token.getToken())).thenReturn(null);
-    //     when(request.getServletPath()).thenReturn("/user");
+        FilterChain filterChain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
 
-    //     jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(request.getServletPath()).thenReturn("/user");
 
-    //     verify(filterChain, times(1)).doFilter(request, response);
-    // }
+        jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+    }
 
     // @Test
     // public void testDoFilterInternalWithNonNullUserEmail() throws Exception { // L49 false - true
