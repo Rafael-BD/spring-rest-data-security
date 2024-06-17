@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,6 +54,13 @@ class MarathonServiceTest {
         when(marathonRepository.findById(anyLong())).thenReturn(Optional.of(marathon));
         marathonService.findById(1L);
         verify(marathonConverter).convertToDto(marathon);
+    }
+
+    @Test
+    void testFindByIdWithMarathonRepositoryNull() {
+        when(marathonRepository.findById(anyLong())).thenReturn(Optional.empty());
+        MarathonDTO result = marathonService.findById(1L);
+        assertThat(result).isNull();
     }
 
     @Test

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,6 +53,13 @@ class OrganizationServiceTest {
         when(organizationRepository.findById(anyLong())).thenReturn(Optional.of(organization));
         organizationService.findById(1L);
         verify(organizationConverter).convertToDto(organization);
+    }
+
+    @Test
+    void testFindByIdWithOrganizationRepositoryNull() {
+        when(organizationRepository.findById(anyLong())).thenReturn(Optional.empty());
+        OrganizationDTO result = organizationService.findById(1L);
+        assertThat(result).isNull();
     }
 
     @Test

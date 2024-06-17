@@ -46,6 +46,13 @@ class GroupServiceTest {
     }
 
     @Test
+    void testFindByIdWithGroupRepositoryNull() {
+        when(groupRepository.findById(1L)).thenReturn(Optional.empty());
+        GroupDTO result = groupService.findById(1L);
+        assertThat(result).isNull();
+    }
+
+    @Test
     void testSaveWithId() {
         Group group = new Group();
         group.setMembers(new ArrayList<>());

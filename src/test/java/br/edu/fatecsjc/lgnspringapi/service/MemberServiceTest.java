@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,13 @@ class MemberServiceTest {
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
         memberService.findById(1L);
         verify(memberConverter).convertToDto(member);
+    }
+
+    @Test
+    void testFindByIdWithMemberRepositoryNull() {
+        when(memberRepository.findById(anyLong())).thenReturn(Optional.empty());
+        MemberDTO result = memberService.findById(1L);
+        assertThat(result).isNull();
     }
 
     @Test
