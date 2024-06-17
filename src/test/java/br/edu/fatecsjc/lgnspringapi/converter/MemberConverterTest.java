@@ -27,7 +27,7 @@ import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.MarathonRepository;
 
 
-public class MemberConverterTest {
+class MemberConverterTest {
 
     @Mock
     private ModelMapper modelMapper;
@@ -93,7 +93,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntity() {
+    void testConvertToEntity() {
         when(modelMapper.map(memberDTO, Member.class)).thenReturn(member);
         when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
         when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
@@ -107,7 +107,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntity() {
+    void testConvertToEntityWithExistingEntity() {
         when(modelMapper.map(memberDTO, Member.class)).thenReturn(member);
         when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
         when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
@@ -121,7 +121,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToDto() {
+    void testConvertToDto() {
         when(modelMapper.map(member, MemberDTO.class)).thenReturn(memberDTO);
 
         MemberDTO result = memberConverter.convertToDto(member);
@@ -130,7 +130,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithNullGroupId() {
+    void testConvertToEntityWithNullGroupId() {
         when(modelMapper.map(memberDtoWithoutGroupId, Member.class)).thenReturn(memberWithoutGroup);
         when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
 
@@ -141,7 +141,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntityAndNullGroupId() {
+    void testConvertToEntityWithExistingEntityAndNullGroupId() {
         when(modelMapper.map(memberDtoWithoutGroupId, Member.class)).thenReturn(memberWithoutGroup);
         when(marathonRepository.findById(1L)).thenReturn(Optional.of(marathon));
 
@@ -152,7 +152,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToDtoWithNullGroup() {
+    void testConvertToDtoWithNullGroup() {
         memberWithoutGroup.setMarathons(Arrays.asList(marathon));
 
         when(modelMapper.map(memberWithoutGroup, MemberDTO.class)).thenReturn(memberDtoWithoutGroupId);
@@ -164,7 +164,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntityList() {
+    void testConvertToEntityList() {
         List<MemberDTO> dtos = Arrays.asList(memberDTO);
         List<Member> members = Arrays.asList(member);
         when(modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType())).thenReturn(members);
@@ -179,7 +179,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToEntityListWithNullGroupId() {
+    void testConvertToEntityListWithNullGroupId() {
         List<MemberDTO> dtos = Arrays.asList(memberDtoWithoutGroupId);
         List<Member> members = Arrays.asList(memberWithoutGroup);
         when(modelMapper.map(dtos, new TypeToken<List<Member>>(){}.getType())).thenReturn(members);
@@ -193,7 +193,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToDtoList() {
+    void testConvertToDtoList() {
         List<Member> members = Arrays.asList(member);
         List<MemberDTO> dtos = Arrays.asList(memberDTO);
         when(modelMapper.map(members, new TypeToken<List<MemberDTO>>(){}.getType())).thenReturn(dtos);
@@ -204,7 +204,7 @@ public class MemberConverterTest {
     }
 
     @Test
-    public void testConvertToDtoListWithNullMarathonIds() {
+    void testConvertToDtoListWithNullMarathonIds() {
         Member memberWithNullMarathons = new Member();
         memberWithNullMarathons.setId(1L);
         memberWithNullMarathons.setName("Member Name");

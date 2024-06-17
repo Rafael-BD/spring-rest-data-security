@@ -5,6 +5,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.Mock;
 import static org.mockito.Mockito.never;
@@ -65,6 +66,8 @@ public class LogoutServiceTest {
         when(tokenRepository.findByToken("invalidToken")).thenReturn(Optional.empty());
 
         logoutService.logout(request, response, authentication);
+
+        verify(tokenRepository, never()).save(any(Token.class));
     }
 
     @Test

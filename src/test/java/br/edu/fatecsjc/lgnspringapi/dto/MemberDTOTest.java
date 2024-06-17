@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MemberDTOTest {
+class MemberDTOTest {
 
     private MemberDTO memberDTO;
 
@@ -17,7 +17,7 @@ public class MemberDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         Integer ageValue = 30;
@@ -50,7 +50,7 @@ public class MemberDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         Integer ageValue = 30;
@@ -71,7 +71,7 @@ public class MemberDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         Integer ageValue = 30;
@@ -117,35 +117,35 @@ public class MemberDTOTest {
     }
 
     @Test
-    public void testId() {
+    void testId() {
         Long idValue = 1L;
         memberDTO.setId(idValue);
         assertEquals(idValue, memberDTO.getId());
     }
 
     @Test
-    public void testName() {
+    void testName() {
         String nameValue = "Test Name";
         memberDTO.setName(nameValue);
         assertEquals(nameValue, memberDTO.getName());
     }
 
     @Test
-    public void testAge() {
+    void testAge() {
         Integer ageValue = 25;
         memberDTO.setAge(ageValue);
         assertEquals(ageValue, memberDTO.getAge());
     }
 
     @Test
-    public void testMarathonIds() {
+    void testMarathonIds() {
         List<Long> marathonIdsValue = Arrays.asList(1L, 2L, 3L);
         memberDTO.setMarathonIds(marathonIdsValue);
         assertEquals(marathonIdsValue, memberDTO.getMarathonIds());
     }
 
     @Test
-    public void testGroupId() {
+    void testGroupId() {
         Long groupIdValue = 1L;
         memberDTO.setGroupId(groupIdValue);
         assertEquals(groupIdValue, memberDTO.getGroupId());

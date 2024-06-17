@@ -14,7 +14,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Group;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class GroupRepositoryTest {
+class GroupRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -23,7 +23,7 @@ public class GroupRepositoryTest {
     private GroupRepository groupRepository;
 
     @Test
-    public void testFindGroupById() {
+    void testFindGroupById() {
         Group group = new Group();
         group.setName("Test Group");
         entityManager.persist(group);
@@ -36,13 +36,13 @@ public class GroupRepositoryTest {
     }
 
     @Test
-    public void testNotFindGroupByInvalidId() {
+    void testNotFindGroupByInvalidId() {
         Optional<Group> fromDb = groupRepository.findById(-11L);
         assertThat(fromDb).isNotPresent();
     }
 
     @Test
-    public void testFindAllGroups() {
+    void testFindAllGroups() {
         Group group1 = new Group();
         Group group2 = new Group();
         Group group3 = new Group();
@@ -59,7 +59,7 @@ public class GroupRepositoryTest {
     }
 
     @Test
-    public void testSaveGroup() {
+    void testSaveGroup() {
         Group group = new Group();
         group.setName("Test Group");
 
@@ -69,7 +69,7 @@ public class GroupRepositoryTest {
     }
 
     @Test
-    public void testDeleteGroupById() {
+    void testDeleteGroupById() {
         Group group1 = new Group();
         Group group2 = new Group();
 

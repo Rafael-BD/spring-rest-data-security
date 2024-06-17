@@ -44,7 +44,7 @@ public class AuthenticationApiTestIT {
 
     @Test
     @Order(0)
-    public void testRegister() {
+    void testRegister() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{"
@@ -67,7 +67,7 @@ public class AuthenticationApiTestIT {
 
     @Test
     @Order(1)
-    public void testAuthenticate() {
+    void testAuthenticate() {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
@@ -92,7 +92,7 @@ public class AuthenticationApiTestIT {
 
     @Test
     @Order(2)
-    public void testRefreshToken() {
+    void testRefreshToken() {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {

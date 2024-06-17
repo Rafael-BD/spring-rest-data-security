@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import br.edu.fatecsjc.lgnspringapi.enums.Role;
 
-public class RegisterRequestDTOTest {
+class RegisterRequestDTOTest {
 
     private RegisterRequestDTO registerRequestDTO;
 
@@ -16,7 +16,7 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         String firstnameValue = "Test Firstname";
         String lastnameValue = "Test Lastname";
         String emailValue = "test@mail.com";
@@ -49,7 +49,7 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         String firstnameValue = "Test Firstname Getter Setter";
         String lastnameValue = "Test Lastname Getter Setter";
         String emailValue = "testeGetterSetter@mail.com";
@@ -70,7 +70,7 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         String firstnameValue = "Test Firstname";
         String lastnameValue = "Test Lastname";
         String emailValue = "test@mail.com";
@@ -107,35 +107,35 @@ public class RegisterRequestDTOTest {
     }
 
     @Test
-    public void testFirstname() {
+    void testFirstname() {
         String firstnameValue = "Test Firstname";
         registerRequestDTO.setFirstname(firstnameValue);
         assertEquals(firstnameValue, registerRequestDTO.getFirstname());
     }
 
     @Test
-    public void testLastname() {
+    void testLastname() {
         String lastnameValue = "Test Lastname";
         registerRequestDTO.setLastname(lastnameValue);
         assertEquals(lastnameValue, registerRequestDTO.getLastname());
     }
 
     @Test
-    public void testEmail() {
+    void testEmail() {
         String emailValue = "test@mail.com";
         registerRequestDTO.setEmail(emailValue);
         assertEquals(emailValue, registerRequestDTO.getEmail());
     }
 
     @Test
-    public void testPassword() {
+    void testPassword() {
         String passwordValue = "test_password";
         registerRequestDTO.setPassword(passwordValue);
         assertEquals(passwordValue, registerRequestDTO.getPassword());
     }
 
     @Test
-    public void testRole() {
+    void testRole() {
         Role roleValue = Role.USER;
         registerRequestDTO.setRole(roleValue);
         assertEquals(roleValue, registerRequestDTO.getRole());

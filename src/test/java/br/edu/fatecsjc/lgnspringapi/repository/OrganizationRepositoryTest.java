@@ -15,7 +15,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Organization;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class OrganizationRepositoryTest {
+class OrganizationRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -24,7 +24,7 @@ public class OrganizationRepositoryTest {
     private OrganizationRepository organizationRepository;
 
     @Test
-    public void testFindOrganizationById() {
+    void testFindOrganizationById() {
         Organization organization = Organization.builder()
             .name("Organization1")
             .cep("12345")
@@ -52,13 +52,13 @@ public class OrganizationRepositoryTest {
     }
 
     @Test
-    public void testNotFindOrganizationByInvalidId() {
+    void testNotFindOrganizationByInvalidId() {
         Optional<Organization> fromDb = organizationRepository.findById(-11L);
         assertThat(fromDb).isNotPresent();
     }
 
     @Test
-    public void testFindAllOrganizations() {
+    void testFindAllOrganizations() {
         Organization organization1 = Organization.builder().name("Organization1").build();
         Organization organization2 = Organization.builder().name("Organization2").build();
         Organization organization3 = Organization.builder().name("Organization3").build();
@@ -74,7 +74,7 @@ public class OrganizationRepositoryTest {
     }
 
     @Test
-    public void testSaveOrganization() {
+    void testSaveOrganization() {
         Organization organization = Organization.builder().name("Organization1").build();
 
         Organization savedOrganization = organizationRepository.save(organization);
@@ -83,7 +83,7 @@ public class OrganizationRepositoryTest {
     }
 
     @Test
-    public void testDeleteOrganizationById() {
+    void testDeleteOrganizationById() {
         Organization organization1 = Organization.builder().name("Organization1").build();
         Organization organization2 = Organization.builder().name("Organization2").build();
 

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class GroupDTOTest {
+class GroupDTOTest {
 
     private GroupDTO groupDTO;
 
@@ -17,7 +17,7 @@ public class GroupDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         MemberDTO memberDTO = new MemberDTO();
@@ -45,7 +45,7 @@ public class GroupDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         MemberDTO memberDTO = new MemberDTO();
@@ -61,7 +61,7 @@ public class GroupDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         MemberDTO memberDTO = new MemberDTO();
@@ -83,21 +83,21 @@ public class GroupDTOTest {
     }
 
     @Test
-    public void testId() {
+    void testId() {
         Long idValue = 1L;
         groupDTO.setId(idValue);
         assertEquals(idValue, groupDTO.getId());
     }
 
     @Test
-    public void testName() {
+    void testName() {
         String nameValue = "Test Name";
         groupDTO.setName(nameValue);
         assertEquals(nameValue, groupDTO.getName());
     }
 
     @Test
-    public void testMembers() {
+    void testMembers() {
         MemberDTO memberDTO = new MemberDTO();
         List<MemberDTO> membersValue = Arrays.asList(memberDTO);
         groupDTO.setMembers(membersValue);

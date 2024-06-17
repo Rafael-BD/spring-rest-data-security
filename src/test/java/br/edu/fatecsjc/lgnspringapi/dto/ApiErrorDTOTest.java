@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ApiErrorDTOTest {
+class ApiErrorDTOTest {
 
     private ApiErrorDTO apiErrorDTO;
 
@@ -19,7 +19,7 @@ public class ApiErrorDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         String messageValue = "Test Message";
         Instant timestampValue = Instant.now();
 
@@ -43,7 +43,7 @@ public class ApiErrorDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         String messageValue = "Test Message getter setter";
         Instant timestampValue = Instant.now();
 
@@ -55,7 +55,7 @@ public class ApiErrorDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         String messageValue = "Test Message";
         Instant timestampValue = Instant.now();
 
@@ -82,14 +82,14 @@ public class ApiErrorDTOTest {
     }
 
     @Test
-    public void testMessage() {
+    void testMessage() {
         String messageValue = "Test Message";
         apiErrorDTO.setMessage(messageValue);
         assertEquals(messageValue, apiErrorDTO.getMessage());
     }
 
     @Test
-    public void testTimestamp() {
+    void testTimestamp() {
         Instant timestampValue = Instant.now();
         apiErrorDTO.setTimestamp(timestampValue);
         assertEquals(timestampValue, apiErrorDTO.getTimestamp());

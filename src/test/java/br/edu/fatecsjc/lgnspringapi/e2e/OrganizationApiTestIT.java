@@ -75,7 +75,7 @@ public class OrganizationApiTestIT {
     }
 
     @Test
-    public void testCreateOrganization() {
+    void testCreateOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -111,7 +111,7 @@ public class OrganizationApiTestIT {
     }
 
     @Test
-    public void testGetAllOrganizations() {
+    void testGetAllOrganizations() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -125,7 +125,7 @@ public class OrganizationApiTestIT {
     }
 
     @Test
-    public void testGetOrganizationById() {
+    void testGetOrganizationById() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -140,7 +140,7 @@ public class OrganizationApiTestIT {
     }
 
     @Test
-    public void testUpdateOrganization() {
+    void testUpdateOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -176,7 +176,7 @@ public class OrganizationApiTestIT {
     }
 
     @Test
-    public void testDeleteOrganization() {
+    void testDeleteOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()

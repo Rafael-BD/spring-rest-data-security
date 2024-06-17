@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ChangePasswordRequestDTOTest {
+class ChangePasswordRequestDTOTest {
 
     private ChangePasswordRequestDTO changePasswordRequestDTO;
 
@@ -15,7 +15,7 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         String currentPasswordValue = "CurrentPassword";
         String newPasswordValue = "NewPassword";
         String confirmationPasswordValue = "ConfirmationPassword";
@@ -42,7 +42,7 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         String currentPasswordValue = "CurrentPasswordGetterSetter";
         String newPasswordValue = "NewPasswordGetterSetter";
         String confirmationPasswordValue = "ConfirmationPasswordGetterSetter";
@@ -57,7 +57,7 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         String currentPasswordValue = "CurrentPassword";
         String newPasswordValue = "NewPassword";
         String confirmationPasswordValue = "ConfirmationPassword";
@@ -78,21 +78,21 @@ public class ChangePasswordRequestDTOTest {
     }
 
     @Test
-    public void testCurrentPassword() {
+    void testCurrentPassword() {
         String currentPasswordValue = "current_password";
         changePasswordRequestDTO.setCurrentPassword(currentPasswordValue);
         assertEquals(currentPasswordValue, changePasswordRequestDTO.getCurrentPassword());
     }
 
     @Test
-    public void testNewPassword() {
+    void testNewPassword() {
         String newPasswordValue = "new_password";
         changePasswordRequestDTO.setNewPassword(newPasswordValue);
         assertEquals(newPasswordValue, changePasswordRequestDTO.getNewPassword());
     }
 
     @Test
-    public void testConfirmationPassword() {
+    void testConfirmationPassword() {
         String confirmationPasswordValue = "confirmation_password";
         changePasswordRequestDTO.setConfirmationPassword(confirmationPasswordValue);
         assertEquals(confirmationPasswordValue, changePasswordRequestDTO.getConfirmationPassword());

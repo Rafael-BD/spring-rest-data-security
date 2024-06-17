@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class OrganizationDTOTest {
+class OrganizationDTOTest {
 
     private OrganizationDTO organizationDTO;
 
@@ -17,7 +17,7 @@ public class OrganizationDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorAndBuilder() {
+    void testAllArgsConstructorAndBuilder() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         String cepValue = "12345-678";
@@ -63,7 +63,7 @@ public class OrganizationDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         String cepValue = "12345-678";
@@ -100,7 +100,7 @@ public class OrganizationDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         Long idValue = 1L;
         String nameValue = "Test Name";
         String cepValue = "12345-678";
@@ -158,70 +158,70 @@ public class OrganizationDTOTest {
     }
 
     @Test
-    public void testId() {
+    void testId() {
         Long idValue = 1L;
         organizationDTO.setId(idValue);
         assertEquals(idValue, organizationDTO.getId());
     }
 
     @Test
-    public void testName() {
+    void testName() {
         String nameValue = "Test Name";
         organizationDTO.setName(nameValue);
         assertEquals(nameValue, organizationDTO.getName());
     }
 
     @Test
-    public void testCep() {
+    void testCep() {
         String cepValue = "12345-678";
         organizationDTO.setCep(cepValue);
         assertEquals(cepValue, organizationDTO.getCep());
     }
 
     @Test
-    public void testNumber() {
+    void testNumber() {
         String numberValue = "123";
         organizationDTO.setNumber(numberValue);
         assertEquals(numberValue, organizationDTO.getNumber());
     }
 
     @Test
-    public void testStreet() {
+    void testStreet() {
         String streetValue = "Test Street";
         organizationDTO.setStreet(streetValue);
         assertEquals(streetValue, organizationDTO.getStreet());
     }
 
     @Test
-    public void testCity() {
+    void testCity() {
         String cityValue = "Test City";
         organizationDTO.setCity(cityValue);
         assertEquals(cityValue, organizationDTO.getCity());
     }
 
     @Test
-    public void testState() {
+    void testState() {
         String stateValue = "Test State";
         organizationDTO.setState(stateValue);
         assertEquals(stateValue, organizationDTO.getState());
     }
 
     @Test
-    public void testCountry() {
+    void testCountry() {
         String countryValue = "Test Country";
         organizationDTO.setCountry(countryValue);
         assertEquals(countryValue, organizationDTO.getCountry());
     }
 
     @Test
-    public void testInstitutionName() {
+    void testInstitutionName() {
         String institutionNameValue = "Test Institution";
         organizationDTO.setInstituition_name(institutionNameValue);
         assertEquals(institutionNameValue, organizationDTO.getInstituition_name());
     }
 
     @Test
-    public void testGroups() {
+    void testGroups() {
         GroupDTO groupDTO = new GroupDTO();
         List<GroupDTO> groupsValue = Arrays.asList(groupDTO);
         organizationDTO.setGroups(groupsValue);

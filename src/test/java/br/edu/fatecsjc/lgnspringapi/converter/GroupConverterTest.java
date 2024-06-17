@@ -24,7 +24,7 @@ import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Group;
 import br.edu.fatecsjc.lgnspringapi.entity.Member;
 
-public class GroupConverterTest {
+class GroupConverterTest {
 
     @Mock
     private ModelMapper modelMapper;
@@ -72,7 +72,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntity() {
+    void testConvertToEntity() {
         when(modelMapper.map(groupDTO, Group.class)).thenReturn(group);
 
         Group result = groupConverter.convertToEntity(groupDTO);
@@ -81,7 +81,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntity() {
+    void testConvertToEntityWithExistingEntity() {
         when(modelMapper.map(groupDTO, Group.class)).thenReturn(group);
 
         Group result = groupConverter.convertToEntity(groupDTO, group);
@@ -92,7 +92,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithNullMembers() {
+    void testConvertToEntityWithNullMembers() {
         Group existingEntity = new Group();
         existingEntity.setId(1L);
         existingEntity.setName("Existing Group");
@@ -111,7 +111,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToDto() {
+    void testConvertToDto() {
         when(modelMapper.map(group, GroupDTO.class)).thenReturn(groupDTO);
 
         GroupDTO result = groupConverter.convertToDto(group);
@@ -120,7 +120,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntityList() {
+    void testConvertToEntityList() {
         List<GroupDTO> dtos = Arrays.asList(groupDTO);
         List<Group> groups = Arrays.asList(group);
         when(modelMapper.map(dtos, new TypeToken<List<Group>>(){}.getType())).thenReturn(groups);
@@ -132,7 +132,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToDtoList() {
+    void testConvertToDtoList() {
         List<Group> groups = Arrays.asList(group);
         List<GroupDTO> dtos = Arrays.asList(groupDTO);
         when(modelMapper.map(groups, new TypeToken<List<GroupDTO>>(){}.getType())).thenReturn(dtos);
@@ -143,7 +143,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingPropertyMapperDto() {
+    void testConvertToEntityWithExistingPropertyMapperDto() {
         TypeMap<GroupDTO, Group> typeMapMock = mock(TypeMap.class);
         when(modelMapper.createTypeMap(GroupDTO.class, Group.class)).thenReturn(typeMapMock);
         groupConverter.convertToEntity(groupDTO);
@@ -154,7 +154,7 @@ public class GroupConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntityAndExistingPropertyMapperDto() {
+    void testConvertToEntityWithExistingEntityAndExistingPropertyMapperDto() {
         TypeMap<GroupDTO, Group> typeMapMock = mock(TypeMap.class);
         when(modelMapper.createTypeMap(GroupDTO.class, Group.class)).thenReturn(typeMapMock);
         when(modelMapper.map(groupDTO, Group.class)).thenReturn(new Group());

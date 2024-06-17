@@ -47,7 +47,7 @@ public class MarathonApiTestIT {
     }
 
     @Test
-    public void testGetAllMarathons() {
+    void testGetAllMarathons() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -61,7 +61,7 @@ public class MarathonApiTestIT {
 
     @Test
     @Order(1)
-    public void testGetMarathonById() {
+    void testGetMarathonById() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -76,7 +76,7 @@ public class MarathonApiTestIT {
 
     @Test
     @Order(2)
-    public void testUpdateMarathon() {
+    void testUpdateMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -99,7 +99,7 @@ public class MarathonApiTestIT {
     }
 
     @Test
-    public void testRegisterMarathon() {
+    void testRegisterMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -123,7 +123,7 @@ public class MarathonApiTestIT {
 
     @Test
     @Order(3)
-    public void testDeleteMarathon() {
+    void testDeleteMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()

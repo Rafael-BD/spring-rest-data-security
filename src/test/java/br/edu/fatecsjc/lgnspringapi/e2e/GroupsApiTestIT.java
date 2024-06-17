@@ -52,7 +52,7 @@ public class GroupsApiTestIT {
 
 
     @Test
-    public void testGetAllGroups() {
+    void testGetAllGroups() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -65,7 +65,7 @@ public class GroupsApiTestIT {
     }
 
     @Test
-    public void testGetGroupById() {
+    void testGetGroupById() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -79,7 +79,7 @@ public class GroupsApiTestIT {
     }
 
     @Test
-    public void testUpdateGroup() {
+    void testUpdateGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{\"name\":\"Test Group Updated\"}";
@@ -98,7 +98,7 @@ public class GroupsApiTestIT {
     }
 
     @Test
-    public void testRegisterGroup() {
+    void testRegisterGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{\"name\":\"Test Group new\"}";
@@ -117,7 +117,7 @@ public class GroupsApiTestIT {
     }
 
     @Test
-    public void testDeleteGroup() {
+    void testDeleteGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()

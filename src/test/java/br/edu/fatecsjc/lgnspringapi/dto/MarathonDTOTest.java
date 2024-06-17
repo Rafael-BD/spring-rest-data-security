@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MarathonDTOTest {
+class MarathonDTOTest {
 
     private MarathonDTO marathonDTO;
 
@@ -17,7 +17,7 @@ public class MarathonDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         Long idValue = 1L;
         int weightValue = 70;
         int scoreValue = 90;
@@ -47,7 +47,7 @@ public class MarathonDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         Long idValue = 1L;
         int weightValue = 70;
         int scoreValue = 90;
@@ -65,7 +65,7 @@ public class MarathonDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         Long idValue = 1L;
         int weightValue = 70;
         int scoreValue = 90;
@@ -88,28 +88,28 @@ public class MarathonDTOTest {
     }
 
     @Test
-    public void testId() {
+    void testId() {
         Long idValue = 1L;
         marathonDTO.setId(idValue);
         assertEquals(idValue, marathonDTO.getId());
     }
 
     @Test
-    public void testWeight() {
+    void testWeight() {
         int weightValue = 75;
         marathonDTO.setWeight(weightValue);
         assertEquals(weightValue, marathonDTO.getWeight());
     }
 
     @Test
-    public void testScore() {
+    void testScore() {
         int scoreValue = 100;
         marathonDTO.setScore(scoreValue);
         assertEquals(scoreValue, marathonDTO.getScore());
     }
 
     @Test
-    public void testMemberIds() {
+    void testMemberIds() {
         List<Long> memberIdsValue = Arrays.asList(1L, 2L, 3L);
         marathonDTO.setMemberIds(memberIdsValue);
         assertEquals(memberIdsValue, marathonDTO.getMemberIds());

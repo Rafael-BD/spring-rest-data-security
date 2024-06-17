@@ -67,7 +67,7 @@ public class MemberApiTestIT {
     }
 
     @Test
-    public void testGetAllMembers() {
+    void testGetAllMembers() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -80,7 +80,7 @@ public class MemberApiTestIT {
     }
 
     @Test
-    public void testGetMemberById() {
+    void testGetMemberById() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()
@@ -94,7 +94,7 @@ public class MemberApiTestIT {
     }
 
     @Test
-    public void testUpdateMember() {
+    void testUpdateMember() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -119,7 +119,7 @@ public class MemberApiTestIT {
     }
 
     @Test
-    public void testRegisterMember() {
+    void testRegisterMember() {
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{" 
@@ -144,7 +144,7 @@ public class MemberApiTestIT {
     }
 
     @Test
-    public void testDeleteMember() {
+    void testDeleteMember() {
         RestAssured.baseURI = "http://localhost:8000";
 
         given()

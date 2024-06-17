@@ -15,7 +15,7 @@ import br.edu.fatecsjc.lgnspringapi.enums.Role;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -24,7 +24,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void testFindByEmail() {
+    void testFindByEmail() {
         String rendomName = RandomStringUtils.randomAlphabetic(5);
         User user = User.builder().email(rendomName + "@mail.com").password("password").role(Role.USER).build();
         entityManager.persist(user);
@@ -37,7 +37,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void testSaveUser() {
+    void testSaveUser() {
         User user = User.builder().email("test@mail.com").password("password").role(Role.USER).build();
 
         User savedUser = userRepository.save(user);

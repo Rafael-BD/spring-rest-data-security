@@ -14,7 +14,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MarathonRepositoryTest {
+class MarathonRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -23,7 +23,7 @@ public class MarathonRepositoryTest {
     private MarathonRepository marathonRepository;
 
     @Test
-    public void testFindMarathonById() {
+    void testFindMarathonById() {
         Marathon marathon = Marathon.builder().weight(10).score(100).build();
         entityManager.persist(marathon);
         entityManager.flush();
@@ -36,13 +36,13 @@ public class MarathonRepositoryTest {
     }
 
     @Test
-    public void testNotFindMarathonByInvalidId() {
+    void testNotFindMarathonByInvalidId() {
         Optional<Marathon> fromDb = marathonRepository.findById(-11L);
         assertThat(fromDb).isNotPresent();
     }
 
     @Test
-    public void testFindAllMarathons() {
+    void testFindAllMarathons() {
         Marathon marathon1 = Marathon.builder().weight(10).score(100).build();
         Marathon marathon2 = Marathon.builder().weight(20).score(200).build();
         Marathon marathon3 = Marathon.builder().weight(30).score(300).build();
@@ -58,7 +58,7 @@ public class MarathonRepositoryTest {
     }
 
     @Test
-    public void testSaveMarathon() {
+    void testSaveMarathon() {
         Marathon marathon = Marathon.builder().weight(10).score(100).build();
 
         Marathon savedMarathon = marathonRepository.save(marathon);
@@ -68,7 +68,7 @@ public class MarathonRepositoryTest {
     }
 
     @Test
-    public void testDeleteMarathonById() {
+    void testDeleteMarathonById() {
         Marathon marathon1 = Marathon.builder().weight(10).score(100).build();
         Marathon marathon2 = Marathon.builder().weight(20).score(200).build();
 

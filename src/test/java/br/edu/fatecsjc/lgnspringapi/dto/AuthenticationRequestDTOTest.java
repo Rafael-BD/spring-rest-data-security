@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AuthenticationRequestDTOTest {
+class AuthenticationRequestDTOTest {
 
     private AuthenticationRequestDTO authenticationRequestDTO;
 
@@ -14,7 +14,7 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
-    public void testAllArgsConstructorNoArgsConstructorAndBuilder() {
+    void testAllArgsConstructorNoArgsConstructorAndBuilder() {
         String emailValue = "test@mail.com";
         String passwordValue = "TestPassword";
 
@@ -38,7 +38,7 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         String emailValue = "testeGetterSetter@mail.com";
         String passwordValue = "TestPasswordGetterSetter";
 
@@ -50,7 +50,7 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         String emailValue = "test@mail.com";
         String passwordValue = "TestPassword";
         
@@ -82,14 +82,14 @@ public class AuthenticationRequestDTOTest {
     }
 
     @Test
-    public void testEmail() {
+    void testEmail() {
         String emailValue = "test@mail.com";
         authenticationRequestDTO.setEmail(emailValue);
         assertEquals(emailValue, authenticationRequestDTO.getEmail());
     }
 
     @Test
-    public void testPassword() {
+    void testPassword() {
         String passwordValue = "password";
         authenticationRequestDTO.setPassword(passwordValue);
         assertEquals(passwordValue, authenticationRequestDTO.getPassword());

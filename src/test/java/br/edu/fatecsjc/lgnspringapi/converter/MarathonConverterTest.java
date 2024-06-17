@@ -23,7 +23,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
 import br.edu.fatecsjc.lgnspringapi.entity.Member;
 import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 
-public class MarathonConverterTest {
+class MarathonConverterTest {
 
     @Mock
     private ModelMapper modelMapper;
@@ -77,7 +77,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntity() {
+    void testConvertToEntity() {
         when(modelMapper.map(marathonDTO, Marathon.class)).thenReturn(marathon);
         when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
 
@@ -89,7 +89,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntity() {
+    void testConvertToEntityWithExistingEntity() {
         when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
 
         Marathon result = marathonConverter.convertToEntity(marathonDTO, marathon);
@@ -102,7 +102,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToDto() {
+    void testConvertToDto() {
         when(modelMapper.map(marathon, MarathonDTO.class)).thenReturn(marathonDTO);
 
         MarathonDTO result = marathonConverter.convertToDto(marathon);
@@ -111,7 +111,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntityList() {
+    void testConvertToEntityList() {
         List<MarathonDTO> dtos = Arrays.asList(marathonDTO);
         List<Marathon> marathons = Arrays.asList(marathon);
         when(modelMapper.map(dtos, new TypeToken<List<Marathon>>(){}.getType())).thenReturn(marathons);
@@ -124,7 +124,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToDtoList() {
+    void testConvertToDtoList() {
         List<Marathon> marathons = Arrays.asList(marathon);
         List<MarathonDTO> dtos = Arrays.asList(marathonDTO);
         when(modelMapper.map(marathons, new TypeToken<List<MarathonDTO>>(){}.getType())).thenReturn(dtos);
@@ -135,7 +135,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithNullMemberIds() {
+    void testConvertToEntityWithNullMemberIds() {
         when(modelMapper.map(marathonDtoWithoutMembers, Marathon.class)).thenReturn(marathonWithoutMembers);
 
         Marathon result = marathonConverter.convertToEntity(marathonDtoWithoutMembers);
@@ -145,7 +145,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingEntityAndNullMemberIds() {
+    void testConvertToEntityWithExistingEntityAndNullMemberIds() {
         Marathon result = marathonConverter.convertToEntity(marathonDtoWithoutMembers, marathonWithoutMembers);
 
         assertEquals(marathonWithoutMembers.getId(), result.getId());
@@ -155,7 +155,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToDtoWithNullMembers() {
+    void testConvertToDtoWithNullMembers() {
         when(modelMapper.map(marathonWithoutMembers, MarathonDTO.class)).thenReturn(marathonDtoWithoutMembers);
 
         MarathonDTO result = marathonConverter.convertToDto(marathonWithoutMembers);
@@ -165,7 +165,7 @@ public class MarathonConverterTest {
     }
 
     @Test
-    public void testConvertToEntityListWithNullMemberIds() {
+    void testConvertToEntityListWithNullMemberIds() {
         List<MarathonDTO> dtos = Arrays.asList(marathonDTO, marathonDtoWithoutMembers);
         List<Marathon> marathons = Arrays.asList(marathon, new Marathon());
 

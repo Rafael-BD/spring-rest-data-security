@@ -1,5 +1,4 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import static java.util.Arrays.asList;
 import java.util.List;
@@ -10,9 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
@@ -33,7 +30,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Organization;
 import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 
 
-public class OrganizationConverterTest {
+class OrganizationConverterTest {
 
     @Mock
     private ModelMapper modelMapper;
@@ -87,7 +84,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntity() {
+    void testConvertToEntity() {
         when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(organization);
         when(groupRepository.findAllById(anyList())).thenReturn(Arrays.asList(group));
 
@@ -99,7 +96,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingOrganization() {
+    void testConvertToEntityWithExistingOrganization() {
         when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(organization);
         when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
 
@@ -111,7 +108,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithNullPropertyMapperDto() {
+    void testConvertToEntityWithNullPropertyMapperDto() {
         TypeMap<OrganizationDTO, Organization> typeMapMock = mock(TypeMap.class);
         when(modelMapper.createTypeMap(OrganizationDTO.class, Organization.class)).thenReturn(typeMapMock);
         when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
@@ -124,7 +121,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithExistingOrganizationAndNullPropertyMapperDto() {
+    void testConvertToEntityWithExistingOrganizationAndNullPropertyMapperDto() {
         TypeMap<OrganizationDTO, Organization> typeMapMock = mock(TypeMap.class);
         when(modelMapper.createTypeMap(OrganizationDTO.class, Organization.class)).thenReturn(typeMapMock);
         when(modelMapper.map(organizationDTO, Organization.class)).thenReturn(new Organization());
@@ -137,7 +134,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntityWithNullGroups() {
+    void testConvertToEntityWithNullGroups() {
         Organization existingEntity = new Organization();
         existingEntity.setId(1L);
         existingEntity.setName("Existing Organization");
@@ -156,7 +153,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToDto() {
+    void testConvertToDto() {
         when(modelMapper.map(organization, OrganizationDTO.class)).thenReturn(organizationDTO);
 
         OrganizationDTO result = organizationConverter.convertToDto(organization);
@@ -165,7 +162,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToEntityList() {
+    void testConvertToEntityList() {
         List<OrganizationDTO> dtos = Arrays.asList(organizationDTO);
         List<Organization> organizations = Arrays.asList(organization);
         when(modelMapper.map(dtos, new TypeToken<List<Organization>>(){}.getType())).thenReturn(organizations);
@@ -178,7 +175,7 @@ public class OrganizationConverterTest {
     }
 
     @Test
-    public void testConvertToDtoList() {
+    void testConvertToDtoList() {
         List<Organization> organizations = Arrays.asList(organization);
         List<OrganizationDTO> dtos = Arrays.asList(organizationDTO);
         when(modelMapper.map(organizations, new TypeToken<List<OrganizationDTO>>(){}.getType())).thenReturn(dtos);

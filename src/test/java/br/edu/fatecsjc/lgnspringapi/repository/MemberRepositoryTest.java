@@ -16,7 +16,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.Member;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MemberRepositoryTest {
+class MemberRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -25,7 +25,7 @@ public class MemberRepositoryTest {
     private MemberRepository memberRepository;
 
     @Test
-    public void testFindMemberById() {
+    void testFindMemberById() {
         Group group = Group.builder().name("Group1").build();
         entityManager.persist(group);
 
@@ -41,13 +41,13 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void testNotFindMemberByInvalidId() {
+    void testNotFindMemberByInvalidId() {
         Optional<Member> fromDb = memberRepository.findById(-11L);
         assertThat(fromDb).isNotPresent();
     }
 
     @Test
-    public void testFindAllMembers() {
+    void testFindAllMembers() {
         Group group = Group.builder().name("Group1").build();
         entityManager.persist(group);
 
@@ -66,7 +66,7 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void testSaveMember() {
+    void testSaveMember() {
         Group group = Group.builder().name("Group1").build();
         entityManager.persist(group);
 
@@ -79,7 +79,7 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void testDeleteMemberById() {
+    void testDeleteMemberById() {
         Group group = Group.builder().name("Group1").build();
         entityManager.persist(group);
 

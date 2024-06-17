@@ -15,7 +15,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.User;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TokenRepositoryTest {
+class TokenRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -24,7 +24,7 @@ public class TokenRepositoryTest {
     private TokenRepository tokenRepository;
 
     @Test
-    public void testFindAllValidTokenByUser() {
+    void testFindAllValidTokenByUser() {
         User user = new User();
         entityManager.persist(user);
         entityManager.flush();
@@ -46,7 +46,7 @@ public class TokenRepositoryTest {
     }
 
     @Test
-    public void testFindByToken() {
+    void testFindByToken() {
         Token token = Token.builder().token("token1").revoked(false).expired(false).build();
         entityManager.persist(token);
         entityManager.flush();
@@ -58,7 +58,7 @@ public class TokenRepositoryTest {
     }
 
     @Test
-    public void testSaveToken() {
+    void testSaveToken() {
         User user = new User();
         entityManager.persist(user);
         entityManager.flush();
