@@ -25,10 +25,10 @@ public class GroupService {
     }
 
     public GroupDTO findById(Long id) {
-        if (!groupRepository.findById(id).isPresent()) {
-            return null;
+        if (groupRepository.findById(id).isPresent()) {
+            return groupConverter.convertToDto(groupRepository.findById(id).get());
         }
-        return groupConverter.convertToDto(groupRepository.findById(id).get());
+        return null;
     }
 
     @Transactional
