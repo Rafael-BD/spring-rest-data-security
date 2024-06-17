@@ -42,6 +42,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
+    private final String GROUPSPATH = "/group/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -49,10 +50,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/group/**").hasAnyRole(ADMIN.name())
+                                .requestMatchers(GROUPSPATH).hasAnyRole(ADMIN.name())
                                 .requestMatchers("/user/**").hasAnyRole(ADMIN.name())
-                                .requestMatchers(POST, "/group/**").hasAnyAuthority(ADMIN_CREATE.name())
-                                .requestMatchers(PUT, "/group/**").hasAnyAuthority(ADMIN_UPDATE.name())
+                                .requestMatchers(POST, GROUPSPATH).hasAnyAuthority(ADMIN_CREATE.name())
+                                .requestMatchers(PUT, GROUPSPATH).hasAnyAuthority(ADMIN_UPDATE.name())
                                 .anyRequest()
                                 .authenticated()
                 )

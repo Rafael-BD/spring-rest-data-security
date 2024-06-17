@@ -32,6 +32,9 @@ class GroupServiceTest {
     @InjectMocks
     private GroupService groupService;
 
+    @Mock
+    private MemberRepository memberRepository;
+
     @Test
     void testFindById() {
         Group group = new Group();
