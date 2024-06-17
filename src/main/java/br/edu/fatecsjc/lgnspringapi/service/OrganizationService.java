@@ -1,6 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,11 @@ public class OrganizationService {
     }
 
     public OrganizationDTO findById(Long id) {
-        if (!organizationRepository.findById(id).isPresent()) {
-            return null;
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if (organization.isPresent()) {
+            return organizationConverter.convertToDto(organization.get());
         }
-        return organizationConverter.convertToDto(organizationRepository.findById(id).get());
+        return null;
     }
 
     @Transactional

@@ -6,10 +6,12 @@ import br.edu.fatecsjc.lgnspringapi.entity.Group;
 import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -25,8 +27,9 @@ public class GroupService {
     }
 
     public GroupDTO findById(Long id) {
-        if (groupRepository.findById(id).isPresent()) {
-            return groupConverter.convertToDto(groupRepository.findById(id).get());
+        Optional <Group> group = groupRepository.findById(id);
+        if (group.isPresent()) {
+            return groupConverter.convertToDto(group.get());
         }
         return null;
     }

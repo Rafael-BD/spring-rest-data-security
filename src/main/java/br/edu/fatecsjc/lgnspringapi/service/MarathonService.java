@@ -1,6 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,11 @@ public class MarathonService {
     }
 
     public MarathonDTO findById(Long id) {
-        if (!marathonRepository.findById(id).isPresent()) {
-            return null;
+        Optional<Marathon> marathon = marathonRepository.findById(id);
+        if (marathon.isPresent()) {
+            return marathonConverter.convertToDto(marathon.get());
         }
-        return marathonConverter.convertToDto(marathonRepository.findById(id).get());
+        return null;
     }
 
     @Transactional

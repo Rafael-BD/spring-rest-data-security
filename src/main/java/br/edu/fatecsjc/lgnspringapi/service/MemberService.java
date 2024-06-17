@@ -1,6 +1,7 @@
 package br.edu.fatecsjc.lgnspringapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,11 @@ public class MemberService {
     }
 
     public MemberDTO findById(Long id) {
-        if (!memberRepository.findById(id).isPresent()) {
-            return null;
+        Optional<Member> member = memberRepository.findById(id);
+        if (member.isPresent()) {
+            return memberConverter.convertToDto(member.get());
         }
-        return memberConverter.convertToDto(memberRepository.findById(id).get());
+        return null;
     }
 
     @Transactional
