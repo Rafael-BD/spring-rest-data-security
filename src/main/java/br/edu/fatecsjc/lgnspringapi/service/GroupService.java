@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import br.edu.fatecsjc.lgnspringapi.converter.GroupConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Group;
-import br.edu.fatecsjc.lgnspringapi.entity.Member;
 import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -26,6 +25,9 @@ public class GroupService {
     }
 
     public GroupDTO findById(Long id) {
+        if (!groupRepository.findById(id).isPresent()) {
+            return null;
+        }
         return groupConverter.convertToDto(groupRepository.findById(id).get());
     }
 

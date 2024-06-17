@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import br.edu.fatecsjc.lgnspringapi.converter.OrganizationConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Organization;
-import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.OrganizationRepository;
 import jakarta.transaction.Transactional;
 
@@ -18,14 +17,15 @@ public class OrganizationService {
     private OrganizationRepository organizationRepository;
     @Autowired
     private OrganizationConverter organizationConverter;
-    @Autowired
-    private GroupRepository groupRepository;
 
     public List<OrganizationDTO> getAll() {
         return organizationConverter.convertToDto(organizationRepository.findAll());
     }
 
     public OrganizationDTO findById(Long id) {
+        if (!organizationRepository.findById(id).isPresent()) {
+            return null;
+        }
         return organizationConverter.convertToDto(organizationRepository.findById(id).get());
     }
 

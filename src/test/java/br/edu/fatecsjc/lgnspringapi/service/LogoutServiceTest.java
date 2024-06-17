@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class LogoutServiceTest {
+class LogoutServiceTest {
 
     @Mock
     private HttpServletRequest request;
@@ -42,7 +42,7 @@ public class LogoutServiceTest {
     private LogoutService logoutService;
 
     @Test
-    public void testLogoutWithValidToken() {
+    void testLogoutWithValidToken() {
         String token = "Bearer validToken";
         Token storedToken = new Token();
         storedToken.setToken("validToken");
@@ -59,7 +59,7 @@ public class LogoutServiceTest {
     }
 
     @Test
-    public void testLogoutWithInvalidToken() {
+    void testLogoutWithInvalidToken() {
         String token = "Bearer invalidToken";
 
         when(request.getHeader("Authorization")).thenReturn(token);
@@ -71,7 +71,7 @@ public class LogoutServiceTest {
     }
 
     @Test
-    public void testLogoutWithNullAuthHeader() {
+    void testLogoutWithNullAuthHeader() {
         when(request.getHeader("Authorization")).thenReturn(null);
 
         logoutService.logout(request, response, authentication);
@@ -80,7 +80,7 @@ public class LogoutServiceTest {
     }
 
     @Test
-    public void testLogoutWithInvalidAuthHeader() {
+    void testLogoutWithInvalidAuthHeader() {
         String token = "Invalid auth header";
         when(request.getHeader("Authorization")).thenReturn(token);
 

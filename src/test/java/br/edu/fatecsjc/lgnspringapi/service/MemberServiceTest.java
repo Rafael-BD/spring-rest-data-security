@@ -30,7 +30,7 @@ import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 
 @ExtendWith(MockitoExtension.class)
-public class MemberServiceTest {
+class MemberServiceTest {
 
     @InjectMocks
     private MemberService memberService;
@@ -45,13 +45,10 @@ public class MemberServiceTest {
     private MemberConverter memberConverter;
 
     @Mock
-    private GroupConverter groupConverter;
-
-    @Mock
     private MarathonRepository marathonRepository;
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
         List<Member> members = new ArrayList<>();
         when(memberRepository.findAll()).thenReturn(members);
         memberService.getAll();
@@ -59,7 +56,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         Member member = new Member();
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
         memberService.findById(1L);
@@ -68,7 +65,7 @@ public class MemberServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithId() {
+    void testSaveWithId() {
         MemberDTO dto = new MemberDTO();
         Member member = new Member();
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
@@ -79,7 +76,7 @@ public class MemberServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithGroupIdAndMarathonIds() {
+    void testSaveWithGroupIdAndMarathonIds() {
         MemberDTO dto = new MemberDTO();
         dto.setGroupId(1L);
         dto.setMarathonIds(Arrays.asList(1L, 2L));
@@ -104,7 +101,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         MemberDTO dto = new MemberDTO();
         Member member = new Member();
         member.setMarathons(new ArrayList<>());
@@ -116,7 +113,7 @@ public class MemberServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithMarathonIdsAndGroupId() {
+    void testSaveWithMarathonIdsAndGroupId() {
         MemberDTO dto = new MemberDTO();
         dto.setMarathonIds(Arrays.asList(1L, 2L));
         dto.setGroupId(1L);
@@ -147,7 +144,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         Member member = new Member();
         Group group = new Group();
         group.setMembers(new ArrayList<>());
@@ -159,7 +156,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void testDeleteWithMarathons() {
+    void testDeleteWithMarathons() {
         Long memberId = 1L;
         Member member = new Member();
         Group group = new Group();

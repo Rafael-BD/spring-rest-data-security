@@ -27,6 +27,9 @@ public class MarathonService {
     }
 
     public MarathonDTO findById(Long id) {
+        if (!marathonRepository.findById(id).isPresent()) {
+            return null;
+        }
         return marathonConverter.convertToDto(marathonRepository.findById(id).get());
     }
 

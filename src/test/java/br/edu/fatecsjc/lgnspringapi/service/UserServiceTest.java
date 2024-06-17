@@ -20,7 +20,7 @@ import br.edu.fatecsjc.lgnspringapi.entity.User;
 import br.edu.fatecsjc.lgnspringapi.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
@@ -32,7 +32,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Test
-    public void testChangePassword() {
+    void testChangePassword() {
         ChangePasswordRequestDTO request = new ChangePasswordRequestDTO("oldPassword", "newPassword", "newPassword");
         User user = new User();
         user.setPassword("oldPasswordEncoded");
@@ -44,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testChangePasswordWithWrongCurrentPassword() {
+    void testChangePasswordWithWrongCurrentPassword() {
         ChangePasswordRequestDTO request = new ChangePasswordRequestDTO("wrongOldPassword", "newPassword", "newPassword");
         User user = new User();
         user.setPassword("oldPasswordEncoded");
@@ -56,7 +56,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testChangePasswordWithNonMatchingNewPasswords() {
+    void testChangePasswordWithNonMatchingNewPasswords() {
         ChangePasswordRequestDTO request = new ChangePasswordRequestDTO("oldPassword", "newPassword", "differentNewPassword");
         User user = new User();
         user.setPassword("oldPasswordEncoded");

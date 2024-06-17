@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.edu.fatecsjc.lgnspringapi.converter.GroupConverter;
 import br.edu.fatecsjc.lgnspringapi.converter.MemberConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Group;
@@ -29,9 +28,6 @@ public class MemberService {
     private MemberConverter memberConverter;
 
     @Autowired
-    private GroupConverter groupConverter;
-
-    @Autowired
     private MarathonRepository marathonRepository;
 
     public List<MemberDTO> getAll() {
@@ -39,6 +35,9 @@ public class MemberService {
     }
 
     public MemberDTO findById(Long id) {
+        if (!memberRepository.findById(id).isPresent()) {
+            return null;
+        }
         return memberConverter.convertToDto(memberRepository.findById(id).get());
     }
 

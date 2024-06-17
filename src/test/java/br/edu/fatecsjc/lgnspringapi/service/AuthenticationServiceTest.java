@@ -37,7 +37,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthenticationServiceTest {
+class AuthenticationServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -58,7 +58,7 @@ public class AuthenticationServiceTest {
     private AuthenticationService authenticationService;
 
     @Test
-    public void testRegister() {
+    void testRegister() {
         RegisterRequestDTO request = new RegisterRequestDTO();
         User user = new User();
         when(passwordEncoder.encode(request.getPassword())).thenReturn("encodedPassword");
@@ -71,7 +71,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testAuthenticate() {
+    void testAuthenticate() {
         AuthenticationRequestDTO request = new AuthenticationRequestDTO();
         User user = new User();
         user.setId(1L);
@@ -105,7 +105,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testAuthenticateWithNoValidTokens() {
+    void testAuthenticateWithNoValidTokens() {
         AuthenticationRequestDTO request = new AuthenticationRequestDTO();
         User user = new User();
         user.setId(1L);
@@ -124,7 +124,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testRefreshToken() throws IOException, java.io.IOException {
+    void testRefreshToken() throws IOException, java.io.IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -158,7 +158,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testRefreshTokenWithInvalidAuthHeader() throws IOException, java.io.IOException {
+    void testRefreshTokenWithInvalidAuthHeader() throws IOException, java.io.IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -174,7 +174,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testRefreshTokenWithNullEmail() throws IOException, java.io.IOException {
+    void testRefreshTokenWithNullEmail() throws IOException, java.io.IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("Bearer refreshToken");
@@ -186,7 +186,7 @@ public class AuthenticationServiceTest {
     }
 
     @Test
-    public void testRefreshTokenWithInvalidToken() throws IOException, java.io.IOException {
+    void testRefreshTokenWithInvalidToken() throws IOException, java.io.IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("Bearer refreshToken");

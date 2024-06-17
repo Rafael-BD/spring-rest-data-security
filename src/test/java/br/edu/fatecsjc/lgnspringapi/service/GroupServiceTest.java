@@ -21,13 +21,10 @@ import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class GroupServiceTest {
+class GroupServiceTest {
 
     @Mock
     private GroupRepository groupRepository;
-
-    @Mock
-    private MemberRepository memberRepository;
 
     @Mock
     private GroupConverter groupConverter;
@@ -36,7 +33,7 @@ public class GroupServiceTest {
     private GroupService groupService;
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         Group group = new Group();
         GroupDTO dto = new GroupDTO();
         when(groupRepository.findById(1L)).thenReturn(Optional.of(group));
@@ -46,7 +43,7 @@ public class GroupServiceTest {
     }
 
     @Test
-    public void testSaveWithId() {
+    void testSaveWithId() {
         Group group = new Group();
         group.setMembers(new ArrayList<>());
         GroupDTO dto = new GroupDTO();
@@ -59,7 +56,7 @@ public class GroupServiceTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         Group group = new Group();
         GroupDTO dto = new GroupDTO();
         when(groupConverter.convertToEntity(dto)).thenReturn(group);
@@ -70,7 +67,7 @@ public class GroupServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         doNothing().when(groupRepository).deleteById(1L);
         groupService.delete(1L);
         verify(groupRepository, times(1)).deleteById(1L);

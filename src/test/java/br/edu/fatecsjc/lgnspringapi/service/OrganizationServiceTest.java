@@ -24,7 +24,7 @@ import br.edu.fatecsjc.lgnspringapi.repository.OrganizationRepository;
 import jakarta.transaction.Transactional;
 
 @ExtendWith(MockitoExtension.class)
-public class OrganizationServiceTest {
+class OrganizationServiceTest {
 
     @InjectMocks
     private OrganizationService organizationService;
@@ -38,11 +38,8 @@ public class OrganizationServiceTest {
     @Mock
     private OrganizationConverter organizationConverter;
 
-    @Mock
-    private GroupConverter groupConverter;
-
     @Test
-    public void testGetAll() {
+    void testGetAll() {
         List<Organization> organizations = new ArrayList<>();
         when(organizationRepository.findAll()).thenReturn(organizations);
         organizationService.getAll();
@@ -50,7 +47,7 @@ public class OrganizationServiceTest {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         Organization organization = new Organization();
         when(organizationRepository.findById(anyLong())).thenReturn(Optional.of(organization));
         organizationService.findById(1L);
@@ -59,7 +56,7 @@ public class OrganizationServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithId() {
+    void testSaveWithId() {
         OrganizationDTO dto = new OrganizationDTO();
         Organization organization = new Organization();
         when(organizationRepository.findById(anyLong())).thenReturn(Optional.of(organization));
@@ -70,7 +67,7 @@ public class OrganizationServiceTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         OrganizationDTO dto = new OrganizationDTO();
         Organization organization = new Organization();
         when(organizationConverter.convertToEntity(dto)).thenReturn(organization);
@@ -81,7 +78,7 @@ public class OrganizationServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithIdAndGroups() {
+    void testSaveWithIdAndGroups() {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setGroups(new ArrayList<>());
 
@@ -100,7 +97,7 @@ public class OrganizationServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithGroups() {
+    void testSaveWithGroups() {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setGroups(new ArrayList<>());
 
@@ -117,7 +114,7 @@ public class OrganizationServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         organizationService.delete(1L);
         verify(organizationRepository).deleteById(1L);
     }

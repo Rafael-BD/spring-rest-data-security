@@ -25,7 +25,7 @@ import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 
 @ExtendWith(MockitoExtension.class)
-public class MarathonServiceTest {
+class MarathonServiceTest {
 
     @InjectMocks
     private MarathonService marathonService;
@@ -40,7 +40,7 @@ public class MarathonServiceTest {
     private MemberRepository memberRepository;
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
         List<Marathon> marathons = new ArrayList<>();
         when(marathonRepository.findAll()).thenReturn(marathons);
         marathonService.getAll();
@@ -48,7 +48,7 @@ public class MarathonServiceTest {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         Marathon marathon = new Marathon();
         when(marathonRepository.findById(anyLong())).thenReturn(Optional.of(marathon));
         marathonService.findById(1L);
@@ -57,7 +57,7 @@ public class MarathonServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithId() {
+    void testSaveWithId() {
         MarathonDTO dto = new MarathonDTO();
         Marathon marathon = new Marathon();
         when(marathonRepository.findById(anyLong())).thenReturn(Optional.of(marathon));
@@ -68,7 +68,7 @@ public class MarathonServiceTest {
 
     @Test
     @Transactional
-    public void testSaveWithIdAndMemberIds() {
+    void testSaveWithIdAndMemberIds() {
         MarathonDTO dto = new MarathonDTO();
         dto.setMemberIds(Arrays.asList(1L, 2L));
 
@@ -90,7 +90,7 @@ public class MarathonServiceTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         MarathonDTO dto = new MarathonDTO();
         Marathon marathon = new Marathon();
         when(marathonConverter.convertToEntity(dto)).thenReturn(marathon);
@@ -100,7 +100,7 @@ public class MarathonServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         marathonService.delete(1L);
         verify(marathonRepository).deleteById(1L);
     }
