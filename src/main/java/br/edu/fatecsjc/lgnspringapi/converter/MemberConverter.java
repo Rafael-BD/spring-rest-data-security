@@ -1,12 +1,10 @@
 package br.edu.fatecsjc.lgnspringapi.converter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
@@ -26,13 +24,11 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
 
     private final GroupRepository groupRepository;
 
-    private final GroupConverter groupConverter;
 
     public MemberConverter(ModelMapper modelMapper, MarathonRepository marathonRepository, GroupRepository groupRepository, GroupConverter groupConverter) {
         this.modelMapper = modelMapper;
         this.marathonRepository = marathonRepository;
         this.groupRepository = groupRepository;
-        this.groupConverter = groupConverter;
     }
 
     @Override
