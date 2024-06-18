@@ -25,7 +25,7 @@ public class MemberConverter implements Converter<Member, MemberDTO> {
     private final GroupRepository groupRepository;
 
 
-    public MemberConverter(ModelMapper modelMapper, MarathonRepository marathonRepository, GroupRepository groupRepository, GroupConverter groupConverter) {
+    public MemberConverter(ModelMapper modelMapper, MarathonRepository marathonRepository, GroupRepository groupRepository) {
         this.modelMapper = modelMapper;
         this.marathonRepository = marathonRepository;
         this.groupRepository = groupRepository;
