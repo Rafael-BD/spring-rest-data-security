@@ -68,6 +68,11 @@ public class AuthenticationApiTestIT {
     @Test
     @Order(1)
     void testAuthenticate() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+        }
+
         RestAssured.baseURI = "http://localhost:8000";
 
         String requestBody = "{"
