@@ -57,7 +57,7 @@ class OrganizationDTOTest {
 
         assertEquals(organizationDTOFields, organizationDTOFromBuilder);
 
-        assertEquals(organizationDTOFields.equals(organizationDTOFromBuilder), true);
+        assertEquals(true, organizationDTOFields.equals(organizationDTOFromBuilder));
         assertEquals(organizationDTOFields.hashCode(), organizationDTOFromBuilder.hashCode());
         assertNotNull(organizationDTOFields.toString());
     }
@@ -153,7 +153,7 @@ class OrganizationDTOTest {
                 groupsValue
         );
 
-        assertEquals(organizationDTOFields.equals(organizationDTO1), true);
+        assertEquals(true, organizationDTOFields.equals(organizationDTO1));
         assertEquals(organizationDTOFields.hashCode(), organizationDTO1.hashCode());
     }
 

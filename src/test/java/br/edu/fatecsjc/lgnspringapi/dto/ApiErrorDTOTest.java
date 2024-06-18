@@ -2,10 +2,8 @@ package br.edu.fatecsjc.lgnspringapi.dto;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +35,7 @@ class ApiErrorDTOTest {
         ApiErrorDTO apiErrorDTONoArgs = new ApiErrorDTO();
         assertNotNull(apiErrorDTONoArgs);
 
-        assertEquals(apiErrorDTOFields.equals(apiErrorDTOFromBuilder), true);
+        assertEquals(true, apiErrorDTOFields.equals(apiErrorDTOFromBuilder));
         assertEquals(apiErrorDTOFields.hashCode(), apiErrorDTOFromBuilder.hashCode());
         assertNotNull(apiErrorDTOFields.toString());
     }
@@ -68,16 +66,14 @@ class ApiErrorDTOTest {
                 timestampValue
         );
 
-        assertTrue(apiErrorDTO1.equals(apiErrorDTO2));
-        assertTrue(apiErrorDTO2.equals(apiErrorDTO1));
+        assertEquals(apiErrorDTO1, apiErrorDTO2);
         assertEquals(apiErrorDTO1.hashCode(), apiErrorDTO2.hashCode());
-        assertTrue(apiErrorDTO1.equals(apiErrorDTO1));
-        assertFalse(apiErrorDTO1.equals(new Object()));
+        assertNotEquals(apiErrorDTO1, new Object());
         ApiErrorDTO apiErrorDTO3 = new ApiErrorDTO(
                 "Different Message",
                 Instant.now()
         );
-        assertFalse(apiErrorDTO1.equals(apiErrorDTO3));
+        assertNotEquals(apiErrorDTO1, apiErrorDTO3);
         assertNotEquals(apiErrorDTO1.hashCode(), apiErrorDTO3.hashCode());
     }
 

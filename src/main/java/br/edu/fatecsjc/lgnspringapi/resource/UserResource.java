@@ -34,7 +34,7 @@ private final UserService service;
                     @ApiResponse(description = "Unknown error", responseCode = "400"),
             }
     )
-    public ResponseEntity changePassword(
+    public ResponseEntity<Void> changePassword(
             @RequestBody ChangePasswordRequestDTO request,
             Principal connectedUser
     ) {

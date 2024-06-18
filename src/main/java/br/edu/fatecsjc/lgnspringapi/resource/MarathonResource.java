@@ -2,7 +2,6 @@ package br.edu.fatecsjc.lgnspringapi.resource;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,8 +27,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Marathons")
 @SecurityRequirement(name = "bearerAuth")
 public class MarathonResource {
-    @Autowired
-    private MarathonService marathonService;
+
+    private final MarathonService marathonService;
+
+    public MarathonResource(MarathonService marathonService) {
+        this.marathonService = marathonService;
+    }
 
     @GetMapping  
     @Operation(

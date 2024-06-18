@@ -32,7 +32,7 @@ class AuthenticationRequestDTOTest {
         AuthenticationRequestDTO authenticationRequestDTONoArgs = new AuthenticationRequestDTO();
         assertNotNull(authenticationRequestDTONoArgs);
 
-        assertEquals(authenticationRequestDTOFields.equals(authenticationRequestDTOFromBuilder), true);
+        assertEquals(true, authenticationRequestDTOFields.equals(authenticationRequestDTOFromBuilder));
         assertEquals(authenticationRequestDTOFields.hashCode(), authenticationRequestDTOFromBuilder.hashCode());
         assertNotNull(authenticationRequestDTOFields.toString());
     }
@@ -78,7 +78,7 @@ class AuthenticationRequestDTOTest {
         assertEquals(authenticationRequestDTO1, authenticationRequestDTO2);
         assertEquals(authenticationRequestDTO2, authenticationRequestDTO1);
         assertEquals(authenticationRequestDTO1.hashCode(), authenticationRequestDTO2.hashCode());
-        assertEquals(authenticationRequestDTO1.equals(authenticationRequestDTO1), true);
+        assertEquals(true, authenticationRequestDTO1.equals(authenticationRequestDTO1));
     }
 
     @Test

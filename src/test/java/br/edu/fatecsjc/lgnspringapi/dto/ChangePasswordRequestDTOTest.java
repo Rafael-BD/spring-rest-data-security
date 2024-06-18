@@ -36,7 +36,7 @@ class ChangePasswordRequestDTOTest {
         ChangePasswordRequestDTO changePasswordRequestDTONoArgs = new ChangePasswordRequestDTO();
         assertNotNull(changePasswordRequestDTONoArgs);
 
-        assertEquals(changePasswordRequestDTOFields.equals(changePasswordRequestDTOFromBuilder), true);
+        assertEquals(true, changePasswordRequestDTOFields.equals(changePasswordRequestDTOFromBuilder));
         assertEquals(changePasswordRequestDTOFields.hashCode(), changePasswordRequestDTOFromBuilder.hashCode());
         assertNotNull(changePasswordRequestDTOFields.toString());
     }

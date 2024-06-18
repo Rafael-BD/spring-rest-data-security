@@ -1,20 +1,23 @@
 package br.edu.fatecsjc.lgnspringapi;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MarathonDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.MemberDTO;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
-import br.edu.fatecsjc.lgnspringapi.entity.Group;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 
 public class TestHelper {
+
+    @Mock
+    private ModelMapper modelMapper;
 
     private static String token;
     private static final String BASE_URL = "http://localhost:8000";

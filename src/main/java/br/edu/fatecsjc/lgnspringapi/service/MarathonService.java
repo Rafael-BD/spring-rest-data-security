@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.fatecsjc.lgnspringapi.converter.MarathonConverter;
@@ -16,12 +15,18 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class MarathonService {
-    @Autowired
-    private MarathonRepository marathonRepository;
-    @Autowired
-    private MarathonConverter marathonConverter;
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MarathonRepository marathonRepository;
+
+    private final MarathonConverter marathonConverter;
+
+    private final MemberRepository memberRepository;
+
+    public MarathonService(MarathonRepository marathonRepository, MarathonConverter marathonConverter, MemberRepository memberRepository) {
+        this.marathonRepository = marathonRepository;
+        this.marathonConverter = marathonConverter;
+        this.memberRepository = memberRepository;
+    }
 
     public List<MarathonDTO> getAll() {
         return marathonConverter.convertToDto(marathonRepository.findAll());

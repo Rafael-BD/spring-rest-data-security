@@ -14,10 +14,15 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OrganizationService {
-    @Autowired
-    private OrganizationRepository organizationRepository;
-    @Autowired
-    private OrganizationConverter organizationConverter;
+
+    private final OrganizationRepository organizationRepository;
+
+    private final OrganizationConverter organizationConverter;
+
+    public OrganizationService(OrganizationRepository organizationRepository, OrganizationConverter organizationConverter) {
+        this.organizationRepository = organizationRepository;
+        this.organizationConverter = organizationConverter;
+    }
 
     public List<OrganizationDTO> getAll() {
         return organizationConverter.convertToDto(organizationRepository.findAll());

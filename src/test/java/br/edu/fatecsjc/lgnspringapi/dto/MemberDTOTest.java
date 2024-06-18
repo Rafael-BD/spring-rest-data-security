@@ -44,7 +44,7 @@ class MemberDTOTest {
         MemberDTO memberDTONoArgs = new MemberDTO();
         assertNotNull(memberDTONoArgs);
 
-        assertEquals(memberDTOFields.equals(memberDTOFromBuilder), true);
+        assertEquals(true, memberDTOFields.equals(memberDTOFromBuilder));
         assertEquals(memberDTOFields.hashCode(), memberDTOFromBuilder.hashCode());
         assertNotNull(memberDTOFields.toString());
     }
@@ -110,10 +110,10 @@ class MemberDTOTest {
                 groupIdValue
         );
 
-        assertEquals(memberDTO1.equals(memberDTO2), true);
-        assertEquals(memberDTO2.equals(memberDTO1), true);
+        assertEquals(true, memberDTO1.equals(memberDTO2));
+        assertEquals(true, memberDTO2.equals(memberDTO1));
         assertEquals(memberDTO1.hashCode(), memberDTO2.hashCode());
-        assertEquals(memberDTO1.equals(memberDTO1), true);
+        assertEquals(true, memberDTO1.equals(memberDTO1));
     }
 
     @Test

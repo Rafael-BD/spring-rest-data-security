@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.fatecsjc.lgnspringapi.converter.MemberConverter;
@@ -19,17 +18,20 @@ import jakarta.transaction.Transactional;
 @Service
 public class MemberService { 
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    @Autowired
-    private GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
 
-    @Autowired
-    private MemberConverter memberConverter;
+    private final MemberConverter memberConverter;
 
-    @Autowired
-    private MarathonRepository marathonRepository;
+    private final MarathonRepository marathonRepository;
+
+    public MemberService(MemberRepository memberRepository, GroupRepository groupRepository, MemberConverter memberConverter, MarathonRepository marathonRepository) {
+        this.memberRepository = memberRepository;
+        this.groupRepository = groupRepository;
+        this.memberConverter = memberConverter;
+        this.marathonRepository = marathonRepository;
+    }
 
     public List<MemberDTO> getAll() {
         return memberConverter.convertToDto(memberRepository.findAll());

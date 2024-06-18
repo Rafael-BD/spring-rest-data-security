@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.fatecsjc.lgnspringapi.dto.MarathonDTO;
@@ -16,11 +15,14 @@ import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 @Component
 public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    public MarathonConverter(ModelMapper modelMapper, MemberRepository memberRepository) {
+        this.modelMapper = modelMapper;
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public Marathon convertToEntity(MarathonDTO dto) {

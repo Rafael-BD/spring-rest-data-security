@@ -41,7 +41,7 @@ class MarathonDTOTest {
         MarathonDTO marathonDTONoArgs = new MarathonDTO();
         assertNotNull(marathonDTONoArgs);
 
-        assertEquals(marathonDTOFields.equals(marathonDTOFromBuilder), true);
+        assertEquals(true, marathonDTOFields.equals(marathonDTOFromBuilder));
         assertEquals(marathonDTOFields.hashCode(), marathonDTOFromBuilder.hashCode());
         assertNotNull(marathonDTOFields.toString());
     }

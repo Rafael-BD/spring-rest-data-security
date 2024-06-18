@@ -90,14 +90,7 @@ public class JwtService {
             isUsernameValid = false;
         }
 
-        if (isTokenExpired) {
-            return false;
-        }
-        else if(!isUsernameValid) {
-            return false;
-        }
-        
-        return true;
+        return !(isTokenExpired || !isUsernameValid);
     }
 
     public boolean isTokenExpired(String token) {

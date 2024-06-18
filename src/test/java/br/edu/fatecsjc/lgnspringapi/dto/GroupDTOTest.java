@@ -39,7 +39,7 @@ class GroupDTOTest {
         GroupDTO groupDTONoArgs = new GroupDTO();
         assertNotNull(groupDTONoArgs);
 
-        assertEquals(groupDTOFields.equals(groupDTOFromBuilder), true);
+        assertEquals(true, groupDTOFields.equals(groupDTOFromBuilder));
         assertEquals(groupDTOFields.hashCode(), groupDTOFromBuilder.hashCode());
         assertNotNull(groupDTOFields.toString());
     }

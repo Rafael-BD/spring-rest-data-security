@@ -43,7 +43,7 @@ class RegisterRequestDTOTest {
         RegisterRequestDTO registerRequestDTONoArgs = new RegisterRequestDTO();
         assertNotNull(registerRequestDTONoArgs);
 
-        assertEquals(registerRequestDTOfields.equals(registerRequestDTOFromBuilder), true);
+        assertEquals(true, registerRequestDTOfields.equals(registerRequestDTOFromBuilder));
         assertEquals(registerRequestDTOfields.hashCode(), registerRequestDTOFromBuilder.hashCode());
         assertNotNull(registerRequestDTOfields.toString());
     }
@@ -102,7 +102,7 @@ class RegisterRequestDTOTest {
                 roleValue
         );
 
-        assertEquals(registerRequestDTO1.equals(registerRequestDTOFromBuilder), true);
+        assertEquals(true, registerRequestDTO1.equals(registerRequestDTOFromBuilder));
         assertEquals(registerRequestDTO1.hashCode(), registerRequestDTOFromBuilder.hashCode());
     }
 

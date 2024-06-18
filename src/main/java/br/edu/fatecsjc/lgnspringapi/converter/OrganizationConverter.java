@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.Provider;
 import org.modelmapper.TypeMap;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
@@ -18,13 +17,18 @@ import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 
 @Component
 public class OrganizationConverter implements Converter<Organization, OrganizationDTO> {
-    @Autowired
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper;
 
     private TypeMap<OrganizationDTO, Organization> propertyMapperDto;
 
-    @Autowired
-    private GroupRepository groupRepository;
+
+    private final GroupRepository groupRepository;
+
+    public OrganizationConverter(ModelMapper modelMapper, GroupRepository groupRepository) {
+        this.modelMapper = modelMapper;
+        this.groupRepository = groupRepository;
+    }
 
     @Override
     public Organization convertToEntity(OrganizationDTO dto) {

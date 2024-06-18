@@ -20,17 +20,20 @@ import br.edu.fatecsjc.lgnspringapi.repository.MarathonRepository;
 @Component
 public class MemberConverter implements Converter<Member, MemberDTO> {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private MarathonRepository marathonRepository;
+    private final MarathonRepository marathonRepository;
 
-    @Autowired
-    private GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
 
-    @Autowired
-    private GroupConverter groupConverter;
+    private final GroupConverter groupConverter;
+
+    public MemberConverter(ModelMapper modelMapper, MarathonRepository marathonRepository, GroupRepository groupRepository, GroupConverter groupConverter) {
+        this.modelMapper = modelMapper;
+        this.marathonRepository = marathonRepository;
+        this.groupRepository = groupRepository;
+        this.groupConverter = groupConverter;
+    }
 
     @Override
     public Member convertToEntity(MemberDTO dto) {

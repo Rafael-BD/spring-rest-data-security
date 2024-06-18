@@ -2,7 +2,6 @@ package br.edu.fatecsjc.lgnspringapi.resource;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,8 +28,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Members")
 @SecurityRequirement(name = "bearerAuth")
 public class MemberResource {
-    @Autowired
-    private MemberService memberService;
+
+    private final MemberService memberService;
+
+    public MemberResource(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @PostMapping
     @PreAuthorize("hasAuthority('admin:create')")
