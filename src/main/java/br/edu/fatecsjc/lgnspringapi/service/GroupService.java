@@ -46,9 +46,7 @@ public class GroupService {
         entity.getMembers().clear();
 
         Group groupToSaved = groupConverter.convertToEntity(dto, entity);
-        groupToSaved.getMembers().forEach( member -> {
-            member.setGroup(groupToSaved);
-        });
+        groupToSaved.getMembers().forEach( member -> member.setGroup(groupToSaved));
         Group groupReturned = groupRepository.save(groupToSaved);
         return groupConverter.convertToDto(groupReturned);
     }

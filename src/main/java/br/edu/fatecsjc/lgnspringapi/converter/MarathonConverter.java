@@ -68,9 +68,7 @@ public class MarathonConverter implements Converter<Marathon, MarathonDTO> {
         List<Marathon> marathons = modelMapper.map(dtos, new TypeToken<List<Marathon>>(){}.getType());
         marathons.forEach(marathon -> {
             if(marathon.getMembers() != null) {
-                marathon.getMembers().forEach(member -> {
-                    member.setMarathons(marathons);
-                });
+                marathon.getMembers().forEach(member -> member.setMarathons(marathons));
             }    
         });
         return marathons;

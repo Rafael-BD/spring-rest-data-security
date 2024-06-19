@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.fatecsjc.lgnspringapi.converter.OrganizationConverter;
@@ -42,9 +41,7 @@ public class OrganizationService {
         Organization organizationToSaved = organizationConverter.convertToEntity(dto, entity);
 
         if(dto.getGroups() != null) {
-            organizationToSaved.getGroups().forEach(group -> {
-                group.getOrganization().setId(organizationToSaved.getId());
-            });
+            organizationToSaved.getGroups().forEach(group -> group.getOrganization().setId(organizationToSaved.getId()));
         }
 
         Organization organizationReturned = organizationRepository.save(organizationToSaved);
@@ -56,9 +53,7 @@ public class OrganizationService {
         Organization organizationToSaved = organizationConverter.convertToEntity(dto);
         
         if(dto.getGroups() != null) {
-            organizationToSaved.getGroups().forEach(group -> {
-                group.getOrganization().setId(organizationToSaved.getId());
-            });
+            organizationToSaved.getGroups().forEach(group -> group.getOrganization().setId(organizationToSaved.getId()));
         }
 
         Organization organizationReturned = organizationRepository.save(organizationToSaved);

@@ -74,8 +74,9 @@ class MemberRepositoryTest {
 
         Member savedMember = memberRepository.save(member);
 
-        assertThat(savedMember).hasFieldOrPropertyWithValue("name", "User1");
-        assertThat(savedMember).hasFieldOrPropertyWithValue("age", 25);
+        assertThat(savedMember)
+            .hasFieldOrPropertyWithValue("name", "User1")
+            .hasFieldOrPropertyWithValue("age", 25);
     }
 
     @Test

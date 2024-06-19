@@ -16,7 +16,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.edu.fatecsjc.lgnspringapi.converter.GroupConverter;
 import br.edu.fatecsjc.lgnspringapi.converter.OrganizationConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.OrganizationDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Organization;

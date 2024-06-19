@@ -1,13 +1,15 @@
 package br.edu.fatecsjc.lgnspringapi.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -16,9 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import static br.edu.fatecsjc.lgnspringapi.enums.Permission.ADMIN_CREATE;
 import static br.edu.fatecsjc.lgnspringapi.enums.Permission.ADMIN_UPDATE;
 import static br.edu.fatecsjc.lgnspringapi.enums.Role.ADMIN;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import lombok.RequiredArgsConstructor;
 
 
 @Configuration
@@ -39,10 +39,11 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/"
     };
+
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private final String GROUPSPATH = "/group/**";
+    private final static String GROUPATH = "/group/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -50,10 +51,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers(GROUPSPATH).hasAnyRole(ADMIN.name())
+                                .requestMatchers(GROUPATH).hasAnyRole(ADMIN.name())
                                 .requestMatchers("/user/**").hasAnyRole(ADMIN.name())
-                                .requestMatchers(POST, GROUPSPATH).hasAnyAuthority(ADMIN_CREATE.name())
-                                .requestMatchers(PUT, GROUPSPATH).hasAnyAuthority(ADMIN_UPDATE.name())
+                                .requestMatchers(POST, GROUPATH).hasAnyAuthority(ADMIN_CREATE.name())
+                                .requestMatchers(PUT, GROUPATH).hasAnyAuthority(ADMIN_UPDATE.name())
                                 .anyRequest()
                                 .authenticated()
                 )

@@ -45,9 +45,7 @@ public class OrganizationConverter implements Converter<Organization, Organizati
         
         entity.setGroups(groups);
 
-        entity.getGroups().forEach(g -> {
-            g.setOrganization(entity);
-        });
+        entity.getGroups().forEach(g -> g.setOrganization(entity));
         return entity;
     }
 
@@ -66,9 +64,7 @@ public class OrganizationConverter implements Converter<Organization, Organizati
             newEntity.setGroups(new ArrayList<>());
         }
     
-        newEntity.getGroups().forEach(group -> {
-            group.setOrganization(newEntity);
-        });
+        newEntity.getGroups().forEach(group -> group.setOrganization(newEntity));
         return newEntity;
     }
 
@@ -81,11 +77,7 @@ public class OrganizationConverter implements Converter<Organization, Organizati
     public List<Organization> convertToEntity(List<OrganizationDTO> dtos) {
         List<Organization> organizations = modelMapper.map(dtos, new TypeToken<List<Organization>>() {}.getType());
 
-        organizations.forEach(organization -> {
-            organization.getGroups().forEach(group -> {
-                group.setOrganization(organization);
-            });
-        });
+        organizations.forEach(organization -> organization.getGroups().forEach(group -> group.setOrganization(organization)));
         return organizations;
     }
 

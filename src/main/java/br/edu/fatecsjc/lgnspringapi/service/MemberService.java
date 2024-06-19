@@ -71,9 +71,7 @@ public class MemberService {
     public MemberDTO save(MemberDTO dto) {
         Member memberToSaved = memberConverter.convertToEntity(dto);
 
-        memberToSaved.getMarathons().forEach(marathon -> {
-            marathon.getMembers().add(memberToSaved);
-        });
+        memberToSaved.getMarathons().forEach(marathon -> marathon.getMembers().add(memberToSaved));
 
         if (dto.getGroupId() != null) {
             Group group = groupRepository.findById(dto.getGroupId()).orElse(null);

@@ -63,8 +63,9 @@ class MarathonRepositoryTest {
 
         Marathon savedMarathon = marathonRepository.save(marathon);
 
-        assertThat(savedMarathon).hasFieldOrPropertyWithValue("weight", 10);
-        assertThat(savedMarathon).hasFieldOrPropertyWithValue("score", 100);
+        assertThat(savedMarathon)
+            .hasFieldOrPropertyWithValue("weight", 10)
+            .hasFieldOrPropertyWithValue("score", 100);
     }
 
     @Test

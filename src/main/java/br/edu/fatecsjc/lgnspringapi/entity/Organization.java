@@ -1,5 +1,4 @@
 package br.edu.fatecsjc.lgnspringapi.entity;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;

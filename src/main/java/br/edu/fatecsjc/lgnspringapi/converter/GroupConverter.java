@@ -50,9 +50,7 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
         if (newEntity.getMembers() == null) {
             newEntity.setMembers(new ArrayList<>());
         }
-        newEntity.getMembers().forEach(member -> {
-            member.setGroup(newEntity);
-        });
+        newEntity.getMembers().forEach(member -> member.setGroup(newEntity));
         return newEntity;
     }
 
@@ -64,11 +62,7 @@ public class GroupConverter implements Converter<Group, GroupDTO> {
     @Override
     public List<Group> convertToEntity(List<GroupDTO> dtos) {
         List<Group> groups = modelMapper.map(dtos, new TypeToken<List<Group>>(){}.getType());
-        groups.forEach(group -> {
-            group.getMembers().forEach(member -> {
-                member.setGroup(group);
-            });
-        });
+        groups.forEach(group -> group.getMembers().forEach(member -> member.setGroup(group)));
         return groups;
     }
 
