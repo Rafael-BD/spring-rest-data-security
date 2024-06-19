@@ -16,9 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Jwts;
-import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import io.jsonwebtoken.security.Keys;
-
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(properties = {
@@ -33,7 +31,7 @@ class JwtServiceTest {
 
     @MockBean
     private UserDetails userDetails;
-    private static final Key KEY = Keys.secretKeyFor(HS256);
+    private static final Key KEY = Keys.hmacShaKeyFor("secretsecretsecretsecretsecretsecretsecretsecret".getBytes());
 
     @Test
     void testGenerateToken() {
