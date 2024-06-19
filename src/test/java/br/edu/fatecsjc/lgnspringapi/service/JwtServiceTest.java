@@ -80,7 +80,7 @@ class JwtServiceTest {
             .setSubject("wrongUsername")
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-            .signWith(KEY)
+            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
             .compact();
 
         boolean isValid = jwtService.isTokenValid(wrongUsernameToken, userDetails);
