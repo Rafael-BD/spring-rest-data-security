@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.lgnspringapi.service;
 
+import java.security.Key;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Jwts;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import io.jsonwebtoken.security.Keys;
+
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(properties = {
@@ -30,6 +33,7 @@ class JwtServiceTest {
 
     @MockBean
     private UserDetails userDetails;
+    private static final Key KEY = Keys.secretKeyFor(HS256);
 
     @Test
     void testGenerateToken() {
@@ -62,7 +66,7 @@ class JwtServiceTest {
         String token = Jwts.builder()
             .setSubject("username")
             .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
-            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .signWith(KEY)
             .compact();
 
         boolean isValid = jwtService.isTokenValid(token, userDetails);
@@ -77,7 +81,7 @@ class JwtServiceTest {
             .setSubject("wrongUsername")
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .signWith(KEY)
             .compact();
 
         boolean isValid = jwtService.isTokenValid(wrongUsernameToken, userDetails);
@@ -91,7 +95,7 @@ class JwtServiceTest {
         String wrongUsernameAndExpiredToken = Jwts.builder()
             .setSubject("wrongUsername")
             .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
-            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .signWith(KEY)
             .compact();
 
         boolean isValid = jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);
