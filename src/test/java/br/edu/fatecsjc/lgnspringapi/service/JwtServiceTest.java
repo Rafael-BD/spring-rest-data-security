@@ -21,7 +21,7 @@ import io.jsonwebtoken.security.Keys;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(properties = {
-    "application.security.jwt.secret-key=secretsecretsecretsecretsecretsecretsecretsecret",
+    "application.security.jwt.secret-key=hfnceiofaufeafieufhafhiaheifuafueafiehheufhcnncn",
     "application.security.jwt.expiration=3600000",
     "application.security.jwt.refresh-token.expiration=86400000"
 })
@@ -80,7 +80,7 @@ class JwtServiceTest {
             .setSubject("wrongUsername")
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .signWith(HS256, "hfnceiofaufeafieufhafhiaheifuafueafiehheufhcnncn")
             .compact();
 
         boolean isValid = jwtService.isTokenValid(wrongUsernameToken, userDetails);
@@ -94,7 +94,7 @@ class JwtServiceTest {
         String wrongUsernameAndExpiredToken = Jwts.builder()
             .setSubject("wrongUsername")
             .setExpiration(new Date(System.currentTimeMillis() - 60 * 1000))
-            .signWith(HS256, "secretsecretsecretsecretsecretsecretsecretsecret")
+            .signWith(HS256, "hfnceiofaufeafieufhafhiaheifuafueafiehheufhcnncn")
             .compact();
 
         boolean isValid = jwtService.isTokenValid(wrongUsernameAndExpiredToken, userDetails);

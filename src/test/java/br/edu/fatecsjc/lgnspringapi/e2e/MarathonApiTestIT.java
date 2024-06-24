@@ -60,6 +60,18 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    void testGetAllMarathonsException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .get("/marathon")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     @Order(1)
     void testGetMarathonById() {
         RestAssured.baseURI = "http://localhost:8000";
@@ -72,6 +84,18 @@ public class MarathonApiTestIT {
             .statusCode(200)
             .body("id", equalTo(marathonId))
             .body(matchesJsonSchemaInClasspath("marathon-schema.json"));
+    }
+
+    @Test
+    void testGetMarathonByIdException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken)
+            .when()
+            .get("/marathon/invalid")
+            .then()
+            .statusCode(400);
     }
 
     @Test
@@ -99,6 +123,25 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    void testUpdateMarathonException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"weight\":20," 
+            + "\"score\":200" 
+            + "}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .put("/marathon/" + marathonId)
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testRegisterMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -122,6 +165,25 @@ public class MarathonApiTestIT {
     }
 
     @Test
+    void testRegisterMarathonException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"weight\":30," 
+            + "\"score\":300" 
+            + "}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .post("/marathon")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     @Order(3)
     void testDeleteMarathon() {
         RestAssured.baseURI = "http://localhost:8000";
@@ -132,6 +194,18 @@ public class MarathonApiTestIT {
             .delete("/marathon/" + marathonId)
             .then()
             .statusCode(204);
+    }
+
+    @Test
+    void testDeleteMarathonException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .delete("/marathon/" + marathonId)
+            .then()
+            .statusCode(403);
     }
 
     @AfterAll

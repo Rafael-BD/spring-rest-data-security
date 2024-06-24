@@ -80,6 +80,18 @@ public class MemberApiTestIT {
     }
 
     @Test
+    void testGetAllMembersException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .get("/member")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testGetMemberById() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -91,6 +103,18 @@ public class MemberApiTestIT {
             .statusCode(200)
             .body("id", equalTo(memberId))
             .body(matchesJsonSchemaInClasspath("member-schema.json"));
+    }
+
+    @Test
+    void testGetMemberByIdException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken)
+            .when()
+            .get("/member/" + memberId + "invalid")
+            .then()
+            .statusCode(400);
     }
 
     @Test
@@ -119,6 +143,27 @@ public class MemberApiTestIT {
     }
 
     @Test
+    void testUpdateMemberException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"name\":\"Updated Member\"," 
+            + "\"age\":35," 
+            + "\"marathonIds\":[" + marathonIdTest + "]," 
+            + "\"groupId\":" + groupIdTest
+            + "}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .put("/member/" + memberId)
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testRegisterMember() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -144,6 +189,27 @@ public class MemberApiTestIT {
     }
 
     @Test
+    void testRegisterMemberException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"name\":\"New Member\"," 
+            + "\"age\":40," 
+            + "\"marathonIds\":[" + marathonIdTest + "]," 
+            + "\"groupId\":" + groupIdTest
+            + "}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .post("/member")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testDeleteMember() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -153,6 +219,18 @@ public class MemberApiTestIT {
             .delete("/member/" + memberIdDeleteTest)
             .then()
             .statusCode(204);
+    }
+
+    @Test
+    void testDeleteMemberException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header ("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .delete("/member/" + memberIdDeleteTest)
+            .then()
+            .statusCode(403);
     }
 
     @AfterAll

@@ -111,6 +111,32 @@ public class OrganizationApiTestIT {
     }
 
     @Test
+    void testCreateOrganizationException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"cep\":\"12345\"," 
+            + "\"number\":\"123\"," 
+            + "\"street\":\"Test Street\"," 
+            + "\"city\":\"Test City\"," 
+            + "\"state\":\"Test State\"," 
+            + "\"country\":\"Test Country\"," 
+            + "\"instituition_name\":\"Test Institution\","
+            + "\"name\":\"Test Organization\","
+            + "\"groups\":[" + groupJson + "]"
+            + "}";
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token + "invalid")
+            .body(requestBody)
+            .when()
+            .post("/organization")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testGetAllOrganizations() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -122,6 +148,19 @@ public class OrganizationApiTestIT {
             .then()
             .statusCode(200)
             .body(matchesJsonSchemaInClasspath("organizations-list-schema.json"));
+    }
+
+    @Test
+    void testGetAllOrganizationsException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token + "invalid")
+            .when()
+            .get("/organization")
+            .then()
+            .statusCode(403);
     }
 
     @Test
@@ -137,6 +176,19 @@ public class OrganizationApiTestIT {
             .statusCode(200)
             .body("id", equalTo(organizationId))
             .body(matchesJsonSchemaInClasspath("organization-schema.json"));
+    }
+
+    @Test
+    void testGetOrganizationByIdException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token)
+            .when()
+            .get("/organization/" + organizationId + "invalid")
+            .then()
+            .statusCode(400);
     }
 
     @Test
@@ -176,6 +228,32 @@ public class OrganizationApiTestIT {
     }
 
     @Test
+    void testUpdateOrganizationException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{" 
+            + "\"cep\":\"12345\"," 
+            + "\"number\":\"123\"," 
+            + "\"street\":\"Test Street\"," 
+            + "\"city\":\"Test City\"," 
+            + "\"state\":\"Test State\"," 
+            + "\"country\":\"Test Country\"," 
+            + "\"instituition_name\":\"Test Institution Updated\","
+            + "\"name\":\"Test Organization\","
+            + "\"groups\":[" + groupJson + "]"
+            + "}";
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token + "invalid")
+            .body(requestBody)
+            .when()
+            .put("/organization/" + organizationId)
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testDeleteOrganization() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -186,6 +264,19 @@ public class OrganizationApiTestIT {
             .delete("/organization/" + organizationIdDeleteTest)
             .then()
             .statusCode(204);
+    }
+
+    @Test
+    void testDeleteOrganizationException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token + "invalid")
+            .when()
+            .delete("/organization/" + organizationIdDeleteTest)
+            .then()
+            .statusCode(403);
     }
 
     @AfterAll

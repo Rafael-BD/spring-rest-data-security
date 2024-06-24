@@ -67,6 +67,19 @@ public class AuthenticationApiTestIT {
 
     @Test
     @Order(1)
+    void testRegisterException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .contentType(ContentType.JSON)
+            .when()
+            .post("/auth/register")
+            .then()
+            .statusCode(400);
+    }
+
+    @Test
+    @Order(2)
     void testAuthenticate() {
         try {
             Thread.sleep(5000);
@@ -91,7 +104,19 @@ public class AuthenticationApiTestIT {
     }
 
     @Test
-    @Order(2)
+    void testAuthenticateException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .contentType(ContentType.JSON)
+            .when()
+            .post("/auth/authenticate")
+            .then()
+            .statusCode(400);
+    }
+
+    @Test
+    @Order(3)
     void testRefreshToken() {
         try {
             Thread.sleep(5000);

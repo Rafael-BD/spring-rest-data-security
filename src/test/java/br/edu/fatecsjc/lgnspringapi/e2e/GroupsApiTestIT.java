@@ -65,6 +65,18 @@ public class GroupsApiTestIT {
     }
 
     @Test
+    void testGetAllGroupsException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .get("/group")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testGetGroupById() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -76,6 +88,18 @@ public class GroupsApiTestIT {
             .statusCode(200)
             .body("id", equalTo(groupId))
             .body(matchesJsonSchemaInClasspath("group-schema.json"));
+    }
+
+    @Test
+    void testGetGroupByIdException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header ("Authorization", "Bearer " + testToken)
+            .when()
+            .get("/group/" + groupId + "invalid")
+            .then()
+            .statusCode(400);
     }
 
     @Test
@@ -98,6 +122,22 @@ public class GroupsApiTestIT {
     }
 
     @Test
+    void testUpdateGroupException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{\"name\":\"Test Group Updated\"}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .put("/group/" + groupId)
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testRegisterGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -117,6 +157,22 @@ public class GroupsApiTestIT {
     }
 
     @Test
+    void testRegisterGroupException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        String requestBody = "{\"name\":\"Test Group new\"}";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+            .when()
+            .post("/group")
+            .then()
+            .statusCode(403);
+    }
+
+    @Test
     void testDeleteGroup() {
         RestAssured.baseURI = "http://localhost:8000";
 
@@ -126,6 +182,18 @@ public class GroupsApiTestIT {
             .delete("/group/" + groupIdDeleteTest)
             .then()
             .statusCode(204);
+    }
+
+    @Test
+    void testDeleteGroupException() {
+        RestAssured.baseURI = "http://localhost:8000";
+
+        given()
+            .header("Authorization", "Bearer " + testToken + "invalid")
+            .when()
+            .delete("/group/" + groupIdDeleteTest)
+            .then()
+            .statusCode(403);
     }
 
     @AfterAll
